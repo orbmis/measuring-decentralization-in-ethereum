@@ -1,4 +1,4 @@
-\documentclass[conference]{IEEEtran}
+G\documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage[
@@ -56,7 +56,7 @@ Any infrastructure that assumes a significant role in Ethereum can pose a centra
 
 Ethereum is not a static ecosystem, and other innovations will likely assume a prominent role within the ecosystem in the future, e.g. EigenLayer \cite{eigenlayer2023}, DVT \cite{asgaonkar-2021}.  As such, any model that we develop should account for the changing topology of the ecosystem and allow us to incorporate new infrastructure into the model at a future date, while still being able to track the changes of effective decentralization over time.
 
-\section{Measurement Model}
+\section{Selection of Data Points}
 
 \subsection{Overview of Data Model}
 
@@ -136,7 +136,7 @@ Our model introduces a metric to measure L2 Rollups by TVL relative to the TVL o
 
 Our model applies a weighting to this metric, taking into account the extent of the risk that centralization within these protocols pose, i.e. they may not cause a safety or liveness fault in the underlying protocol, but may nevertheless potentially cause loss of funds or significant delays should they be compromised.
 
-Without loss of generality, consider as an example an L2 rollup with a centralized sequencer that experiences a significant liveness fault in which users with funds on that network are no longer able to transact as they would under normal conditions.  In this scenario, it may be possible that the users can force a withdrawal through the L2's base layer smart contract bridge.  However, if this rollup contains a substantial number of user accounts, it may result in significant congestion on the base layer \cite{gorzny2022ideal}.  This would likely cause an increase in base fee and a prolonged delay in transaction inclusion.  Furthermore, in the case of tokens that are minted natively on an L2, it may not be possible to withdraw them to the base layer at all.
+Consider as an example an L2 rollup with a centralized sequencer that experiences a significant liveness fault in which users with funds on that network are no longer able to transact as they would under normal conditions.  In this scenario, it may be possible that the users can force a withdrawal through the L2's base layer smart contract bridge.  However, if this rollup contains a substantial number of user accounts, it may result in significant congestion on the base layer \cite{gorzny2022ideal}.  This would likely cause an increase in base fee and a prolonged delay in transaction inclusion.  Furthermore, in the case of tokens that are minted natively on an L2, it may not be possible to withdraw them to the base layer at all.
 
 \subsection{Miscellaneous Metrics}
 
@@ -181,35 +181,108 @@ Our model applies various indices to our data in order to have a robust set of m
 
 \subsection{Gini Index}
 
-The Gini Index was developed by  . . .
-And is used commonly in . . . .
+The Gini Index was developed by Corado Gini \cite{gini1936measure} as mechanism for measuring inequality of income / wealth in a population, and is arguably the most commonly used measurement of inequality across a number of fields.   It is employed as the basis of the original Nakamoto Coefficient model, and has been used in previous \cite{sai2021characterizing, lee2021dq, gupta2018gini, kusmierz2022centralized, kwon2019impossibility, cong2023inclusion, gochhayat2020measuring, karakostas2022sok, zhang2022sok, campajola2022evolution} several studies of Bitcoin and Ethereum, which allows for some comparison with the results of previous studies.
+
+The Gini Index is derived from the Lorenz curve \cite{lorenz1905methods}, which allows us to plot the individual shares of the total distribution in relation to the overall distribution.
+
 There are a number of different methods of calculating the Gini Index (Tutberidze et al. describe four \cite{tutberidze2018measuring}), though most are based on calculation the Lorenz Curve of a population, whereby the  Gini index is calculated as the area between the line of equality and the Lorenz curve divided by the total area under the line of equality, i.e.: \(G=\frac{A}{A+B}\)
 
 \begin{tikzpicture}
-    \begin{axis}[xlabel = {lowest to highest},
-                ylabel = {income earned},
-                xmin = 0,
-                xmax = 1,
-                ymin = 0,
-                ymax = 1
+    \begin{axis}[
+      xlabel = {cumulative proportion of population},
+      ylabel = {cumulative proportion of resource},
+      axis y line*=left,
+      axis x line*=bottom,
+      minor tick num=1,
+      xmin = 0,
+      xmax = 1,
+      ymin = 0,
+      ymax = 1
     ]
-        \addplot[domain=0:1]{x} node[midway,above,sloped]{Line of equality}
-        node[midway,below,sloped]{Concentration area};
-        \addplot[domain=0:1,smooth, thick, label=$x$]{x^2}
-        node[midway,below,sloped]{Lorenz curve};
+    \addplot[domain=0:1]{x} node[midway,above,sloped]{Line of equality};
+    \node[anchor=north west] at (0.48,0.44) {A};
+    \node[anchor=north west] at (0.7,0.22) {B};
+    \addplot[domain=0:1,smooth, thick, label=$x$]{x^2}
+      node[midway,below,sloped]{Lorenz curve};
     \end{axis}
 \end{tikzpicture}
 
-Therefore calculating the Gini Index is done via:
-\[G=1-2\int_{0}^{1}L\left( x \right)dx\]
-The method employed in this research was to calculate the area under the Lorenz Curve as the sum of a series of trapeziums, as opposed to using integral calculus.
+While the area under a curve is commonly calculated using the Newton-Leibnitz formula \cite{kalinski2016}, in practice it is often simpler to calculate the area under the Lorenz Curve as the sum of a the area of a series of trapeziums, correlating in width to the unit interval being measured.  Using this approach, the Gini Index can be calculated as:
+
 \[G=1-\sum_{i=1}^{n}\left[ \left( q_{i}+q_{i-1} \right) \left( p_{i}-p_{i-1} \right) \right]\]
-where q is the cumulative proportion of the distribution (i.e. wealth, income) and p is the cumulative proportion of 
-A detailed explanation for how we this method is arrived at is given by \cite{bellu2006inequality}.
+
+where \textit{q} is the cumulative proportion of the distribution (i.e. wealth / income) and \textit{p} is the cumulative proportion of the population with ownership of control over that portion of the total distribution.  A detailed explanation for how this method is arrived at is given by \cite{bellu2006inequality}.
+The Gini index gives us a value of between 0 and 1, where 0 indicates perfect equality of distribution of resources within the population, and 1 is total inequality, i.e. one single entity controls all the 100\% of resources.
 
 \subsection{Atkinson Index}
 
-\cite{sitthiyot2020simple}
+The Gini Index is useful as a base for calculating inequality, but it has limitations in describing the qualities of inequality.  As the Gini Index is based on the ratio of total areas under the curve, it does not account for variance or skewness, and it also means that two different distributions can potentially have the same Gini index, which could potentially affect the tracking of changes over time.
+
+For this reason, our model employs the Atkinson index \cite{atkinson1970measurement} as a further measure of decentralization to allow us to cross-reference our Gini index against a measurement that can be fine-tuned to our requirements, and which can be used to capture the any nuance in distribution of different measurements.
+
+The Atkinson index is based on the social-welfare approach, which at a high level tracks the amount of resources that would need to be redistributed to achieve a certain level of equality.
+
+\[A(\varepsilon) = 1 - \left(\frac{1}{N} \sum_{i=1}^{N} \left(\frac{y_i}{\mu}\right)^{1 - \varepsilon}\right)^{\frac{1}{1 - \varepsilon}}, \quad \quad \varepsilon \neq 1
+\]
+
+\[A\left( \varepsilon \right)=1-\frac{\prod_{i=1}^{N}\left( y_{i}^{\frac{1}{N}} \right)}{\bar{y}}, \quad \quad \varepsilon=1\]
+
+where the parameters include:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+$\epsilon$ & inequality aversion parameter where $\epsilon>0$ \\ \hline
+$n_{i}$ & number of people in the ith income group \\ \hline
+N & total number of people \\ \hline
+$y_{i}$ & average income of the ith income group \\ \hline
+$\mu$ & average income of the total population \\ \hline
+\end{tabular}
+\end{center}
+
+The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).
+
+\subsection{Shannon Entropy Index}
+
+\subsection{Herfindahl-Hirschman Index}
+
+The Herfindahl-Hirschman Index is commonly used as a measurement of competition within a certain industry sector. It has found applications in regulation where antitrust authorities \cite{usdoj2015}. It is calculated as the sum of the square of the percentage market share of each entity.
+
+It is calculated using the following formula, where $n$ is the total number of participants in the market, $P$ is the total number of units produced in the entire market, and $p_i$ is the number of units consumed from $i^{th}$ participant.
+
+\[HHI = \sum_{i=1}^{n} (\frac{p_{i}}{P}*100)^{2}
+\]
+As an example, in measuring concentration in the block building market, $P$ would be the total number of blocks produced in an interval,  $p_i$ would be the blocks proposed to the network that are built by the $i^{th}$ block builder.
+
+As the HHI is based on percentage shares of the market, it becomes close to zero for a market that has been commoditized, having a large number of participants with a relatively equal share.  Conversely, the HHI approaches 10,000 for a highly concentrated market, with 10,000, or $1 \times 100^2 $, being a single entity monopoly.
+
+The US DoJ generally classifies markets within three discrete categories \cite{usdoj2015}:
+
+\begin{itemize}
+    \item Unconcentrated: $HHI < 1500$ 
+    \item Moderately Concentrated: $1500 <= HHI <= 2500$
+    \item Highly Concentrated: $HHI > 2500$
+\end{itemize}
+
+Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the data-points in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for merging middleware such as block builders or relays.
+
+\section*{Acknowledgment}
+
+The preferred spelling of the word ``acknowledgment'' in America is without 
+an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
+G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
+acknowledgments in the unnumbered footnote on the first page.
+
+
+\vspace{12pt}
+
+\printbibliography
+
+\end{document}
+
+$\mu$ & average income of the total population \\ \hline
+\end{tabular}
+\end{center}
 
 \section*{Acknowledgment}
 
