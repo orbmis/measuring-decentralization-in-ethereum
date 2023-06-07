@@ -1,4 +1,4 @@
-G\documentclass[conference]{IEEEtran}
+\documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage[
@@ -158,7 +158,7 @@ In broad terms, the statistical measurements we incorporate in to our model can 
 
 \begin{itemize}
     \item \textbf{Deviations Model}, e.g. Gini index or Hoover index
-    \item \textbf{Combinatoratics mode}l, e.g. Herfindahl-Hirschman index or Simposon index
+    \item \textbf{Combinatoratics mode}l, e.g. Herfindahl-Hirschman index or Simpson index
     \item \textbf{Entropy model}, e.g. Shannon index or Theil index
     \item \textbf{Social welfare model}, e.g. Atkinson index
     \item \textbf{Tail ratios}, such Palma ratio or Pareto ratio
@@ -242,55 +242,66 @@ $\mu$ & average income of the total population \\ \hline
 
 The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).
 
-\subsection{Shannon Entropy Index}
-
 \subsection{Herfindahl-Hirschman Index}
 
 The Herfindahl-Hirschman Index is commonly used as a measurement of competition within a certain industry sector. It has found applications in regulation where antitrust authorities \cite{usdoj2015}. It is calculated as the sum of the square of the percentage market share of each entity.
 
-It is calculated using the following formula, where $n$ is the total number of participants in the market, $P$ is the total number of units produced in the entire market, and $p_i$ is the number of units consumed from $i^{th}$ participant.
-
-\[HHI = \sum_{i=1}^{n} (\frac{p_{i}}{P}*100)^{2}
-\]
-As an example, in measuring concentration in the block building market, $P$ would be the total number of blocks produced in an interval,  $p_i$ would be the blocks proposed to the network that are built by the $i^{th}$ block builder.
-
 As the HHI is based on percentage shares of the market, it becomes close to zero for a market that has been commoditized, having a large number of participants with a relatively equal share.  Conversely, the HHI approaches 10,000 for a highly concentrated market, with 10,000, or $1 \times 100^2 $, being a single entity monopoly.
+
+Our model adapts the standard HHI by re-scaling it to make it comparable with other indices employed in the model, by dividing the HHI by $10^4$ so that it falls in the interval $0 <= HHI <= 1$. As such, the re-scaled HHI, denoted by $\theta$, is expressed via the following formula, where $n$ is the total number of participants in the market, $P$ is the total number of units produced in the entire market, and $p_i$ is the number of units consumed from $i^{th}$ participant.
+
+\[\theta = \sum_{i=1}^{n} \frac{(p_{i}/P*100)^{2}}{10^{4}}
+\]
+
+As an example, in measuring concentration in the block building market, $P$ would be the total number of blocks produced in an interval,  $p_i$ would be the blocks proposed to the network that are built by the $i^{th}$ block builder.
 
 The US DoJ generally classifies markets within three discrete categories \cite{usdoj2015}:
 
-\begin{itemize}
-    \item Unconcentrated: $HHI < 1500$ 
-    \item Moderately Concentrated: $1500 <= HHI <= 2500$
-    \item Highly Concentrated: $HHI > 2500$
-\end{itemize}
-
-Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the data-points in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for merging middleware such as block builders or relays.
-
-\section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
-
-
-\vspace{12pt}
-
-\printbibliography
-
-\end{document}
-
-$\mu$ & average income of the total population \\ \hline
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Unconcentrated & $HHI < 1,500$  \\ \hline
+Moderately Concentrated & $1,500 <= HHI <= 2,500$ \\ \hline
+Highly Concentrated & $HHI > 2,500$ \\ \hline
 \end{tabular}
 \end{center}
 
-\section*{Acknowledgment}
+Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the data-points in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for merging middleware such as block builders or relays.
 
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
+\subsection{Shannon Index}
 
+The Shannon Index \cite{shannon1998mathematical} is part of a family of measurements that are derived from information theory and which are based on concept of entropy.  Other measurements in this category include the Generalized Entropy measurement, and the Theil indices.
+
+The Shannon index is a measure of the amount of entropy in a data set.  It was intended to be used to measure the amount of information content in a signal, where information content can be considered as a measurement of the unexpectedness of a particular value occurring at a specific point in the signal, and entropy is the \textit{average} level of unexpectedness within a signal.  
+
+Shannon gives examples of strings of characters, where the more characters and randomness there is, the lower the probability of predicting the next character in the string, and the more unexpected it is when that value occurs as predicted.  The less often the next character can be predicted correctly, the higher the entropy.  A basic example of this concept is a coin toss, where one party chooses heads, where there is a 50\% chance of the expected value (i.e. heads) occurring as predicted.  As this has a relatively high probability, $p(heads) = 0.5$, coin tosses have low entropy. If we roll a die, the entropy increases and the probability of an expected value decreases, i.e. $p(6) = 0.16$.
+
+Entropy as applied within the field of economics was systematized by Theil \cite{theil1967economics}, and has found application in measuring inequality within a distribution of resources, and later within several studies of decentralization in cryptocurrencies \cite{zhang2022sok, gochhayat2020measuring, kusmierz2022centralized}.
+
+The Shannon index is commonly expressed using the following formula, where $p_{i}$ is the amount of resources allocated to the $i^{th}$ entity in the population in proportion to the total amount of resources.
+\[H' = - \sum_{x} p(x) \log_{2} p(x)\]
+The Shannon index was designed for use with categorical data, as opposed to continuous data, for which the  GE index is better suited \cite{tran2021harnessing}.   However, for the purposes of measuring distribution of native asset (i.e. ETH), we have applied the Shannon index to ranges of amounts of ETH.  In this context, $p_i$ is the proportion of the asset owned by the $i^{th}$ percentile of the population.
+
+The Shannon index has a range between 0 and the logarithm of the number of categories in the dataset, i.e. $0<=H'<=log(n)$.  The more centralized a system becomes, the closer the Shannon index will be to zero \cite{kusmierz2022centralized}.
+
+\subsection{Tail Ratios}
+
+According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected by changes closer to the median of the distribution more than it is affected by changes at tail ends of the distribution.  In order to account for this characteristic of the Gini index, we employ a series of tail ratios to highlight any changes in the shape of the distribution that affect the lower and upper percentiles.
+
+Our model incorporates the Palma Ratio \cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distributed to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.  We complement the Palma ratio with several other inter-decile ratios such as P90:P10, P50:P10, P80:P20 (Pareto Ratio).
+
+These ratios are employed simply as a complement to the other indices in our model, as a method of identifying potential areas where the model may need to be fine-tuned to correctly track changes over time.  By themselves they are not useful measurements as the range within the results are not bounded, as with the Gini index, or Herfindahl-Hirschman Index.
+
+\subsection{Euclidean Distance}
+
+As we are interested in measuring the changes to levels of decentralization over time, we employ the Euclidean Distance measurement of a way to track changes over discrete intervals.  In order to do this, we apply the Euclidean Distance measurement to the allocation of resources to either single entities or discrete ranges of asset ownership depending on the data set, from one interval to the following interval.
+
+As we are derive a set of Euclidean Distances for each interval, we are particularly looking at the maximum distance that occurs between two intervals.  As such, we adapt the Euclidean Distance formula in our model to derive the maximum ED per measurement dimension per interval, using the following formula:
+
+\[ED = \max \left( \sqrt{\sum_{i=1}^{n} (x_{i,2} - x_{i,1})^2} \right)
+\]
+
+The Euclidian Distance, as well as well similar measurements have been employed in previous research of decentralization in blockchain networks in previous studies \cite{gochhayat2020measuring}, in relation to measuring governance in decentralized networks, where our model employs this measurement as a means to identifying changes to decentralization over time.
 
 \vspace{12pt}
 
