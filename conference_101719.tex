@@ -19,7 +19,7 @@ sorting=none
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Measurements of the Effective Level of Decentralization in the Contemporary Ethereum Ecosystem}
+\title{A Revised Measure of Decentralization in Ethereum's Contemporary Topology}
 
 \author{\IEEEauthorblockN{Simon Brown}
 \IEEEauthorblockA{\textit{ConsenSys Software Inc.}\\
@@ -60,12 +60,14 @@ Ethereum is not a static ecosystem, and other innovations will likely assume a p
 
 \subsection{Overview of Data Model}
 
-We use as a base for our model the canonical measurement of decentralization in blockchain, first described by Balaji Srinivasan as the minimum Nakamoto coefficient \cite{srinivasan2018}.  This model considers a blockchain as being compromised of a number of subsystems, which are important in terms of maintaining decentralization within an ecosystem, allowing it to remain resistant to capture by any one party or group.  Srinivasan describes any blockchain as being only as decentralized as the least decentralized subsystem. 
+We use as a base for our model the canonical measurement of decentralization in blockchain, first described by Balaji Srinivasan as the minimum Nakamoto coefficient \cite{srinivasan2018}.  This model considers a blockchain as being compromised of a number of subsystems, which are important in terms of maintaining decentralization within an ecosystem, allowing it to remain resistant to capture by any one party or group.  Srinivasan describes any blockchain as being only as decentralized as the least decentralized subsystem, and his original model loosely defines a number of discrete subsystems to measure.
 
 We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and introduced several other dimensions that represent exogenous vectors for potential centralization.  Our model thus extends Srinivasan's original model from 6 dimensions to 15.  These dimensions of measurement are listed below, and are followed by a detailed explanation of the rationale for each.
 
+\vspace{8pt}
+
 \begin{itemize}
-   \item \textbf{Based on Nakamoto Coefficient:}
+   \item \textbf{Based on original Nakamoto Coefficient subsystems:}
    \begin{itemize}
      \item Consensus nodes by client
      \item Consensus nodes by country
@@ -94,6 +96,8 @@ We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and
    \end{itemize}
  \end{itemize}
 
+ \vspace{4pt}
+
 \subsection{Deviation from Nakamoto Coefficient Model}
 
 We have adapted the Nakamoto coefficient model though a number of modifications to the original model.  These changes including removing Mining Decentralization and Developer Decentralization. 
@@ -116,6 +120,81 @@ Fundamentally, PBS allows for the separation of concerns between block building 
 
 This has several benefits, from lowering the resource requirements for running a validator node, to reducing centralising economics of MEV in staking pools \cite{buterin2021}.  However, it also introduces a number of other actors into Ethereum's infrastructure topology, i.e. block builders and relays, creating new vectors for potential centralization.
 
+\begin{figure}[h]
+\centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt    
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,225); %set diagram left start at 0, and has height of 225
+
+%Shape: Rectangle [id:dp32874736422552087] 
+\draw  [fill={rgb, 255:red, 204; green, 204; blue, 204 }  ,fill opacity=1 ] (40,90) -- (110,90) -- (110,130) -- (40,130) -- cycle ;
+%Shape: Rectangle [id:dp7893810608134403] 
+\draw  [fill={rgb, 255:red, 204; green, 204; blue, 204 }  ,fill opacity=1 ] (40,160) -- (110,160) -- (110,200) -- (40,200) -- cycle ;
+%Shape: Rectangle [id:dp8757104876136521] 
+\draw  [fill={rgb, 255:red, 204; green, 204; blue, 204 }  ,fill opacity=1 ] (40,20) -- (110,20) -- (110,60) -- (40,60) -- cycle ;
+%Shape: Rectangle [id:dp7094759049141843] 
+\draw   (140,90) -- (210,90) -- (210,130) -- (140,130) -- cycle ;
+%Shape: Rectangle [id:dp6485665405686041] 
+\draw   (140,160) -- (210,160) -- (210,200) -- (140,200) -- cycle ;
+%Shape: Rectangle [id:dp9969164825616158] 
+\draw   (240,160) -- (310,160) -- (310,200) -- (240,200) -- cycle ;
+%Shape: Rectangle [id:dp3291661227641548] 
+\draw   (140,20) -- (310,20) -- (310,60) -- (140,60) -- cycle ;
+%Shape: Rectangle [id:dp44497942140930546] 
+\draw   (240,90) -- (310,90) -- (310,130) -- (240,130) -- cycle ;
+%Straight Lines [id:da5149384940052303] 
+\draw    (240,180) -- (212,180) ;
+\draw [shift={(210,180)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da4997928601727849] 
+\draw    (140,180) -- (112,180) ;
+\draw [shift={(110,180)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da05690888030284669] 
+\draw    (40,180) -- (20,180) -- (20,30) -- (38,30) ;
+\draw [shift={(40,30)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da8057124336951804] 
+\draw    (275,130) -- (275,157) ;
+\draw [shift={(275,159)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da9723629842507198] 
+\draw    (174,130) -- (174,142.5) -- (260,142.5) -- (260,158) ;
+\draw [shift={(260,160)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da7759217148625789] 
+\draw    (175,60) -- (175,88) ;
+\draw [shift={(175,90)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da3789087953226402] 
+\draw    (310,40) -- (330,40) -- (330,180) -- (312,180) ;
+\draw [shift={(310,180)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da45339092329104136] 
+\draw    (76,90) -- (76,62) ;
+\draw [shift={(76,60)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da9969423372136927] 
+\draw    (140,40.5) -- (126,40.5) -- (126,109.5) -- (112,109.5) ;
+\draw [shift={(110,109.5)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (52,98) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Execution\\ \ \ Client};
+% Text Node
+\draw (50,174) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {mev-boost};
+% Text Node
+\draw (50,28) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Consensus\\ \ \ \ Client};
+% Text Node
+\draw (152,103) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Searchers};
+% Text Node
+\draw (160,175) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Relay};
+% Text Node
+\draw (243,174) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Block Builder};
+% Text Node
+\draw (150,35) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Ethereum Network \& Mempool};
+% Text Node
+\draw (251,97) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] { \ \ Private\\Orderflow};
+
+\end{tikzpicture}
+
+\caption{High level mev-boost architecture}
+\label{fig:mev-boost architecture}
+\end{figure}
+
 Our model applies a weighting to the PBS metrics when considering the measurement in the context of Ethereum's overall level of decentralization.  This is because any byzantine behaviour of the mev-boost middleware will result in validator nodes falling back to local block production, thus preventing any safety or liveness fault within the core protocol \cite{hasu2022}.
 
 However, it has been well documented \cite{labrys2022} that a number of prominent mev-boost builders and relays actively censor transactions according to specific criteria.  This effectively results in those transactions experiencing a potentially significant delay in being included in a block, (about 68\% longer than regular transactions according to Yang et al. \cite{yang2022sok}). 
@@ -127,6 +206,60 @@ This can effectively create a two-tier network with transactions associated with
 Our model introduces two metrics that pertain specifically to account abstraction, including "Number of user operations per bundler" and "Number of transactions per bundler". Account Abstraction has been a goal of Ethereum since it's inception, and there have been a number of previous proposals that were not implemented \cite{john2023, wilson2020, dietrichs2020}, which all involved some change to the core protocol.  The breakthrough came with "ERC-4337: Account Abstraction Using Alt Mempool" \cite{buterin2021B}, which does not require a protocol change, but which introduces a new roles within the ecosystem topology: bundlers and paymasters.
 
 ERC-4337 specifies a specific transaction type called a user operation, or "userop".  User operations are submitted to bundlers, who batch them into a single transaction to a global entrypoint contract, which iterates over the userops in the batch, passing them to their respective smart contract wallets along with the userop's calldata for the contract wallet to execute (e.g. send ETH or call a function on some specific smart contract).
+
+\begin{figure}[h]
+\centering
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,225); %set diagram left start at 0, and has height of 225
+
+%Shape: Rectangle [id:dp7094759049141843] 
+\draw   (20,75) -- (90,75) -- (90,115) -- (20,115) -- cycle ;
+%Shape: Rectangle [id:dp6485665405686041] 
+\draw   (120,75) -- (190,75) -- (190,115) -- (120,115) -- cycle ;
+%Shape: Rectangle [id:dp920843516545626] 
+\draw   (230,45) -- (300,45) -- (300,85) -- (230,85) -- cycle ;
+%Shape: Rectangle [id:dp12494094437695702] 
+\draw   (230,105) -- (300,105) -- (300,145) -- (230,145) -- cycle ;
+%Shape: Rectangle [id:dp9780604775904197] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}] (220,20) -- (310,20) -- (310,170) -- (220,170) -- cycle ;
+%Shape: Rectangle [id:dp4892691569318943] 
+\draw  [dash pattern={on 0.84pt off 2.51pt}] (110,20) -- (200,20) -- (200,170) -- (110,170) -- cycle ;
+%Straight Lines [id:da2517222890784073] 
+\draw    (50,115) -- (50,135) -- (155.43,134.71) -- (155.43,116.71) ;
+\draw [shift={(155.43,114.71)}, rotate = 90] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da7228274553126968] 
+\draw    (154.43,74.71) -- (154.43,64.71) -- (227.43,64.71) ;
+\draw [shift={(229.43,64.71)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Straight Lines [id:da29583642417688083] 
+\draw    (265.43,85.71) -- (265.43,102.71) ;
+\draw [shift={(265.43,104.71)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+% Text Node
+\draw (44,90) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {User};
+% Text Node
+\draw (137,90) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Bundler};
+% Text Node
+\draw (116,173) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize,color={rgb, 255:red, 128; green, 128; blue, 128 }  ,opacity=1 ] [align=left] {Userop Mempool};
+% Text Node
+\draw (241,53) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Entrypoint\\ \ Contract};
+% Text Node
+\draw (246,112) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Contract\\ \ Wallets};
+% Text Node
+\draw (14,141) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Submits Userops};
+% Text Node
+\draw (253,173) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize,color={rgb, 255:red, 128; green, 128; blue, 128 }  ,opacity=1 ] [align=left] {EVM};
+% Text Node
+\draw (116,33) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize] [align=left] {Submits Bundle\\Transaction};
+
+
+\end{tikzpicture}
+
+\caption{ERC-4337 Account Abstraction Architecture}
+\label{fig:4337 architecture}
+\end{figure}
 
 Our model weights these metrics lower than other metrics within the model, as the risk posed from centralization within this class of actors is lower than other parts of the infrastructure we have included.  Although bundlers can choose to censor specific transactions, the censored sender can simply decide to send their transaction directly to the entry-point contract, or to their smart contract wallet directly, if it's design allows.  This represents a relatively weak form of censorship but does require some user sophistication in order to bypass. Over-centralization in this part of Ethereum's infrastructure can potentially lead to censorship risks, resulting in an effective two-tier network, with some addresses being less privileged than others in terms of their access to the network. We posit that this is a reasonable basis for including this metric in our model, albeit with an adjusted weighting.
 
@@ -284,6 +417,7 @@ A basic example of this concept is a coin toss, where one party chooses heads, a
 Entropy as applied within the field of economics was systematized by Theil \cite{theil1967economics}, and has found applications in measuring inequality within a distribution of resources, and later within several studies of decentralization in cryptocurrencies \cite{zhang2022sok, gochhayat2020measuring, kusmierz2022centralized}.
 
 The Shannon index is commonly expressed using the following formula, where $p_{i}$ is the amount of resources allocated to the $i^{th}$ entity in the population in proportion to the total amount of resources available.
+
 \[H' = - \sum_{i} p(i) \log_{2} p(i)\]
 The Shannon index was designed for use with categorical data, as opposed to continuous data, for which the  GE index is better suited \cite{tran2021harnessing}.   However, for the purposes of measuring distribution of native asset (i.e. ETH), we have applied the Shannon index to ranges of amounts of ETH.  In this context, $p_i$ is the proportion of the asset owned by the $i^{th}$ percentile of the population.
 
@@ -293,7 +427,13 @@ The Shannon index has a range between 0 and the logarithm of the number of categ
 
 According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected by changes closer to the median of the distribution more than it is affected by changes at tail ends of the distribution.  In order to account for this characteristic of the Gini index, we employ a series of tail ratios to highlight any changes in the shape of the distribution that affect the lower and upper percentiles.
 
-Our model incorporates the Palma Ratio, described by Gabriel Palma \cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.  We complement the Palma ratio with several other inter-decile ratios such as P90:P10, P50:P10, P80:P20 (Pareto Ratio).
+Our model incorporates the Palma Ratio, described by Gabriel Palma \cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.  We complement the Palma ratio with  other inter-decile ratios using linear interpolation:
+
+\[\text{Px:Py} = \frac{{(1 - d_{x}) \times X_{n_{x}} + d_{x} \times X_{n_{x+1}}}}{{(1 - d_{y}) \times X_{n_{y}} + d_{y} \times X_{n_{y+1}}}}
+\]
+
+The above formula assigns $d_x$ and $d_y$ to the decimal parts of the rank positions for Px and Py, respectively. For example, to calculate the P50:P10 ratio, we would assign $x=50$ and $y=10$.  Similarly we can calculate other inter-decile ratios such as the P90:P10, P50:P10, P80:P20 (Pareto Ratio).
+
 
 These ratios are employed simply as a complement to the other indices in our model, as a method of identifying potential areas where the model may need to be fine-tuned to correctly track changes over time.  By themselves they are not useful measurements as the range within the results occur are not bounded, as with the Gini index, or Herfindahl-Hirschman Index.
 
@@ -325,22 +465,22 @@ The following table lists the various sources of data for each data point that i
 \vspace{24pt}
 
 \begin{table*}[ht]
-\small % Set the font size to \small to match the body font size
+\normalsize
 \begin{tabular}{ll}
-\multicolumn{2}{l}{\textbf{Based on Nakamoto Coefficient:}} \\[6pt]
+\multicolumn{2}{l}{\textbf{Based on original Nakamoto Coefficient subsystem selection:}} \\[6pt]
 Consensus nodes by client & \url{https://migalabs.es/api/v1/client-distribution} \\[6pt]
 Consensus nodes by country & \url{https://migalabs.es/api/v1/geo-distribution} \\[6pt]
 Execution nodes by client & \url{https://www.ethernodes.org/} \\[6pt]
 Execution nodes by country & \url{https://www.ethernodes.org/countries} \\[6pt]
 Exchanges by supply & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
 Distribution of native asset by amount & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
-Amount staked by Pool / Staking Service Provider & \url{https://api.dune.com/api/v1/query/2394100/results?api_key=} \\[18pt]
-\multicolumn{2}{l}{\textbf{Metrics pertaining to PBS:}} \\[6pt]
+Amount staked by Pool / Staking Service Provider & \url{https://api.dune.com/api/v1/query/2394100/results?api_key=} \\[24pt]
+\multicolumn{2}{l}{\textbf{Metrics pertaining to Proposer Builder Separation:}} \\[6pt]
 Blocks proposed by builder & \url{https://www.mevboost.org/stats} \\[6pt]
-Blocks proposed by relayer & \url{https://www.relayscan.io/overview/md} \\[18pt]
+Blocks proposed by relayer & \url{https://www.relayscan.io/overview/md} \\[24pt]
 \multicolumn{2}{l}{\textbf{Metrics pertaining to Account Abstraction:}} \\[6pt]
 Number of user operations per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[6pt]
-Number of transactions per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[18pt]
+Number of transactions per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[24pt]
 \multicolumn{2}{l}{\textbf{Miscellaneous Metrics:}} \\[6pt]
 Rollups by relative TVL / size / volume & \url{https://l2beat.com/scaling/tvl} \\[6pt]
 Stablecoins & \url{https://stablecoins.llama.fi/stablecoins} \\[6pt]
