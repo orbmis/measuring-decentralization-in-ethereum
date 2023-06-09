@@ -19,7 +19,7 @@ sorting=none
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{A Revised Measure of Decentralization in Ethereum's Contemporary Topology}
+\title{Measuring the Concentration of Control in Contemporary Ethereum}
 
 \author{\IEEEauthorblockN{Simon Brown}
 \IEEEauthorblockA{\textit{ConsenSys Software Inc.}\\
@@ -29,7 +29,7 @@ simon.brown@consensys.net}
 \maketitle
 
 \begin{abstract}
-Ethereum is undergoing significant changes to it's architecture as it evolves.  These changes include it's switch to PoS consensus and the introduction of significant infrastructural changes that do not require a change to the core protocol, but that fundamentally affect the way users interact with the network.  These changes represent an evolution toward a more modular architecture, in which have emerged new exogenous vectors for centralization.  This paper builds on previous studies of decentralization of Ethereum and reflects these recent significant changes and Ethereum's new modular paradigm.
+Ethereum is undergoing significant changes to its architecture as it evolves.  These changes include its switch to PoS consensus and the introduction of significant infrastructural changes that do not require a change to the core protocol, but that fundamentally affect the way users interact with the network.  These changes represent an evolution toward a more modular architecture, in which new exogenous vectors for centralization.  This paper builds on previous studies of decentralization of Ethereum and reflects these recent significant changes and Ethereum's new modular paradigm.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -42,7 +42,7 @@ As web3 and cryptocurrencies are a relatively nascent socio-technological innova
 
 Previous research \cite{gochhayat2020measuring, lin2021measuring, karakostas2022sok} focused on measuring decentralization at the various layers of a vertical stack within a monolithic system.  The contribution of this paper is a model for measuring decentralization that adapts previous models to Ethereum's contemporary ecosystem topology.
 
-The paper is organized as follows: in the background section we deliver an overview of how Ethereum is evolving and the challenge faced when attempting to measure it's level of decentralization.  In section III we outline the various dimensions that we propose to measure within our model, and our data sources.  In section IV we describe our methodology, including the various indices that are applied to our data.  Section V we deliver a breakdown of results, and we close with our conclusions in section VI.
+The paper is organized as follows: in the background section we deliver an overview of how Ethereum is evolving and the challenge faced when attempting to measure its level of decentralization.  In section III we outline the various dimensions that we propose to measure within our model, and our data sources.  In section IV we describe our methodology, including the various indices that are applied to our data.  Section V we deliver a breakdown of results, and we close with our conclusions in section VI.
 
 \section{Background}
 
@@ -51,7 +51,7 @@ It can be argued that protocols that are built on top of the base layer of Ether
 Any infrastructure that assumes a significant role in Ethereum can pose a centralization risk to the overall network based on two critical factors:
 \begin{enumerate}[label=\alph*.]
 \item the size of the infrastructure compared to the base layer, as measured in either percentage of base layer transactions that flow through the infrastructure and/or Total Value Locked (TVL) compared to the base layer.
-\item the potential effect on the base layer should the infrastructure be compromised or develops misaligned incentives, whether this effect is a level of effective degraded performance of the network, or an increased level of censorship.
+\item the potential effect on the base layer should the infrastructure be compromised or develop misaligned incentives, whether this effect is a level of effective degraded performance of the network, or an increased level of censorship.
 \end{enumerate}
 
 Ethereum is not a static ecosystem, and other innovations will likely assume a prominent role within the ecosystem in the future, e.g. EigenLayer \cite{eigenlayer2023}, DVT \cite{asgaonkar-2021}.  As such, any model that we develop should account for the changing topology of the ecosystem and allow us to incorporate new infrastructure into the model at a future date, while still being able to track the changes of effective decentralization over time.
@@ -60,7 +60,7 @@ Ethereum is not a static ecosystem, and other innovations will likely assume a p
 
 \subsection{Overview of Data Model}
 
-We use as a base for our model the canonical measurement of decentralization in blockchain, first described by Balaji Srinivasan as the minimum Nakamoto coefficient \cite{srinivasan2018}.  This model considers a blockchain as being compromised of a number of subsystems, which are important in terms of maintaining decentralization within an ecosystem, allowing it to remain resistant to capture by any one party or group.  Srinivasan describes any blockchain as being only as decentralized as the least decentralized subsystem, and his original model loosely defines a number of discrete subsystems to measure.
+We use as a base for our model the canonical measurement of decentralization in blockchain, first described by Balaji Srinivasan as the minimum Nakamoto coefficient \cite{srinivasan2018}.  This model considers a blockchain as being composed of a number of subsystems, which are important in terms of maintaining decentralization within an ecosystem, allowing it to remain resistant to capture by any one party or group.  Srinivasan describes any blockchain as being only as decentralized as the least decentralized subsystem, and his original model loosely defines a number of discrete subsystems to measure.
 
 We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and introduced several other dimensions that represent exogenous vectors for potential centralization.  Our model thus extends Srinivasan's original model from 6 dimensions to 15.  These dimensions of measurement are listed below, and are followed by a detailed explanation of the rationale for each.
 
@@ -100,13 +100,13 @@ We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and
 
 \subsection{Deviation from Nakamoto Coefficient Model}
 
-We have adapted the Nakamoto coefficient model though a number of modifications to the original model.  These changes including removing Mining Decentralization and Developer Decentralization. 
+We have adapted the Nakamoto coefficient model through a number of modifications to the original model.  These changes include removing Mining Decentralization and Developer Decentralization. 
 
-The Mining Decentralization metric is longer relevant in PoS Ethereum and and such has been replaced by the "Amount staked by Pool" metric, which measures the relevant share of the staked ETH by staking service provider. 
+The Mining Decentralization metric is longer relevant in PoS Ethereum and such has been replaced by the "Amount staked by Pool" metric, which measures the relevant share of the staked ETH by staking service provider. 
 
-The "Developer Decentralization" metric is no longer an applicable metrics for PoS Ethereum. The rationale for this change is the fact that nodes on the network run a number of different client implementations, each with it's own distinct development team.  In this context, and considering a priori that developers are unique to each team, it is sufficient to measure the level of client diversity rather than the relative contributions of individual developers. 
+The "Developer Decentralization" metric is no longer an applicable metric for PoS Ethereum. The rationale for this change is the fact that nodes on the network run a number of different client implementations, each with its own distinct development team.  In this context, and considering a priori that developers are unique to each team, it is sufficient to measure the level of client diversity rather than the relative contributions of individual developers. 
 
-In terms of client diversity, it is also necessary to update the model to reflect the fact that Ethereum is now technically two merged blockchains that operate in unison, the beacon chain which handles consensus, and the execution layer, which is the P2P layer that gossips transactions and handles execution.  For this reason, the original "Client Decentralization", and "Node Decentralization" metrics have been been replaced by "Consensus / Execution nodes by client / country" metrics. 
+In terms of client diversity, it is also necessary to update the model to reflect the fact that Ethereum is now technically two merged blockchains that operate in unison, the beacon chain which handles consensus, and the execution layer, which is the P2P layer that gossips transactions and handles execution.  For this reason, the original "Client Decentralization", and "Node Decentralization" metrics have been replaced by "Consensus / Execution nodes by client / country" metrics. 
 
 The two metrics that have been retained in their original form are "Distribution of native asset by amount", which measures wealth inequality in terms of ownership of ETH, and "Exchanges by supply", which measures the potential influence of large centralized exchanges by the amount of ETH that they hold on deposit.
 
@@ -118,7 +118,7 @@ PBS is a network topology that has not been implemented at the protocol level, b
 
 Fundamentally, PBS allows for the separation of concerns between block building and block proposing \cite{ethereum2023}, whereas currently the protocol assigns the responsibility of both to the validator.  Ethereum's PoS protocol requires validators to broadcast a valid block of transactions to the network when they are selected as a proposer.  As per the specification, validators will build a block locally by requesting their local execution client to collate pending transactions from the public P2P network. However, validators can install mev-boost and can request blocks from third party specialist block builders via public relays, instead of building one themselves \cite{ethereum2022}.
 
-This has several benefits, from lowering the resource requirements for running a validator node, to reducing centralising economics of MEV in staking pools \cite{buterin2021}.  However, it also introduces a number of other actors into Ethereum's infrastructure topology, i.e. block builders and relays, creating new vectors for potential centralization.
+This has several benefits, from lowering the resource requirements for running a validator node, to reducing centralizing economics of MEV in staking pools \cite{buterin2021}.  However, it also introduces a number of other actors into Ethereum's infrastructure topology, i.e. block builders and relays, creating new vectors for potential centralization.
 
 \begin{figure}[h]
 \centering
@@ -195,7 +195,7 @@ This has several benefits, from lowering the resource requirements for running a
 \label{fig:mev-boost architecture}
 \end{figure}
 
-Our model applies a weighting to the PBS metrics when considering the measurement in the context of Ethereum's overall level of decentralization.  This is because any byzantine behaviour of the mev-boost middleware will result in validator nodes falling back to local block production, thus preventing any safety or liveness fault within the core protocol \cite{hasu2022}.
+Our model applies a weighting to the PBS metrics when considering the measurement in the context of Ethereum's overall level of decentralization.  This is because any byzantine behavior of the mev-boost middleware will result in validator nodes falling back to local block production, thus preventing any safety or liveness fault within the core protocol \cite{hasu2022}.
 
 However, it has been well documented \cite{labrys2022} that a number of prominent mev-boost builders and relays actively censor transactions according to specific criteria.  This effectively results in those transactions experiencing a potentially significant delay in being included in a block, (about 68\% longer than regular transactions according to Yang et al. \cite{yang2022sok}). 
 
@@ -203,7 +203,7 @@ This can effectively create a two-tier network with transactions associated with
 
 \subsection{Metrics pertaining to Account Abstraction}
 
-Our model introduces two metrics that pertain specifically to account abstraction, including "Number of user operations per bundler" and "Number of transactions per bundler". Account Abstraction has been a goal of Ethereum since it's inception, and there have been a number of previous proposals that were not implemented \cite{john2023, wilson2020, dietrichs2020}, which all involved some change to the core protocol.  The breakthrough came with "ERC-4337: Account Abstraction Using Alt Mempool" \cite{buterin2021B}, which does not require a protocol change, but which introduces a new roles within the ecosystem topology: bundlers and paymasters.
+Our model introduces two metrics that pertain specifically to account abstraction, including "Number of user operations per bundler" and "Number of transactions per bundler". Account Abstraction has been a goal of Ethereum since its inception, and there have been a number of previous proposals that were not implemented \cite{john2023, wilson2020, dietrichs2020}, which all involved some change to the core protocol.  The breakthrough came with "ERC-4337: Account Abstraction Using Alt Mempool" \cite{buterin2021B}, which does not require a protocol change, but which introduces new roles within the ecosystem topology: bundlers and paymasters.
 
 ERC-4337 specifies a specific transaction type called a user operation, or "userop".  User operations are submitted to bundlers, who batch them into a single transaction to a global entrypoint contract, which iterates over the userops in the batch, passing them to their respective smart contract wallets along with the userop's calldata for the contract wallet to execute (e.g. send ETH or call a function on some specific smart contract).
 
@@ -269,7 +269,7 @@ Our model introduces a metric to measure L2 Rollups by TVL relative to the TVL o
 
 Our model applies a weighting to this metric, taking into account the extent of the risk that centralization within these protocols pose, i.e. they may not cause a safety or liveness fault in the underlying protocol, but may nevertheless potentially cause loss of funds or significant delays should they be compromised.
 
-cite "do not overload Ethereum's Consensus
+The theoretical risk to Ethereum's underlying social consensus from having a single dominant rollup is described by Buterin \cite{buterin2023}, as forming a broad assumption within the ecosystem that "\textit{if there is a bug that causes funds to be stolen, the losses will be so large that the community will have no choice but to fork to recover the users' funds}".
 
 Consider as an example an L2 rollup with a centralized sequencer that experiences a significant liveness fault, in which users with funds on that network are no longer able to transact as they would under normal conditions.  In this scenario, it may be possible that the users can force a withdrawal through the L2's base layer smart contract bridge.  However, if this rollup contains a substantial number of user accounts, it may result in significant congestion on the base layer \cite{gorzny2022ideal}.  This would likely cause an increase in base fee and a prolonged delay in transaction inclusion.  Furthermore, in the case of tokens that are minted natively on an L2, it may not be possible to withdraw them to the base layer at all.
 
@@ -277,23 +277,23 @@ Consider as an example an L2 rollup with a centralized sequencer that experience
 
 As part of our model we measure the \textbf{effective inflation rate adjusted for burn}.  This is an important metric for any PoS base layer protocol.  A high rate of issuance of the network's native asset via validator rewards, has the effect of diluting the circulating supply, effectively decreasing the asset's value.  This incentivizes the network's users to stake the native asset in order to counteract the dilutionary effects of issuance, which forms a self-reinforcing cycle, leading to eventual hyperinflation even if that process takes a number of years.  Polynya describes a number of examples of this phenomenon that have been observed in practice \cite{polynya2022}. 
 
-Our model thus incorporates a simple metric for measuring the inflation rate and adjusting it for the amount of ETH that is burned through the EIP-1559 mechanism, in which the base fee, which is adjusted for every block by the protocol itself, and that each transaction must pay at a minimum in order to be included in a block, is subsequently burned when a block is proposed.  This has the effect of  creating a negative issuance rate once transaction volume surpasses critical threshold, which will likely decreases the total supply over time \cite{liu2022empirical}.
+Our model thus incorporates a simple metric for measuring the inflation rate and adjusting it for the amount of ETH that is burned through the EIP-1559 mechanism, in which the base fee, which is adjusted for every block by the protocol itself, and that each transaction must pay at a minimum in order to be included in a block, is subsequently burned when a block is proposed.  This has the effect of  creating a negative issuance rate once transaction volume surpasses critical threshold, which will likely decrease the total supply over time \cite{liu2022empirical}.
 
-We have also incorporated a closely related metric this is the \textbf{percentage of total supply staked}.  This is directly related to the effective inflation rate metric with respect to maintaining an economic equilibrium between the issuance rate and circulating supply, allowing the asset to hold it's value over time \cite{john2021equilibrium}.  It is worth pointing out that Ethereum's economics are designed to maintain this equilibrium by reducing issuance as more validators come online \cite{edgington2023}, which theoretically reduces the incentive to stake once the percentage of staked assets reaches a certain threshold, however, there is always the possibility that innovations such as EigenLayer may disrupt this equilibrium over time.
+We have also incorporated a closely related metric this is the \textbf{percentage of total supply staked}.  This is directly related to the effective inflation rate metric with respect to maintaining an economic equilibrium between the issuance rate and circulating supply, allowing the asset to hold its value over time \cite{john2021equilibrium}.  It is worth pointing out that Ethereum's economics are designed to maintain this equilibrium by reducing issuance as more validators come online \cite{edgington2023}, which theoretically reduces the incentive to stake once the percentage of staked assets reaches a certain threshold, however, there is always the possibility that innovations such as EigenLayer may disrupt this equilibrium over time.
 
-Another meaningful metrics that we have introduced into our model is measurement of \textbf{Stablecoins by relative TVL on Ethereum}.  There exists both algorithmic stablecoins, which are backed by a number of other assets and which rely on networks of decentralized oracles, and which are at least notionally decentralized by nature, and there also exists stablecoins which are backed largely by FIAT deposits, and which are issued by a centralized authority.  The latter type of stablecoin is orthogonal our model, insofar as while they are not part of the infrastructure of the network, they are a significant part of the ecosystem that users use to interact with other dapps with.  They also pose a centralization risk in terms of censorship.  There have been a number of document cases where stablecoins have been frozen from specific addresses \cite{wall2021}.
+Another meaningful metric that we have introduced into our model is measurement of \textbf{Stablecoins by relative TVL on Ethereum}.  There exists both algorithmic stablecoins, which are backed by a number of other assets and which rely on networks of decentralized oracles, and which are at least notionally decentralized by nature, and there also exists stablecoins which are backed largely by FIAT deposits, and which are issued by a centralized authority.  The latter type of stablecoin is orthogonal to our model, insofar as while they are not part of the infrastructure of the network, they are a significant part of the ecosystem that users use to interact with other dapps with.  They also pose a centralization risk in terms of censorship.  There have been a number of  cases where stablecoins have been frozen from specific addresses \cite{wall2021}.
 
 \section*{Methodology}
 
-The measurement of inequality of distribution is a well understood area of statistics that has found many applications in the fields of economics and social sciences. There may been a number of studies in the field of cryptoeconomics that have made use of various popular statistical measurements.  As our model aims to measure the level of decentralization across a number of different dimensions with different qualities, we incorporate a number of different statistical measurements.
+The measurement of inequality of distribution is a well understood area of statistics that has found many applications in the fields of economics and social sciences. There have been a number of studies in the field of cryptoeconomics that have made use of various popular statistical measurements.  As our model aims to measure the level of decentralization across a number of different dimensions with different qualities, we incorporate a number of different statistical measurements.
 
-The various indices employed are useful in measuring distributions in different ways depending on what qualities of the distribution that are most relevant.  For example, the Gini index is arguably the most widely used index with regards to measuring wealth inequality, and is well suited for measuring the distribution of a network's native asset, (i.e. ETH), while the Herfindahl-Hirschman index is more often used for measuring the level of competition in specific industrial sectors, making it more suitable to measuring the degree of decentralization within block builder market.
+The various indices employed are useful in measuring distributions in different ways depending on what qualities of the distribution that are most relevant.  For example, the Gini index is arguably the most widely used index with regards to measuring wealth inequality, and is well suited for measuring the distribution of a network's native asset, (i.e. ETH), while the Herfindahl-Hirschman index is more often used for measuring the level of competition in specific industrial sectors, making it more suitable for measuring the degree of decentralization within the block builder market.
 
 Furthermore, we have adopted certain indices for the purposes of identifying subtle changes in distributions over time, which common indices for measuring inequality do not always capture.
 
 The indices that we have employed in our model are as listed below and are described in detail in the following sections.  Each index has characteristics and trade-offs associated with the underlying approach or model that they are based on.
 
-\vspace{12pt}
+\vspace{6pt}
 
 \begin{center}
 \begin{tabular}{|l|l|}
@@ -308,15 +308,17 @@ Distance measures & Euclidean Distance \\ \hline
 \end{tabular}
 \end{center}
 
-\vspace{12pt}
+\vspace{2pt}
 
 \subsection{Gini Index}
 
-The Gini Index was developed by Corado Gini \cite{gini1936measure} as mechanism for measuring inequality of income / wealth in a population, and is arguably the most commonly used measurement of inequality across a number of fields.   It is employed as the basis of the original Nakamoto Coefficient model, and has been used in several previous studies of decentralization in Bitcoin and/or Ethereum  \cite{sai2021characterizing, lee2021dq, gupta2018gini, kusmierz2022centralized, kwon2019impossibility, cong2023inclusion, gochhayat2020measuring, karakostas2022sok, zhang2022sok, campajola2022evolution}, which allows for some comparison with the results of previous studies.
+The Gini Index was developed by Corado Gini \cite{gini1936measure} as a mechanism for measuring inequality of income / wealth in a population, and is arguably the most commonly used measurement of inequality across a number of fields.   It is employed as the basis of the original Nakamoto Coefficient model, and has been used in several previous studies of decentralization in Bitcoin and/or Ethereum  \cite{sai2021characterizing, lee2021dq, gupta2018gini, kusmierz2022centralized, kwon2019impossibility, cong2023inclusion, gochhayat2020measuring, karakostas2022sok, zhang2022sok, campajola2022evolution}, which allows for some comparison with the results of previous studies.
 
 The Gini Index is derived from the Lorenz curve \cite{lorenz1905methods}, which allows us to plot the individual shares of the total distribution in relation to the overall distribution.
 
 There are a number of different methods of calculating the Gini Index (Tutberidze et al. describe four \cite{tutberidze2018measuring}), though most methods are based on the calculation of the Lorenz Curve of a population, whereby the Gini index is calculated as the area between the line of equality and the Lorenz curve, divided by the total area under the line of equality, i.e.: \(G=\frac{A}{A+B}\)
+
+\begin{figure}[h]
 
 \begin{tikzpicture}
     \begin{axis}[
@@ -338,6 +340,10 @@ There are a number of different methods of calculating the Gini Index (Tutberidz
     \end{axis}
 \end{tikzpicture}
 
+\caption{Visualization of Lorenz Curve}
+\label{fig:lorenz-curve-graph}
+\end{figure}
+
 While the area under a curve is commonly calculated using the Newton-Leibnitz formula \cite{kalinski2016}, in practice it is often simpler to calculate the area under the Lorenz Curve as the sum of a the areas of a series of trapeziums, correlating in width to the unit interval being measured.  Using this approach, the Gini Index can be calculated as follows, where \textit{q} is the cumulative proportion of the distribution (i.e. wealth / income) and \textit{p} is the cumulative proportion of the population with ownership or control over that portion of the total distribution.  A detailed explanation for how this method is arrived at is given by Bellù and Liberati \cite{bellu2006inequality}.
 
 \[G=1-\sum_{i=1}^{n}\left[ \left( q_{i}+q_{i-1} \right) \left( p_{i}-p_{i-1} \right) \right]\]
@@ -355,13 +361,13 @@ The Atkinson index is based on the social-welfare approach, which at a high leve
 \[A(\varepsilon) = 1 - \left(\frac{1}{N} \sum_{i=1}^{N} \left(\frac{y_i}{\mu}\right)^{1 - \varepsilon}\right)^{\frac{1}{1 - \varepsilon}}, \quad \quad \varepsilon \neq 1
 \]
 
-\[A\left( \varepsilon \right)=1-\frac{\prod_{i=1}^{N}\left( y_{i}^{\frac{1}{N}} \right)}{\bar{y}}, \quad \quad \varepsilon=1\]
+\[A\left( \varepsilon \right)=1-\frac{\prod_{i=1}^{N}\left( y_{i}^{\frac{1}{N}} \right)}{\mu}, \quad \quad \varepsilon=1\]
 
 \vspace{12pt}
 
 where the parameters include:
 
-\vspace{12pt}
+\vspace{6pt}
 
 \begin{center}
 \begin{tabular}{|l|l|}
@@ -374,7 +380,7 @@ $\mu$ & average income of the total population \\ \hline
 \end{tabular}
 \end{center}
 
-\vspace{12pt}
+\vspace{6pt}
 
 The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).  The Atkinson index results in a value between 0 and 1, and takes as a parameter $\epsilon$, which allows us to fine-tune the formula by increasing the value of $\epsilon$ in order to make the index more sensitive to changes at lower end of the distribution.  The value of $\epsilon$ is referred to as the inequality aversion, and yields a higher value when $\epsilon$ is given a value closer to 1.
 
@@ -416,9 +422,10 @@ A basic example of this concept is a coin toss, where one party chooses heads, a
 
 Entropy as applied within the field of economics was systematized by Theil \cite{theil1967economics}, and has found applications in measuring inequality within a distribution of resources, and later within several studies of decentralization in cryptocurrencies \cite{zhang2022sok, gochhayat2020measuring, kusmierz2022centralized}.
 
-The Shannon index is commonly expressed using the following formula, where $p_{i}$ is the amount of resources allocated to the $i^{th}$ entity in the population in proportion to the total amount of resources available.
+The Shannon index is commonly expressed using the following formula, where $Ni$ is the frequency of a each value in the dataset divided by $N$, the total number of distinct values in the dataset, i.e. $N_i$ is the number of entities within the population that have a $i$ amount of resources, in proportion to $N$ total number of discrete amounts of resources in the population.
 
-\[H' = - \sum_{i} p(i) \log_{2} p(i)\]
+\[H' = - \sum_{i=1}^{N} \left(\frac{N_i}{N}\right) \log_{2} \left(\frac{N_i}{N}\right)\]
+
 The Shannon index was designed for use with categorical data, as opposed to continuous data, for which the  GE index is better suited \cite{tran2021harnessing}.   However, for the purposes of measuring distribution of native asset (i.e. ETH), we have applied the Shannon index to ranges of amounts of ETH.  In this context, $p_i$ is the proportion of the asset owned by the $i^{th}$ percentile of the population.
 
 The Shannon index has a range between 0 and the logarithm of the number of categories in the dataset, i.e. $0<=H'<=log(n)$.  The more centralized a system becomes, the closer the Shannon index will be to zero \cite{kusmierz2022centralized}.
@@ -427,26 +434,34 @@ The Shannon index has a range between 0 and the logarithm of the number of categ
 
 According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected by changes closer to the median of the distribution more than it is affected by changes at tail ends of the distribution.  In order to account for this characteristic of the Gini index, we employ a series of tail ratios to highlight any changes in the shape of the distribution that affect the lower and upper percentiles.
 
-Our model incorporates the Palma Ratio, described by Gabriel Palma \cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.  We complement the Palma ratio with  other inter-decile ratios using linear interpolation:
+Our model incorporates the Palma Ratio\cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.
 
-\[\text{Px:Py} = \frac{{(1 - d_{x}) \times X_{n_{x}} + d_{x} \times X_{n_{x+1}}}}{{(1 - d_{y}) \times X_{n_{y}} + d_{y} \times X_{n_{y+1}}}}
-\]
+We complement the Palma ratio with other inter-decile ratios that can be used to qualify the character of the inequality in the distribution, including the P90:P10, P50:P10 ratios.  These inter-decile ratios are calculated using linear the interpolation method \cite{frost2023B} described below, where $P_x$ denotes the desired percentile, and $N$ is the population size, a $v$ represents the value at position $i$ in an ascending ordered dataset, where $i$ is calculated using the following formula:
 
-The above formula assigns $d_x$ and $d_y$ to the decimal parts of the rank positions for Px and Py, respectively. For example, to calculate the P50:P10 ratio, we would assign $x=50$ and $y=10$.  Similarly we can calculate other inter-decile ratios such as the P90:P10, P50:P10, P80:P20 (Pareto Ratio).
+\[ i = \frac{P_x\left( N+1 \right)}{100} \]
 
+This gives us the rank position of the desired percentile, assuming the dataset is sorted in ascending order.  We then interpolate between the value at this rank position in the ordered dataset, and the value at the subsequent position in order to attain each percentile in our desired inter-decile ratio:
+
+\begin{align*}
+P = \left( v_{\left\lfloor i+1 \right\rfloor} - v_{\left\lfloor i \right\rfloor}\right)(n \ \text{mod} \ 1) + v_{\left\lfloor i \right\rfloor} \ , & \ \ i \ \text{mod} \ 1 \neq 0 \\
+P = v_i \ , & \ \ i \ \text{mod} \ 1 = 0
+\end{align*}
+
+\vspace{8pt}
 
 These ratios are employed simply as a complement to the other indices in our model, as a method of identifying potential areas where the model may need to be fine-tuned to correctly track changes over time.  By themselves they are not useful measurements as the range within the results occur are not bounded, as with the Gini index, or Herfindahl-Hirschman Index.
 
 \subsection{Euclidean Distance}
 
-As we are interested in measuring the changes to levels of decentralization over time, we employ the Euclidean Distance measurement of a way to track changes over discrete intervals.  In order to do this, we apply the Euclidean Distance measurement to the allocation of resources to either single entities or discrete ranges of asset ownership depending on the data set, from one interval to the following interval.
+As we are interested in measuring the changes to levels of decentralization over time, we employ the Euclidean Distance measurement as a way to track changes over discrete intervals.  In order to do this, we apply the Euclidean Distance measurement to the allocation of resources to either single entities or discrete ranges of asset ownership depending on the data set, from one interval to the following interval.
 
-As we are derive a set of Euclidean Distances for each interval, we are particularly looking at the maximum distance that occurs between two intervals.  As such, we adapt the Euclidean Distance formula in our model to derive the maximum ED per measurement dimension per interval, using the following formula:
+As we derive a set of Euclidean Distances for each interval, we are particularly looking at the maximum distance that occurs between two intervals.  As such, we adapt the Euclidean Distance formula in our model to derive the maximum ED per measurement dimension per interval, using the following formula, where $k$ and $k+1$ are the intervals being measured:
 
-\[ED = \max \left( \sqrt{\sum_{i=1}^{n} (x_{i,2} - x_{i,1})^2} \right)
-\]
+\[ED = \max \left( \sqrt{\sum_{i=1}^{n} (x_{i,K+1} - x_{i,k})^2} \right) \]
 
-The Euclidian Distance, as well as well similar measurements have been employed in previous research of decentralization in blockchain networks in previous studies \cite{gochhayat2020measuring}, in relation to measuring governance in decentralized networks. Our model employs this measurement as a means to identifying changes in decentralization over time.
+\vspace{8pt}
+
+The Euclidean Distance, as well as similar measurements, have been employed in previous research of decentralization in blockchain networks in previous studies \cite{gochhayat2020measuring}, in relation to measuring governance in decentralized networks. Our model employs this measurement as a means to identify changes in decentralization over time.
 
 \vspace{12pt}
 
@@ -467,7 +482,7 @@ The following table lists the various sources of data for each data point that i
 \begin{table*}[ht]
 \normalsize
 \begin{tabular}{ll}
-\multicolumn{2}{l}{\textbf{Based on original Nakamoto Coefficient subsystem selection:}} \\[6pt]
+\multicolumn{2}{l}{\textbf{Based on original Nakamoto Coefficient subsystem selection:}} \\[10pt]
 Consensus nodes by client & \url{https://migalabs.es/api/v1/client-distribution} \\[6pt]
 Consensus nodes by country & \url{https://migalabs.es/api/v1/geo-distribution} \\[6pt]
 Execution nodes by client & \url{https://www.ethernodes.org/} \\[6pt]
@@ -475,13 +490,13 @@ Execution nodes by country & \url{https://www.ethernodes.org/countries} \\[6pt]
 Exchanges by supply & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
 Distribution of native asset by amount & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
 Amount staked by Pool / Staking Service Provider & \url{https://api.dune.com/api/v1/query/2394100/results?api_key=} \\[24pt]
-\multicolumn{2}{l}{\textbf{Metrics pertaining to Proposer Builder Separation:}} \\[6pt]
+\multicolumn{2}{l}{\textbf{Metrics pertaining to Proposer Builder Separation:}} \\[10pt]
 Blocks proposed by builder & \url{https://www.mevboost.org/stats} \\[6pt]
 Blocks proposed by relayer & \url{https://www.relayscan.io/overview/md} \\[24pt]
-\multicolumn{2}{l}{\textbf{Metrics pertaining to Account Abstraction:}} \\[6pt]
+\multicolumn{2}{l}{\textbf{Metrics pertaining to Account Abstraction:}} \\[10pt]
 Number of user operations per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[6pt]
 Number of transactions per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[24pt]
-\multicolumn{2}{l}{\textbf{Miscellaneous Metrics:}} \\[6pt]
+\multicolumn{2}{l}{\textbf{Miscellaneous Metrics:}} \\[10pt]
 Rollups by relative TVL / size / volume & \url{https://l2beat.com/scaling/tvl} \\[6pt]
 Stablecoins & \url{https://stablecoins.llama.fi/stablecoins} \\[6pt]
 \end{tabular}
