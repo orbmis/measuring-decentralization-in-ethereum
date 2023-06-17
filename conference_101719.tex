@@ -316,8 +316,6 @@ The Gini Index was developed by Corado Gini \cite{gini1936measure} as a mechanis
 
 The Gini Index is derived from the Lorenz curve \cite{lorenz1905methods}, which allows us to plot the individual shares of the distribution in relation to the overall total distribution.
 
-There are a number of different methods of calculating the Gini Index (Tutberidze et al. describe four \cite{tutberidze2018measuring}), though most methods are based on the calculation of the Lorenz Curve of a population, whereby the Gini index is calculated as the area between the line of equality and the Lorenz curve, divided by the total area under the line of equality, i.e.: \(G=\frac{A}{A+B}\)
-
 \begin{figure}[h]
 
 \begin{tikzpicture}
@@ -344,9 +342,15 @@ There are a number of different methods of calculating the Gini Index (Tutberidz
 \label{fig:lorenz-curve-graph}
 \end{figure}
 
-While the area under a curve is commonly calculated using the Newton-Leibnitz formula \cite{kalinski2016}, in practice it is often simpler to calculate the area under the Lorenz Curve as the sum of the areas of a series of trapeziums, correlating in width to the unit interval being measured.  Using this approach, the Gini Index can be calculated using the following formula, where \textit{q} is the cumulative proportion of the distribution (i.e. wealth / income) and \textit{p} is the cumulative proportion of the population with ownership or control over that portion of the total distribution.  A detailed explanation for how this method is arrived at is given by Bellù and Liberati \cite{bellu2006inequality}.
 
-\[G=1-\sum_{i=1}^{n}\left[ \left( q_{i}+q_{i-1} \right) \left( p_{i}-p_{i-1} \right) \right]\]
+There are a number of different methods of calculating the Gini Index (Tutberidze et al. describe four \cite{tutberidze2018measuring}), though most methods are based on the calculation of the Lorenz Curve of a population, whereby the Gini index is calculated as the area between the line of equality and the Lorenz curve, divided by the total area under the line of equality, i.e.: \(G=\frac{A}{A+B}\)
+
+While the area under a curve is commonly calculated using the Newton-Leibnitz formula \cite{kalinski2016} , where $L(x)$ is the Lorenz curve.  It can also be approximated as the sum of the areas of a series of trapeziums, correlating in width to the unit interval being measured. 
+\[G=1-2\int_{0}^{1}L\left( x \right)dx\]
+
+While the calculation of the Gini Index using the Lorenz Curve is useful for visualising the distribution and level of inequality on a chart, it is possible to calculate directly using an approach that is based on the empirical mean difference of the values in the dataset \cite{gastwirth1972estimation}:
+
+\[G=\frac{\sum_{i=1}^{n}\sum_{j=1}^{n}\left| x_i - x_j \right|}{2n^2\mu}\]
 
 The Gini index gives us a value of between 0 and 1, where 0 indicates perfect equality of distribution of resources within the population, and 1 is total inequality, i.e. one single entity controls 100\% of the resources.
 
@@ -422,9 +426,9 @@ A basic example of this concept is a coin toss, where one party chooses heads, a
 
 Entropy as applied within the field of economics was systematized by Theil \cite{theil1967economics}, and has found applications in measuring inequality within a distribution of resources, and later within several studies of decentralization in cryptocurrencies \cite{zhang2022sok, gochhayat2020measuring, kusmierz2022centralized}.
 
-The Shannon index is commonly expressed using the following formula, where $Ni$ is the frequency of a each value in the dataset divided by $N$, the total number of distinct values in the dataset, i.e. $N_i$ is the number of entities within the population that have a $i$ amount of resources, in proportion to $N$ total number of discrete amounts of resources in the population.
+The Shannon index is commonly expressed using the following formula, where $Ni$ is the frequency of a each value in the dataset divided by $N$, the total number of distinct values in the dataset, i.e. $N_i$ is the number of entities within the population that have a $i$ amount of resources, in proportion to $N$ total number entities in the population.
 
-\[H' = - \sum_{i=1}^{N} \left(\frac{N_i}{N}\right) \log_{2} \left(\frac{N_i}{N}\right)\]
+\[H' = - \sum_{i=1}^{N} \left(\frac{N_i}{N}\right) \log_{e} \left(\frac{N_i}{N}\right)\]
 
 The Shannon index was designed for use with categorical data, as opposed to continuous data, for which the  GE index is better suited \cite{tran2021harnessing}.   However, for the purposes of measuring distribution of native asset (i.e. ETH), we have applied the Shannon index to ranges of amounts of ETH.  In this context, $p_i$ is the proportion of the asset owned by the $i^{th}$ percentile of the population.
 
@@ -451,13 +455,39 @@ P = v_i \ , & \ \ i \ \text{mod} \ 1 = 0
 
 These ratios are employed simply as a complement to the other indices in our model, as a method of identifying potential areas where the model may need to be fine-tuned to correctly track changes over time.  By themselves they are not useful measurements as the range within the results are not bounded, as with the Gini index, or Herfindahl-Hirschman Index.
 
+\subsection{Jensen-Shannon Divergence}
+
+Let $p$ and $q$  be two probability distributions represented as vectors of sizes $n$ and $m$ respectively. If $n < m$,  pad $p$ with zeros until it matches the size of $q$. Similarly, if $m < n$, pad $q$ with zeros until it matches the size of $p$. We now have two vectors of the same size.
+
+The normalized JS divergence is given by:
+
+
+\[ D_{JS}(p||q) = \frac{1}{\log(2)} \left( \frac{1}{2} D_{KL}(p||m) + \frac{1}{2} D_{KL}(q||m) \right) \]
+
+\vspace{8pt}
+
+where $m = \frac{1}{2} (p + q)$  is the average of $p$ and $q$, and $D_{KL}(p||m)$ and $D_{KL}(q||m)$ are the Kullback-Leibler divergences of $p$ and $q$  from $m$ respectively, defined as:
+
+\[
+D_{KL}(p||q) = \sum_{i=1}^{n} p(i) \log \frac{p(i)}{q(i)}
+\]
+
+\vspace{8pt}
+
+
 \subsection{Euclidean Distance}
 
-As we are interested in measuring the changes to levels of decentralization over time, we employ the Euclidean Distance measurement as a way to track changes over discrete intervals.  In order to do this, we apply the Euclidean Distance measurement to the allocation of resources to either single entities, or discrete ranges of asset ownership, depending on the data set, from one interval to the following interval.
+As we are interested in measuring the changes to levels of decentralization over time, we employ the Euclidean Distance measurement as a way to track changes over discrete intervals.  In order to do this, we apply the Euclidean Distance measurement to the allocation of resources to either single entities, or discrete ranges of asset ownership, depending on the dataset, from one interval to the following interval.
 
-As we derive a set of Euclidean Distances for each interval, we are particularly looking at the maximum distance that occurs between two intervals.  As such, we adapt the Euclidean Distance formula in our model to derive the maximum ED per measurement dimension per interval, using the following formula, where $k$ and $k+1$ are the intervals being measured:
+As we derive a set of Euclidean Distances for each interval, we are particularly looking at the maximum distance that occurs between two intervals, which we have parameterized to 24 hours.  As such, we adapt the Euclidean Distance formula in our model to derive the maximum ED per measurement dimension per interval, using the following formula, where $m_1, m_2, \dots m_n$ is the set of metrics in each interval, $k$ and $k+1$ are the intervals being measured, $n$ is the number of values in the metric $m_{i,k}$
 
-\[ED = \max \left( \sqrt{\sum_{i=1}^{n} (x_{i,k+1} - x_{i,k})^2} \right) \]
+\[
+\delta_{m,k} = \sqrt{\sum_{i=1}^{n} (m_{i,k} - m_{i,k-1})^2}
+\]
+\[
+\rho = \max \left\{ \delta_{m_1,k}, \ \delta_{m_2,k}, \ \dots \ \delta_{m_n,k} \right\}
+\]
+
 
 \vspace{8pt}
 
