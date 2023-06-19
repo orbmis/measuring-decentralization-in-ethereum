@@ -285,11 +285,11 @@ Another meaningful metric that we have introduced into our model is the measurem
 
 \section{Methodology}
 
-The measurement of inequality of distribution is a well understood area of statistics that has found many applications in the fields of economics and social sciences. There have been a number of studies in the field of cryptoeconomics that have made use of various popular statistical measurements.  As our model aims to measure the level of decentralization across a number of different dimensions with different qualities, we incorporate a number of different statistical measurements.
+The measurement of inequality in distributions is a well understood area of statistics that has found many applications in the fields of economics and social sciences. As our model aims to measure the level of decentralization across a number of different dimensions with different qualities, it is necessary incorporate a number of different statistical measurements.
 
-The various indices employed are useful in measuring distributions in different ways depending on what qualities of the distribution that are most relevant.  For example, the Gini index is arguably the most widely used index with regards to measuring wealth inequality, and is well suited for measuring the distribution of a network's native asset, (i.e. ETH), while the Herfindahl-Hirschman index is more often used for measuring the level of competition in specific industrial sectors, making it more suitable for measuring the degree of decentralization within the block builder market.
+We use as a base measurement, the Gini index and the Herfindahl-Hirschman index. The Gini index is arguably the most widely used index with regards to measuring wealth inequality, and is well suited for measuring the distribution of a network's native asset, (i.e. ETH), while the Herfindahl-Hirschman index (HHI) is more often used for measuring the level of competition in specific industrial sectors, making it more suitable for measuring the degree of decentralization within the block builder market.  The base measurement is applied to each measurement dimension, but our results will reference one or the other based on the respective qualities of each.
 
-Furthermore, we have adopted certain indices for the purposes of identifying subtle changes in distributions over time, which common indices for measuring inequality do not always capture.
+The Shannon index is used to complement and cross reference any indicative result from our base measurement.  This is useful because the Shannon Index is based on a different approach to the Gini Index and the HHI.  The Atkinson Index is used to fine-tune the results from our base measurement by updating the index parameters to make it more sensitive to changes at different extremes of the distribution.  This can be useful is we want to qualify our results with more detail on any part of a distribution at certain times.  The tail ratios are used to inform any decisions about the parameterization of the Atkinson Index, and the Jensen-Shannon Divergence is used to track changes to the distribution over time.
 
 The indices that we have employed in our model are as listed below and are described in detail in the following sections.  Each index has characteristics and trade-offs associated with the underlying approach or model that they are based on.
 
@@ -304,7 +304,7 @@ Combinatoratics model & Herfindahl-Hirschman index \\ \hline
 Entropy model & Shannon index \\ \hline
 Social welfare model & Atkinson index \\ \hline
 Tail ratios & Palma ratio, Pareto ratio \\ \hline
-Distance measures & Euclidean Distance \\ \hline
+Divergence measures & Jensen-Shannon Divergence \\ \hline
 \end{tabular}
 \end{center}
 
@@ -348,7 +348,7 @@ There are a number of different methods of calculating the Gini Index (Tutberidz
 While the area under a curve is commonly calculated using the Newton-Leibnitz formula \cite{kalinski2016} , where $L(x)$ is the Lorenz curve.  It can also be approximated as the sum of the areas of a series of trapeziums, correlating in width to the unit interval being measured. 
 \[G=1-2\int_{0}^{1}L\left( x \right)dx\]
 
-While the calculation of the Gini Index using the Lorenz Curve is useful for visualising the distribution and level of inequality on a chart, it is possible to calculate directly using an approach that is based on the empirical mean difference of the values in the dataset \cite{gastwirth1972estimation}:
+While the calculation of the Gini Index using the Lorenz Curve is useful for visualising the distribution and level of inequality on a chart, it is also possible to calculate directly using an approach that is based on the empirical mean difference of the values in the dataset \cite{gastwirth1972estimation}, which is the approach that we have implemented:
 
 \[G=\frac{\sum_{i=1}^{n}\sum_{j=1}^{n}\left| x_i - x_j \right|}{2n^2\mu}\]
 
@@ -358,9 +358,9 @@ The Gini index gives us a value of between 0 and 1, where 0 indicates perfect eq
 
 The Gini Index is useful as a base for calculating inequality, but it has limitations in describing the \textit{qualities} of inequality.  As the Gini Index is based on the ratio of total areas under the curve, it does not account for variance or skewness, and it also means that two different distributions can potentially have the same Gini index, which could potentially affect the tracking of changes over time.
 
-For this reason, our model employs the Atkinson index \cite{atkinson1970measurement} as a further measure of decentralization, to allow us to cross-reference our Gini index against a measurement that can be fine-tuned to our requirements, and which can be used to capture  any nuance in the distribution of different measurements.
+For this reason, our model employs the Atkinson index \cite{atkinson1970measurement} as a further measure of decentralization, to allow us to cross-reference our Gini index against a measurement that can be fine-tuned to our requirements, and which can be used to capture any nuance in the distribution of different measurements.
 
-The Atkinson index is based on the social-welfare approach, which at a high level tracks the amount of resources that would need to be redistributed to achieve a certain level of equality.  The Atkinson index is calculated using the following formula:
+The Atkinson index is based on the social-welfare approach, which infers the amount of resources that would need to be redistributed to achieve a certain level of equality.  The Atkinson index is calculated using the following formula:
 
 \[A(\varepsilon) = 1 - \left(\frac{1}{N} \sum_{i=1}^{N} \left(\frac{y_i}{\mu}\right)^{1 - \varepsilon}\right)^{\frac{1}{1 - \varepsilon}}, \quad \quad \varepsilon \neq 1
 \]
@@ -412,11 +412,11 @@ Highly Concentrated & $HHI > 2,500$ \\ \hline
 \end{tabular}
 \end{center}
 
-Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the datapoints in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays.
+Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the datapoints in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays, or ERC-4337 bundlers.
 
 \subsection{Shannon Index}
 
-The Shannon Index \cite{shannon1998mathematical} is part of a family of measurements that are derived from information theory and which are based on the concept of entropy.  Other measurements in this category include the Generalized Entropy measurement, and the Theil indices.
+The Shannon Index \cite{shannon1998mathematical} is part of a family of measurements that are derived from information theory and which are based on the concept of entropy.  Other measurements in this category include the Generalized Entropy measurement, and the Theil indices.  As the Shannon Index is based on a very different approach from either the Gini index or HHI, it is a useful measurement to cross-reference results against.
 
 The Shannon index is a measure of the amount of entropy in a dataset.  It was intended to be used to measure the amount of information content in a signal, where information content can be considered as a measurement of the unexpectedness of a particular value occurring at a specific point in the signal, and entropy is the \textit{average} level of unexpectedness within a signal.  
 
@@ -430,13 +430,13 @@ The Shannon index is commonly expressed using the following formula, where $Ni$ 
 
 \[H' = - \sum_{i=1}^{N} \left(\frac{N_i}{N}\right) \log_{e} \left(\frac{N_i}{N}\right)\]
 
-The Shannon index was designed for use with categorical data, as opposed to continuous data, for which the  GE index is better suited \cite{tran2021harnessing}.   However, for the purposes of measuring distribution of native asset (i.e. ETH), we have applied the Shannon index to ranges of amounts of ETH.  In this context, $p_i$ is the proportion of the asset owned by the $i^{th}$ percentile of the population.
+The Shannon index was designed for use with categorical data, as opposed to continuous data, for which the GE index is better suited \cite{tran2021harnessing}.   However, for the purposes of measuring distribution of native asset (i.e. ETH), we have applied the Shannon index to ranges of amounts of ETH.  In this context, $p_i$ is the proportion of the asset owned by the $i^{th}$ percentile of the population.
 
 The Shannon index has a range between 0 and the logarithm of the number of categories in the dataset, i.e. $0<=H'<=log(n)$.  The more centralized a system becomes, the closer the Shannon index will be to zero \cite{kusmierz2022centralized}.
 
 \subsection{Tail Ratios}
 
-According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected by changes closer to the median of the distribution more than it is affected by changes at tail ends of the distribution.  In order to account for this characteristic of the Gini index, we employ a series of tail ratios to highlight any changes in the shape of the distribution that affect the lower and upper percentiles.
+According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected by changes closer to the median of the distribution more than it is affected by changes at tail ends of the distribution.  In order to account for this characteristic of the Gini index, we employ a series of tail ratios to highlight any changes in the shape of the distribution that affect the lower and upper percentiles, and as a means to inform decisions about the inequality aversion parameter in our Atkinson Index.
 
 Our model incorporates the Palma Ratio\cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.
 
@@ -457,12 +457,12 @@ These ratios are employed simply as a complement to the other indices in our mod
 
 \subsection{Jensen-Shannon Divergence}
 
-Let $p$ and $q$  be two probability distributions represented as vectors of sizes $n$ and $m$ respectively. If $n < m$,  pad $p$ with zeros until it matches the size of $q$. Similarly, if $m < n$, pad $q$ with zeros until it matches the size of $p$. We now have two vectors of the same size.
+As we are interested in measuring the changes to levels of decentralization over time,  we employ a method described by Lin \cite{lin1991divergence} as the JenSen-Shannon Divergence, which is a method to measure of the level of similarity or divergence between two probability distributions.  The JSD is useful for applying across the various dimensions of measurements in our model, particularly because it has a defined upper bound, which means it can be scaled for comparison with other index values.  In order to scale the JSD, we normalize it be dividing the result by the upper bound of the possible range of results, which in model, is $log_2$.
 
-The normalized JS divergence is given by:
+We calculate the JSD between two intervals by comparing the distribution of each one across each measurement dimension respectively.  As such, we define $p$ and $q$  as two probability distributions, taken from two discrete intervals of a single metric, represented as vectors of sizes $n$ and $m$ respectively. It is important that both vectors are the same size, therefore if $n < m$,  we pad $p$ with zeros until it matches the size of $q$, or if $m < n$, we pad $q$ with zeros until it matches the size of $p$.  As our data is categorical in nature, we also align values each distribution such that $p$ and $q$ are ordered by category.  The normalized JSD is then calculated as follows:
 
 
-\[ D_{JS}(p||q) = \frac{1}{\log(2)} \left( \frac{1}{2} D_{KL}(p||m) + \frac{1}{2} D_{KL}(q||m) \right) \]
+\[ D_{JS}(p||q) = \frac{1}{\log_2} \left( \frac{1}{2} D_{KL}(p||m) + \frac{1}{2} D_{KL}(q||m) \right) \]
 
 \vspace{8pt}
 
@@ -474,36 +474,21 @@ D_{KL}(p||q) = \sum_{i=1}^{n} p(i) \log \frac{p(i)}{q(i)}
 
 \vspace{8pt}
 
-
-\subsection{Euclidean Distance}
-
-As we are interested in measuring the changes to levels of decentralization over time, we employ the Euclidean Distance measurement as a way to track changes over discrete intervals.  In order to do this, we apply the Euclidean Distance measurement to the allocation of resources to either single entities, or discrete ranges of asset ownership, depending on the dataset, from one interval to the following interval.
-
-As we derive a set of Euclidean Distances for each interval, we are particularly looking at the maximum distance that occurs between two intervals, which we have parameterized to 24 hours.  As such, we adapt the Euclidean Distance formula in our model to derive the maximum ED per measurement dimension per interval, using the following formula, where $m_1, m_2, \dots m_n$ is the set of metrics in each interval, $k$ and $k+1$ are the intervals being measured, $n$ is the number of values in the metric $m_{i,k}$
-
-\[
-\delta_{m,k} = \sqrt{\sum_{i=1}^{n} (m_{i,k} - m_{i,k-1})^2}
-\]
-\[
-\rho = \max \left\{ \delta_{m_1,k}, \ \delta_{m_2,k}, \ \dots \ \delta_{m_n,k} \right\}
-\]
-
-
-\vspace{8pt}
-
-The Euclidean Distance, as well as similar measurements, have been employed in previous research of decentralization in blockchain networks in previous studies \cite{gochhayat2020measuring}, in relation to measuring governance in decentralized networks. Our model employs this measurement as a means to identify changes in decentralization over time.
+The normalized JSD is calculated across each measurement dimension for both the 1 day, 30, 60 and 90 day intervals in order to track and quantify any changes in decentralization in specific subsystems over time.
 
 \subsection{Deriving a Master Index}
 
-In order to measure Ethereum's level of decentralization over time, we need to account for it's modular topology, in which significant components of it's infrastructure will change.  For example, we might measure the concentration in the mev-boost relay market, but later decide to remove this metric as innovations like enshrined PBS make them redundant \cite{neuder2023}.
+As we are measuring Ethereum's level of decentralization over time, we need to account for it's modular topology, in which significant components of it's infrastructure will change.  For example, we might measure the concentration in the mev-boost relay market, but later decide to remove this metric as innovations like enshrined PBS make them redundant \cite{neuder2023}.
 
-Our model calculates an aggregate set of indices across a number of dimensions of measurement, that can be used as an indicator of the relative level of decentralization in Ethereum as it changes over time.  Each relevant index, (i.e. Gini, HHI, Atkinson), has an associated aggregate index that is derived from calculating the normalized weighted geometric mean of that index's value across all relevant metrics, i.e.:
+Our model calculates an aggregate set of indices across a number of dimensions of measurement, that can be used as further indicator of the relative level of decentralization in Ethereum as it changes over time.  Each relevant index, (i.e. Gini, HHI, Atkinson), contributes to an aggregate index that is derived from calculating the normalized weighted geometric mean of the respective index's value across all relevant metrics, i.e.:
 
 \[ \gamma = \frac{{\left(\prod_{i=1}^{n} (\beta_i \times \omega_i)\right)^{\frac{1}{n}} - \text{min}\left(\beta\right)}}{{\text{max}\left(\beta\right) - \text{min}\left(\beta\right)}} \]
 
 \vspace{8pt}
 
 where \(\beta=\{\text{index}_1, \text{index}_1, ..., \text{index}_n\}\) i.e. the set of relevant indices, $\omega$ is the respective weighting for each index, and $n=\left| \beta \right|$, the cardinality of $\beta$, or the number of metrics being measured.
+
+This master index can be used to see changes on a daily basis over a period of time and be used in conjunction with the normalized JSD, which measures changes at specific points of 30, 60, and 90 days.
 
 \hfill
 
