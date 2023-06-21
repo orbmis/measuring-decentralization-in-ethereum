@@ -15,6 +15,7 @@ sorting=none
 \usepackage{xcolor}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
+% \pgfplotsset{width=10cm,compat=1.9}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -289,7 +290,13 @@ The measurement of inequality in distributions is a well understood area of stat
 
 We use as a base measurement, the Gini index and the Herfindahl-Hirschman index. The Gini index is arguably the most widely used index with regards to measuring wealth inequality, and is well suited for measuring the distribution of a network's native asset, (i.e. ETH), while the Herfindahl-Hirschman index (HHI) is more often used for measuring the level of competition in specific industrial sectors, making it more suitable for measuring the degree of decentralization within the block builder market.  The base measurement is applied to each measurement dimension, but our results will reference one or the other based on the respective qualities of each.
 
-The Shannon index is used to complement and cross reference any indicative result from our base measurement.  This is useful because the Shannon Index is based on a different approach to the Gini Index and the HHI.  The Atkinson Index is used to fine-tune the results from our base measurement by updating the index parameters to make it more sensitive to changes at different extremes of the distribution.  This can be useful is we want to qualify our results with more detail on any part of a distribution at certain times.  The tail ratios are used to inform any decisions about the parameterization of the Atkinson Index, and the Jensen-Shannon Divergence is used to track changes to the distribution over time.
+The Shannon index is used to complement and cross reference any indicative result from our base measurement.  This is useful because the Shannon Index is based on a different approach to the Gini Index and the HHI.  The Atkinson Index is used to fine-tune the results from our base measurement by updating the index parameters to make it more sensitive to changes at different extremes of the distribution.  This can be useful is we want to qualify our results with more detail on any part of a distribution at certain times.
+
+The tail ratios are used to inform any decisions about the parameterization of the Atkinson Index.  These include the P90:P10, and P50:P10 ratios, as well as the Palma ratio.  These ratios describe inequality within a distribution by comparing percentiles, for example, the P90 represents the level of resources allocated to > 90\% of the population, while the P10 represents the level of resources allocated to > 10\% of the population.  Our model adjusts the parameterization of the Atkinson index with respect the to the values of these tail ratios.
+
+The Jensen-Shannon Divergence is used to track changes to the distribution over time, by comparing distributions of respective measurement dimensions between specific intervals, such as 30, 60 and 90 day intervals.
+
+Our model also incorporates a master index in order to track the changes in each measurement dimension over discrete intervals.  This master index is an aggregate of other relevant indices, that is derived from calculating the normalized weighted geometric mean of the respective index's value across all other relevant metrics.
 
 The indices that we have employed in our model are as listed below and are described in detail in the following sections.  Each index has characteristics and trade-offs associated with the underlying approach or model that they are based on.
 
@@ -305,6 +312,7 @@ Entropy model & Shannon index \\ \hline
 Social welfare model & Atkinson index \\ \hline
 Tail ratios & Palma ratio, Pareto ratio \\ \hline
 Divergence measures & Jensen-Shannon Divergence \\ \hline
+Weighted geometric mean & Master Index \\ \hline
 \end{tabular}
 \end{center}
 
@@ -314,7 +322,7 @@ Divergence measures & Jensen-Shannon Divergence \\ \hline
 
 The Gini Index was developed by Corado Gini \cite{gini1936measure} as a mechanism for measuring inequality of income / wealth in a population, and is arguably the most commonly used measurement of inequality across a number of fields.   It is employed as the basis of the original Nakamoto Coefficient model, and has been used in several previous studies of decentralization in Bitcoin and/or Ethereum  \cite{sai2021characterizing, lee2021dq, gupta2018gini, kusmierz2022centralized, kwon2019impossibility, cong2023inclusion, gochhayat2020measuring, karakostas2022sok, zhang2022sok, campajola2022evolution}, which allows for some comparison with the results of previous studies.
 
-The Gini Index is derived from the Lorenz curve \cite{lorenz1905methods}, which allows us to plot the individual shares of the distribution in relation to the overall total distribution.
+The Gini Index is derived from the Lorenz curve \cite{lorenz1905methods}, which allows us to plot the individual shares of the distribution in relation to the overall total distribution. This becomes particularly useful for visualizing inequality within a distribution at a high level, and can also be very useful for comparing inequality between two distributions easily.
 
 \begin{figure}[h]
 
@@ -347,46 +355,15 @@ There are a number of different methods of calculating the Gini Index (Tutberidz
 
 While the area under a curve is commonly calculated using the Newton-Leibnitz formula \cite{kalinski2016} , where $L(x)$ is the Lorenz curve.  It can also be approximated as the sum of the areas of a series of trapeziums, correlating in width to the unit interval being measured. 
 \[G=1-2\int_{0}^{1}L\left( x \right)dx\]
+\vspace{1pt}
 
 While the calculation of the Gini Index using the Lorenz Curve is useful for visualising the distribution and level of inequality on a chart, it is also possible to calculate directly using an approach that is based on the empirical mean difference of the values in the dataset \cite{gastwirth1972estimation}, which is the approach that we have implemented:
 
 \[G=\frac{\sum_{i=1}^{n}\sum_{j=1}^{n}\left| x_i - x_j \right|}{2n^2\mu}\]
 
+\vspace{4pt}
+
 The Gini index gives us a value of between 0 and 1, where 0 indicates perfect equality of distribution of resources within the population, and 1 is total inequality, i.e. one single entity controls 100\% of the resources.
-
-\subsection{Atkinson Index}
-
-The Gini Index is useful as a base for calculating inequality, but it has limitations in describing the \textit{qualities} of inequality.  As the Gini Index is based on the ratio of total areas under the curve, it does not account for variance or skewness, and it also means that two different distributions can potentially have the same Gini index, which could potentially affect the tracking of changes over time.
-
-For this reason, our model employs the Atkinson index \cite{atkinson1970measurement} as a further measure of decentralization, to allow us to cross-reference our Gini index against a measurement that can be fine-tuned to our requirements, and which can be used to capture any nuance in the distribution of different measurements.
-
-The Atkinson index is based on the social-welfare approach, which infers the amount of resources that would need to be redistributed to achieve a certain level of equality.  The Atkinson index is calculated using the following formula:
-
-\[A(\varepsilon) = 1 - \left(\frac{1}{N} \sum_{i=1}^{N} \left(\frac{y_i}{\mu}\right)^{1 - \varepsilon}\right)^{\frac{1}{1 - \varepsilon}}, \quad \quad \varepsilon \neq 1
-\]
-
-\[A\left( \varepsilon \right)=1-\frac{\prod_{i=1}^{N}\left( y_{i}^{\frac{1}{N}} \right)}{\mu}, \quad \quad \varepsilon=1\]
-
-\vspace{12pt}
-
-where the parameters include:
-
-\vspace{6pt}
-
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline
-$\epsilon$ & inequality aversion parameter where $\epsilon>0$ \\ \hline
-$n_{i}$ & number of people in the $i^{th}$ income group \\ \hline
-N & total number of people \\ \hline
-$y_{i}$ & average income of the $i^{th}$ income group \\ \hline
-$\mu$ & average income of the total population \\ \hline
-\end{tabular}
-\end{center}
-
-\vspace{6pt}
-
-The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).  The Atkinson index results in a value between 0 and 1, and takes as a parameter $\epsilon$, which allows us to fine-tune the formula by increasing the value of $\epsilon$ in order to make the index more sensitive to changes at lower end of the distribution.  The value of $\epsilon$ is referred to as the inequality aversion, and yields a higher value when $\epsilon$ is given a value closer to 1.
 
 \subsection{Herfindahl-Hirschman Index}
 
@@ -394,7 +371,7 @@ The Herfindahl-Hirschman Index is commonly used as a measurement of competition 
 
 As the HHI is based on percentage shares of the market, it becomes close to zero for a market that has been commoditized, having a large number of participants with a relatively equal share.  Conversely, the HHI approaches 10,000 for a highly concentrated market, with 10,000, (or $1 \times 100^2 $), being a single entity monopoly.
 
-Our model adapts the standard HHI by re-scaling it to make it comparable with other indices employed in the model, by dividing the HHI by $10^4$ so that it falls in the interval $0 <= HHI <= 1$. As such, the re-scaled HHI, denoted by $\theta$, is expressed via the following formula, where $n$ is the total number of participants in the market, $P$ is the total number of units produced in the entire market, and $p_i$ is the number of units consumed from $i^{th}$ participant.
+Our model adapts the standard HHI by re-scaling it to make it comparable with other indices employed in the model, by dividing the HHI by $10^4$ so that it falls in the interval $0 <= \text{HHI} <= 1$. As such, the re-scaled HHI, denoted by $\theta$, is expressed via the following formula, where $n$ is the total number of participants in the market, $P$ is the total number of units produced in the entire market, and $p_i$ is the number of units consumed from $i^{th}$ participant.
 
 \[\theta = \sum_{i=1}^{n} \frac{(p_{i}/P \cdot 100)^{2}}{10^{4}}
 \]
@@ -403,14 +380,18 @@ As an example, in measuring concentration in the block building market, $P$ woul
 
 The US DoJ generally classifies markets within three discrete categories \cite{usdoj2015}:
 
+\vspace{8pt}
+
 \begin{center}
 \begin{tabular}{|l|l|}
 \hline
-Unconcentrated & $HHI < 1,500$  \\ \hline
-Moderately Concentrated & $1,500 <= HHI <= 2,500$ \\ \hline
-Highly Concentrated & $HHI > 2,500$ \\ \hline
+Unconcentrated & $\text{HHI} < 1,500$  \\ \hline
+Moderately Concentrated & $1,500 <= \text{HHI} <= 2,500$ \\ \hline
+Highly Concentrated & $\text{HHI} > 2,500$ \\ \hline
 \end{tabular}
 \end{center}
+
+\vspace{8pt}
 
 Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the datapoints in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays, or ERC-4337 bundlers.
 
@@ -434,26 +415,57 @@ The Shannon index was designed for use with categorical data, as opposed to cont
 
 The Shannon index has a range between 0 and the logarithm of the number of categories in the dataset, i.e. $0<=H'<=log(n)$.  The more centralized a system becomes, the closer the Shannon index will be to zero \cite{kusmierz2022centralized}.
 
+\subsection{Atkinson Index}
+
+The Gini Index is useful as a base for calculating inequality, but it has limitations in describing the \textit{qualities} of inequality.  As the Gini Index is based on the ratio of total areas under the curve, it does not account for variance or skewness, and it also means that two different distributions can potentially have the same Gini index, which could potentially affect the tracking of changes over time.
+
+For this reason, our model employs the Atkinson index \cite{atkinson1970measurement} as a further measure of decentralization, to allow us to cross-reference our Gini index against a measurement that can be fine-tuned to our requirements, and which can be used to capture any nuance in the distribution of different measurements.
+
+The Atkinson index is based on the social-welfare approach, which infers the amount of resources that would need to be redistributed to achieve a certain level of equality.  The Atkinson index is calculated using the following formula:
+
+\begin{align*}
+A(\varepsilon) = 1 - \left(\frac{1}{N} \sum_{i=1}^{N} \left(\frac{y_i}{\mu}\right)^{1 - \varepsilon}\right)^{\frac{1}{1 - \varepsilon}}, \quad \quad \varepsilon \neq 1 \\
+\quad \\
+A\left( \varepsilon \right)=1-\frac{\prod_{i=1}^{N}\left( y_{i}^{\frac{1}{N}} \right)}{\mu}, \quad \quad \varepsilon=1
+\end{align*}
+
+\vspace{12pt}
+
+where the parameters include:
+
+\vspace{6pt}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+$\epsilon$ & inequality aversion parameter where $\epsilon>0$ \\ \hline
+$n_{i}$ & number of people in the $i^{th}$ income group \\ \hline
+N & total number of people \\ \hline
+$y_{i}$ & average income of the $i^{th}$ income group \\ \hline
+$\mu$ & average income of the total population \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{6pt}
+
+The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).  The Atkinson index results in a value between 0 and 1, and takes as a parameter $\epsilon$, which allows us to fine-tune the formula by increasing the value of $\epsilon$ in order to make the index more sensitive to changes at lower end of the distribution.  The value of $\epsilon$ is referred to as the inequality aversion, and yields a higher value when $\epsilon$ is given a value closer to 1.
+
 \subsection{Tail Ratios}
 
 According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected by changes closer to the median of the distribution more than it is affected by changes at tail ends of the distribution.  In order to account for this characteristic of the Gini index, we employ a series of tail ratios to highlight any changes in the shape of the distribution that affect the lower and upper percentiles, and as a means to inform decisions about the inequality aversion parameter in our Atkinson Index.
 
 Our model incorporates the Palma Ratio\cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.
 
-We complement the Palma ratio with other inter-decile ratios that can be used to qualify the character of the inequality in the distribution, including the P90:P10, P50:P10 ratios.  These inter-decile ratios are calculated using the linear interpolation method \cite{frost2023B} described below, where $P_x$ denotes the desired percentile, and $N$ is the population size, a $v$ represents the value at position $i$ in an ascending ordered dataset, where $i$ is calculated using the following formula:
+We complement the Palma ratio with other inter-decile ratios that can be used to qualify the character of the inequality in the distribution, including the P90:P10, P50:P10 ratios.  Without loss of generality, Px represents the level of resources allocated to greater than x\% of the population, and is used to compare the gap between allocation of resources to two discrete percentiles within the distribution.
 
+These inter-decile ratios are calculated using the linear interpolation method \cite{frost2023B} described below, where $P_x$ denotes the desired percentile, and $N$ is the population size, a $v$ represents the value at position $i$ in an ascending ordered dataset, where $i$ is calculated using the following formula:
 \[ i = \frac{P_x\left( N+1 \right)}{100} \]
-
 This gives us the rank position of the desired percentile, assuming the dataset is sorted in ascending order.  We then interpolate between the value at this rank position in the ordered dataset, and the value at the subsequent position, in order to attain each percentile in our desired inter-decile ratio:
-
 \begin{align*}
-P = \left( v_{\left\lfloor i+1 \right\rfloor} - v_{\left\lfloor i \right\rfloor}\right)(n \ \text{mod} \ 1) + v_{\left\lfloor i \right\rfloor} \ , & \ \ i \ \text{mod} \ 1 \neq 0 \\
+P = \left( v_{\left\lfloor i+1 \right\rfloor} - v_{\left\lfloor i \right\rfloor}\right)(i \ \text{mod} \ 1) + v_{\left\lfloor i \right\rfloor} \ , & \ \ i \ \text{mod} \ 1 \neq 0 \\
 P = v_i \ , & \ \ i \ \text{mod} \ 1 = 0
 \end{align*}
-
-\vspace{8pt}
-
-These ratios are employed simply as a complement to the other indices in our model, as a method of identifying potential areas where the model may need to be fine-tuned to correctly track changes over time.  By themselves they are not useful measurements as the range within the results are not bounded, as with the Gini index, or Herfindahl-Hirschman Index.
+By themselves these ratios are not useful measurements as the range within the results are not bounded, as with the Gini index or HHI. They can be useful to reference when deciding which end of a distribution warrants further scrutiny.
 
 \subsection{Jensen-Shannon Divergence}
 
@@ -481,7 +493,6 @@ The normalized JSD is calculated across each measurement dimension for both the 
 As we are measuring Ethereum's level of decentralization over time, we need to account for it's modular topology, in which significant components of it's infrastructure will change.  For example, we might measure the concentration in the mev-boost relay market, but later decide to remove this metric as innovations like enshrined PBS make them redundant \cite{neuder2023}.
 
 Our model calculates an aggregate set of indices across a number of dimensions of measurement, that can be used as further indicator of the relative level of decentralization in Ethereum as it changes over time.  Each relevant index, (i.e. Gini, HHI, Atkinson), contributes to an aggregate index that is derived from calculating the normalized weighted geometric mean of the respective index's value across all relevant metrics, i.e.:
-
 \[ \gamma = \frac{{\left(\prod_{i=1}^{n} (\beta_i \times \omega_i)\right)^{\frac{1}{n}} - \text{min}\left(\beta\right)}}{{\text{max}\left(\beta\right) - \text{min}\left(\beta\right)}} \]
 
 \vspace{8pt}
@@ -490,12 +501,9 @@ where \(\beta=\{\text{index}_1, \text{index}_1, ..., \text{index}_n\}\) i.e. the
 
 This master index can be used to see changes on a daily basis over a period of time and be used in conjunction with the normalized JSD, which measures changes at specific points of 30, 60, and 90 days.
 
-\hfill
-
 The relevant metrics that are included in each aggregate index, along with their respective weightings, are listed below. The weightings are assigned based on the qualitative properties of the infrastructural component being measured, as described in section III.
 
 \vspace{12pt}
-
 \begin{table}[h]
 \normalsize
 \begin{center}
@@ -518,10 +526,47 @@ Stablecoins by relative TVL & 0.3 \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-
-\vspace{6pt}
-
 This results in a series of aggregate indices for each interval within the time-range our sample data is taken from.  The aggregate indices relate to the Gini, Atkinson, Normalized HHI and Normalized Shannon indices.  This should allow us to track the changes in decentralization over time, while allowing us to examine an individual index at specific intervals in order to further understand any changes that occur.
+
+
+\section{Results}
+
+\vspace{12pt}
+
+\begin{figure}[h]
+\begin{tikzpicture}
+\begin{axis}[
+  xtick={0,5,...,30},
+  minor xtick={0,1,...,30},
+  xticklabels={May 23,May 28,Jun 2,Jun 7,Jun 12,Jun 17},
+  xticklabel style={font=\footnotesize,rotate=45,anchor=near xticklabel},
+  ytick={0.6,0.7,...,0.9},
+  minor ytick={0.65,0.75,...,0.85},
+  yticklabel style={font=\footnotesize},
+  grid=both,
+  major grid style={gray},
+  minor grid style={gray!25},
+  legend style={at={(0.5,-0.225)},anchor=north,font=\footnotesize,draw=gray!50},
+  legend entries={
+    Execution Nodes By Country,
+    Execution Nodes By Client Base,
+    Consensus Nodes By Country,
+    Consensus Nodes By Client
+   },
+  enlarge x limits=false,
+  axis line style={gray!75},
+]
+
+\addplot table [x expr=\coordindex, y=ExecutionNodesByCountry] {data/gini_index_nodes.dat};
+\addplot table [x expr=\coordindex, y=ExecutionNodesByClientBase] {data/gini_index_nodes.dat};
+\addplot table [x expr=\coordindex, y=ConsensusNodesByCountry] {data/gini_index_nodes.dat};
+\addplot table [x expr=\coordindex, y=ConsensusNodesByClient] {data/gini_index_nodes.dat};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Gini Indices for Network Nodes}
+\label{fig:gini index network nodes}
+\end{figure}
 
 \printbibliography
 
