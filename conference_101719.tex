@@ -14,6 +14,9 @@ sorting=none
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{dateplot}
+\pgfplotsset{xticklabel={\pgfmathparse{int(\tick-1)}\pgfmathresult}}
 \pgfplotsset{compat=1.16}
 % \pgfplotsset{width=10cm,compat=1.9}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -568,6 +571,46 @@ This results in a series of aggregate indices for each interval within the time-
 \label{fig:gini index network nodes}
 \end{figure}
 
+\begin{itemize}
+    \item Line Chart of Gini Index of Network Nodes
+    \item Line Chart of Master Indices
+    \item Shannon entropy for 30 day interval
+    \item Pie Charts?
+\end{itemize}
+
+
+
+\begin{figure}[h]
+\begin{tikzpicture}
+\begin{axis}[
+  xtick={0,5,...,30},
+  minor xtick={0,1,...,30},
+  xticklabels={May 23,May 28,Jun 2,Jun 7,Jun 12,Jun 17},
+  xticklabel style={font=\footnotesize,rotate=45,anchor=near xticklabel},
+  ytick={0.05,0.1,...,0.35},
+  minor ytick={0.025,0.075,...,0.325},
+  yticklabel style={font=\footnotesize},
+  grid=both,
+  major grid style={gray},
+  minor grid style={gray!25},
+  legend style={at={(0.5,-0.225)},anchor=north,font=\footnotesize,draw=gray!50},
+  legend entries={Blocks By Relays, Blocks By Builder},
+  enlarge x limits=false,
+  axis line style={gray!50},
+]
+
+% \addplot table [x expr=\coordindex, y=BlocksByRelays] {data/HHI_block_builders_relays.dat};
+% \addplot table [x expr=\coordindex, y=BlocksByBuilder] {data/HHI_block_builders_relays.dat};
+
+\addplot[scatter, only marks, mark=*, mark size=2pt] table [x expr=\coordindex, y=BlocksByRelays] {data/HHI_block_builders_relays.dat};
+\addplot[scatter, only marks, mark=triangle*, mark size=2pt] table [x expr=\coordindex, y=BlocksByBuilder] {data/HHI_block_builders_relays.dat};
+
+\end{axis}
+\end{tikzpicture}
+\caption{HHI of Block Builders and Relays}
+\label{fig:HHI block builder relays}
+\end{figure}
+
 \printbibliography
 
 \newpage
@@ -594,8 +637,8 @@ Exchanges by supply & \url{https://data.messari.io/api/v1/assets/ethereum/metric
 Distribution of native asset by amount & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
 Amount staked by Pool / Staking Service Provider & \url{https://api.dune.com/api/v1/query/2394100/results?api_key=} \\[24pt]
 \multicolumn{2}{l}{\textbf{Metrics pertaining to Proposer Builder Separation:}} \\[10pt]
-Blocks proposed by builder & \url{https://www.mevboost.org/stats} \\[6pt]
-Blocks proposed by relayer & \url{https://www.relayscan.io/overview/md} \\[24pt]
+Blocks proposed by builder & \url{https://mevboost.pics/data.html} \\[6pt]
+Blocks proposed by relayer & \url{https://mevboost.pics/data.html} \\[24pt]
 \multicolumn{2}{l}{\textbf{Metrics pertaining to Account Abstraction:}} \\[10pt]
 Number of user operations per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[6pt]
 Number of transactions per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[24pt]
