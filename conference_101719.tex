@@ -15,6 +15,7 @@ sorting=none
 \usepackage{xcolor}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
+\usepackage{rotating}
 \usepgfplotslibrary{dateplot}
 \pgfplotsset{xticklabel={\pgfmathparse{int(\tick-1)}\pgfmathresult}}
 \pgfplotsset{compat=1.16}
@@ -534,9 +535,40 @@ This results in a series of aggregate indices for each interval within the time-
 
 \section{Results}
 
+In this section we discuss the results of the application of our model to a sample that was recorded at 24 hour interval across a period of 30 days, between the 23\textsuperscript{rd} June 2023 to the 23\textsuperscript{rd} of July 2023.  We discuss how our results demonstrate our hypothesis that decentralization is a dynamic quality that changes over time, rather than static quality is maintained in continuous equilibrium. The results have been organized into sections broadly corresponding to the categories of metrics as described in section I.
+
+
+\begin{figure}[ht]
+\vspace{12pt}
+\begin{center}
+\begin{tabular}{lcccc}
+Metric & \rotatebox[origin=c]{90}{Gini} & \rotatebox[origin=c]{90}{HHI} & \rotatebox[origin=c]{90}{ Atkinson } & \rotatebox[origin=c]{90}{ Shannon } \\
+Execution Nodes by Country & 0.85 & 0.22 & 0.52 & 0.49 \\
+Execution Nodes by Client  & 0.77 & 0.5 & 0.44 & 0.28 \\
+Consensus Nodes by Country & 0.86 & 0.18 & 0.51 & 0.5 \\
+Consensus Nodes by Client & 0.63 & 0.32 & 0.28 & 0.3 \\
+Amount Staked by Pool & 0.9 & 0.2 & 0.61 & 0.55 \\
+Native Assets by Address & 0.76 & 0.4 & 0.44 & 0.33 \\
+Exchange by Supply & 0.65 & 0.33 & 0.29 & 0.3 \\
+Activity by Bundler & 0.12 & 0.53 & 0.01 & 0.1 \\
+Stablecoins by Tvl & 0.94 & 0.36 & 0.71 & 0.59 \\
+Rollups by Tvl & 0.87 & 0.47 & 0.55 & 0.45 \\
+Blocks by Builder & 0.78 & 0.2 & 0.43 & 0.43 \\
+Blocks by Relays & 0.59 & 0.23 & 0.24 & 0.33 \\
+\end{tabular}
+\end{center}
+\caption{30 day averages across all metrics}
+\label{fig:average indices}
+\end{figure}
+
+\subsection{Results based on original Nakamoto Coefficient subsystem selection}
+
+\subsubsection{Network Nodes}
+When examining the data recorded across the dimensions of measurement that are based on original Nakamoto Coefficient subsystem selection, we first applied the Gini index to the metrics pertaining to network nodes.  The results of this analysis is displayed in figure \ref{fig:gini index network nodes}, which plots the Gini index of these metrics across our sample time period.
+
 \vspace{12pt}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \begin{tikzpicture}
 \begin{axis}[
   xtick={0,5,...,30},
@@ -571,16 +603,20 @@ This results in a series of aggregate indices for each interval within the time-
 \label{fig:gini index network nodes}
 \end{figure}
 
-\begin{itemize}
-    \item Line Chart of Gini Index of Network Nodes
-    \item Line Chart of Master Indices
-    \item Shannon entropy for 30 day interval
-    \item Pie Charts?
-\end{itemize}
+We observe a relatively high Gini index value for both \textbf{Execution Nodes by Country} and \textbf{Consensus Nodes by Country}, which both maintain an average Gini index of \textbf{0.85} to \textbf{0.86}.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having approximately 39\% of Consensus nodes and approximately 46\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
 
+We observed that measuring \textbf{Consensus Nodes by Client} yields an average Gini index of \textbf{0.63}, which is a reasonably safe level of client diversity, while \textbf{Execution Nodes by Client} shows a surprisingly dynamic Gini index, which changes from \textbf{0.73} to over \textbf{0.8} and back to \textbf{0.63}.  Reaching above 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
 
+\subsubsection{Amount Staked by Staking Pool}
+In examining the \textbf{Amount Staked by Staking Pool}, we observe that the level of concentration stays relatively static with a Gini index of \textbf{90\%} to \textbf{91\%} during the sample period.  This suggests a very high level of centralization amount staking pools, however upon scrutinizing the the underlying data, we observe that ~30\% of the total ETH staked on the network is controlled by a single entity, which is Lido.  While this seems concerning at first, it is to be noted that Lido itself is a DAO, and as such is a decentralized entity.  In fact, Lido commissions 29 separate independent node operators to manage their validators, with a relatively even distribution of stake between each node operator, as documented on the VaNoM portal\cite{lido2023}.
 
-\begin{figure}[h]
+Rather than breaking down the composition of Lido via it's node operators within the original dataset, we leverage the Atkinson index rather than the Gini index, by modifying the inequality aversion parameter to account for the composition of Lido by it's node operators.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, i.e.: $\alpha^\prime = \alpha \cdot \left( 1 - \omega \right) = 0.5 \cdot \left( 1 - 0.3 \right) = 0.35$.  By using an inequality aversion parameter of $\alpha^\prime=0.35$ we obtain an Atkinson index of $0.6$ to $0.61$ which remains relatively static through the sample period, and which represents a much lower level of centralization than suggested by applying the Gini index.  The value of Atkinson index indicates a moderate level of centralization, which is likely caused by a number of entities with larger of market shares, such as Coinbase, which has a share of ~10\%.
+
+\subsection{Metrics pertaining to PBS}
+
+In analyzing the data with regards to the metrics pertaining to Proposer-Builder-Separation, we examined both the Blocks proposed by Builder and the Blocks proposed by Relay metrics.  For these metrics we applied the Herfindahl-Hirschman index as a more suitable index, due to the fact that the builder and relay space is naturally more concentrated, and comprised of a number of known entities, making it similar in some ways to more traditional economic sectors (as opposed to ~500,000 pseudonymous validators for instance).  The results of our analysis visualized in figure \ref{fig:HHI block builder relays}.
+
+\begin{figure}[ht]
 \begin{tikzpicture}
 \begin{axis}[
   xtick={0,5,...,30},
@@ -610,6 +646,33 @@ This results in a series of aggregate indices for each interval within the time-
 \caption{HHI of Block Builders and Relays}
 \label{fig:HHI block builder relays}
 \end{figure}
+
+As can be observed from the above visualization, the market concentration ranges from a re-scaled HHI of ~0.22 (or 2,200), to ~0.26 (or 2,600) for relays, whereas the builders display a HHI that ranges from ~0.16 (1,600) to ~0.21 (2,100).
+
+To refer to the description of the HHI in section II, we recall that the US DoJ regards any sector with a HHI of less than 1,500 as being unconcentrated, whereas anything above 2,500 as being highly concentrated.  Using these broad categories as a reference, we observe that the relay market is by one definition, moderately to highly concentrated, whereas the block builder market ranges from almost unconcentrated to moderately concentrated.  We also observe that that level of concentration changes with significant relevance for the above categorization, even within a 30 day period.
+
+When examining the Jensen-Shannon Divergence between the first and last 24 hour intervals in the dataset for both relevant metrics, we see a relatively high value compared to all other metrics, which indicates that there are significant changes in the number of blocks proposed by individual builders and relays, as well as overall changes to level of concentration within the market.  This is a useful index to cross-reference as it is capable of capturing nuance that other indices sometimes fail to capture, in cases where two or more entities can frequently reverse their respective market shares, with each claiming an outsized portion of the market for a period of time.  In this scenario, the overall level of inequality
+
+\vspace{8pt}
+
+\begin{center}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} llllll }
+\hline
+\textbf{Metric} & \textbf{JSD} \\ \hline
+Amount Staked by Pool & 0.0033466 \\
+Execution Nodes by Country & 0.0059288 \\
+Execution Nodes by Client Base & 0.0047427 \\
+Consensus Nodes by Country & 0.0027306 \\
+Consensus Nodes by Client & 0.0040048 \\
+Blocks by Relays & 0.0155308 \\
+\textbf{Blocks by Builder} & \textbf{0.1015199} \\ \hline
+Activity by Bundler & 0 \\
+Stablecoins by Tvl & 0.0090817 \\
+Rollups by Tvl & 0.0074514 \\
+Native Assets by Address & 0.0000887 \\
+Exchange by Supply & 0.0017824 \\ \hline
+\end{tabular*}
+\end{center}
 
 \printbibliography
 
