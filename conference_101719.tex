@@ -535,40 +535,57 @@ This results in a series of aggregate indices for each interval within the time-
 
 \section{Results}
 
-In this section we discuss the results of the application of our model to a sample that was recorded at 24 hour interval across a period of 30 days, between the 23\textsuperscript{rd} June 2023 to the 23\textsuperscript{rd} of July 2023.  We discuss how our results demonstrate our hypothesis that decentralization is a dynamic quality that changes over time, rather than static quality is maintained in continuous equilibrium. The results have been organized into sections broadly corresponding to the categories of metrics as described in section I.
+In this section we discuss the results of the application of our model to a sample that was recorded at 24 hour interval across a period of 30 days, between the 23\textsuperscript{rd} June 2023 to the 23\textsuperscript{rd} of July 2023.  We discuss how the results demonstrate our hypothesis that decentralization is a dynamic quality that changes over time, rather than a static quality that is maintained in continuous equilibrium.
 
+\subsection{Discussion of Results}
+
+As can be seen from the table below, different indices give divergent results when applied to the same data.  This highlights the need to leverage more than one approach to measuring decentralization, and also highlights the fact that different indices are more suitable for applying to certain dimensions of measurements over others.
 
 \begin{figure}[ht]
-\vspace{12pt}
 \begin{center}
 \begin{tabular}{lcccc}
+\hline
 Metric & \rotatebox[origin=c]{90}{Gini} & \rotatebox[origin=c]{90}{HHI} & \rotatebox[origin=c]{90}{ Atkinson } & \rotatebox[origin=c]{90}{ Shannon } \\ \hline
-Execution Nodes by Country & \cellcolor[HTML]{FF9F80}0.85 & \cellcolor[HTML]{D9FF80}0.22 & \cellcolor[HTML]{FFE580}0.52 & \cellcolor[HTML]{FFEC80}0.49 \\
-Execution Nodes by Client & \cellcolor[HTML]{FFB080}0.77 & \cellcolor[HTML]{FFEA80}0.5 & \cellcolor[HTML]{FFF780}0.44 & \cellcolor[HTML]{E6FF80}0.28 \\
-Consensus Nodes by Country & \cellcolor[HTML]{FF9D80}0.86 & \cellcolor[HTML]{D0FF80}0.18 & \cellcolor[HTML]{FFE880}0.51 & \cellcolor[HTML]{FFEA80}0.5 \\
-Consensus Nodes by Client & \cellcolor[HTML]{FFCE80}0.63 & \cellcolor[HTML]{EEFF80}0.32 & \cellcolor[HTML]{E6FF80}0.28 & \cellcolor[HTML]{EAFF80}0.3 \\
-Amount Staked by Pool & \cellcolor[HTML]{FF9580}0.9 & \cellcolor[HTML]{D5FF80}0.2 & \cellcolor[HTML]{FFD280}0.61 & \cellcolor[HTML]{FFDF80}0.55 \\
-Native Assets by Address & \cellcolor[HTML]{FFB380}0.76 & \cellcolor[HTML]{FFFF80}0.4 & \cellcolor[HTML]{FFF780}0.44 & \cellcolor[HTML]{F0FF80}0.33 \\
-Exchange by Supply & \cellcolor[HTML]{FFCA80}0.65 & \cellcolor[HTML]{F0FF80}0.33 & \cellcolor[HTML]{E8FF80}0.29 & \cellcolor[HTML]{EAFF80}0.3 \\
-Activity by Bundler & \cellcolor[HTML]{C4FF80}0.12 & \cellcolor[HTML]{FFE380}0.53 & \cellcolor[HTML]{ACFF80}0.01 & \cellcolor[HTML]{BFFF80}0.1 \\
-Stablecoins by Tvl & \cellcolor[HTML]{FF8C80}0.94 & \cellcolor[HTML]{F7FF80}0.36 & \cellcolor[HTML]{FFBD80}0.71 & \cellcolor[HTML]{FFD780}0.59 \\
-Rollups by Tvl & \cellcolor[HTML]{FF9B80}0.87 & \cellcolor[HTML]{FFF080}0.47 & \cellcolor[HTML]{FFDF80}0.55 & \cellcolor[HTML]{FFF480}0.45 \\
-Blocks by Builder & \cellcolor[HTML]{FFAE80}0.78 & \cellcolor[HTML]{D5FF80}0.2 & \cellcolor[HTML]{FFF980}0.43 & \cellcolor[HTML]{FFF980}0.43 \\
-Blocks by Relays & \cellcolor[HTML]{FFD780}0.59 & \cellcolor[HTML]{DBFF80}0.23 & \cellcolor[HTML]{DDFF80}0.24 & \cellcolor[HTML]{F0FF80}0.33 \\ \hline
+Execution Nodes by Country & \cellcolor[HTML]{FF9F80}0.85 & \cellcolor[HTML]{D9FF80}0.22 & \cellcolor[HTML]{FFEE80}0.52 & \cellcolor[HTML]{FFE880}0.49 \\
+Execution Nodes by Client & \cellcolor[HTML]{FFB080}0.77 & \cellcolor[HTML]{FFEA80}0.5 & \cellcolor[HTML]{FFDD80}0.44 & \cellcolor[HTML]{FFBB80}0.28 \\
+Consensus Nodes by Country & \cellcolor[HTML]{FF9D80}0.86 & \cellcolor[HTML]{D0FF80}0.18 & \cellcolor[HTML]{FFEC80}0.51 & \cellcolor[HTML]{FFEA80}0.5 \\
+Consensus Nodes by Client & \cellcolor[HTML]{FFCE80}0.63 & \cellcolor[HTML]{EEFF80}0.32 & \cellcolor[HTML]{FFBB80}0.28 & \cellcolor[HTML]{FFBF80}0.3 \\
+Amount Staked by Pool & \cellcolor[HTML]{FF9580}0.9 & \cellcolor[HTML]{D5FF80}0.2 & \cellcolor[HTML]{FDFF80}0.61 & \cellcolor[HTML]{FFF480}0.55 \\
+Native Assets by Address & \cellcolor[HTML]{FFB380}0.76 & \cellcolor[HTML]{FFFF80}0.4 & \cellcolor[HTML]{FFDD80}0.44 & \cellcolor[HTML]{FFC680}0.33 \\
+Exchange by Supply & \cellcolor[HTML]{FFCA80}0.65 & \cellcolor[HTML]{F0FF80}0.33 & \cellcolor[HTML]{FFBD80}0.29 & \cellcolor[HTML]{FFBF80}0.3 \\
+Activity by Bundler & \cellcolor[HTML]{C4FF80}0.12 & \cellcolor[HTML]{FFE380}0.53 & \cellcolor[HTML]{FF8280}0.01 & \cellcolor[HTML]{FF9580}0.1 \\
+Stablecoins by Tvl & \cellcolor[HTML]{FF8C80}0.94 & \cellcolor[HTML]{F7FF80}0.36 & \cellcolor[HTML]{E8FF80}0.71 & \cellcolor[HTML]{FFFD80}0.59 \\
+Rollups by Tvl & \cellcolor[HTML]{FF9B80}0.87 & \cellcolor[HTML]{FFF080}0.47 & \cellcolor[HTML]{FFF480}0.55 & \cellcolor[HTML]{FFDF80}0.45 \\
+Blocks by Builder & \cellcolor[HTML]{FFAE80}0.78 & \cellcolor[HTML]{D5FF80}0.2 & \cellcolor[HTML]{FFDB80}0.43 & \cellcolor[HTML]{FFDB80}0.43 \\
+Blocks by Relays & \cellcolor[HTML]{FFD780}0.59 & \cellcolor[HTML]{DBFF80}0.23 & \cellcolor[HTML]{FFB380}0.24 & \cellcolor[HTML]{FFC680}0.33 \\
+\hline
 \end{tabular}
 \end{center}
 \caption{30 day averages across all metrics}
 \label{fig:average indices}
 \end{figure}
 
+The values in the table in \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for many metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal.  We observe this phenomenon clearly in several metrics in the results table.
+
+most notably  . . . . . .
+
+While the Gini index and the HHI are each better suited to specific dimensions of measurement, there can often be nuances that they fail to capture by themselves.  An illustrative given by Buterin \cite{buterin2022b} is where there are two hypothetical societies with profound levels of inequality, one in which half the population equally shares all the resources while the other half has none, and the other in which one person has half of all the resources, everyone else equally shares the remaining half.  In Buterin's example, both distributions would result in the same Gini index value, despite having radically different characteristics.
+
+These limitations form the rationale behind in the inclusion of the Shannon index within our model.  The Shannon index is sensitive to both size of the distribution and the diversity of different values in the distribution, and is therefore able to highlight differences between distributions that the Gini index does not capture.
+
+This is meaningful in considering the level of concentration in areas where the distribution is smaller, for example with "Stablecoins by Tvl".  In the result for this metrics, the Gini index is very high, indicating high concentration, but the Shannon shows a relatively low concentration, and this is a reflection of the fact there are fewer stablecoins, and hence less chance for a decentralized market to emerge.
+
+As we can see there is broad agreement between the Atkinson and Shannon indices, and this is not surprising considering they are both based on the entropy model.  However, the Atkinson index is not used by our model except for certain specific dimensions of measurements, because of it's non standard inequality aversion parameter, which makes it unsuitable for comparison with other studies. It can be useful however, in fine-tuning certain measurements when needed.
+
+The observations of the recorded results have been organized into the following sections which broadly correspond to the categories of metrics as described in section I.
+
 \subsection{Results based on original Nakamoto Coefficient subsystem selection}
 
 \subsubsection{Network Nodes}
 When examining the data recorded across the dimensions of measurement that are based on original Nakamoto Coefficient subsystem selection, we first applied the Gini index to the metrics pertaining to network nodes.  The results of this analysis is displayed in figure \ref{fig:gini index network nodes}, which plots the Gini index of these metrics across our sample time period.
 
-\vspace{12pt}
-
 \begin{figure}[ht]
+\begin{center}
 \begin{tikzpicture}
 \begin{axis}[
   xtick={0,5,...,30},
@@ -599,13 +616,14 @@ When examining the data recorded across the dimensions of measurement that are b
 
 \end{axis}
 \end{tikzpicture}
+\end{center}
 \caption{Gini Indices for Network Nodes}
 \label{fig:gini index network nodes}
 \end{figure}
 
 We observe a relatively high Gini index value for both \textbf{Execution Nodes by Country} and \textbf{Consensus Nodes by Country}, which both maintain an average Gini index of \textbf{0.85} to \textbf{0.86}.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having approximately 39\% of Consensus nodes and approximately 46\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
 
-We observed that measuring \textbf{Consensus Nodes by Client} yields an average Gini index of \textbf{0.63}, which is a reasonably safe level of client diversity, while \textbf{Execution Nodes by Client} shows a surprisingly dynamic Gini index, which changes from \textbf{0.73} to over \textbf{0.8} and back to \textbf{0.63}.  Reaching above 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
+We observed that measuring \textbf{Consensus Nodes by Client} yields an average Gini index of \textbf{0.63}, which is a reasonably safe level of client diversity, while \textbf{Execution Nodes by Client} shows a surprisingly dynamic Gini index, which changes from \textbf{0.73} to over \textbf{0.8} and back to \textbf{0.63}.  Reaching above 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.  We also refer to the HHI as measurement of client diversity, which may be a more more accurate measurement than the Gini index, due to the fact that  the population size of the distribution.  In both cases the HHI suggest a highly concentrated distribution, and therefore a lack of healthy diversity, with a slight over-concentration in consensus nodes (mainly driven by prism and Lighthouse \cite{abu2023}), and a pronounce over-concentration in execution nodes (driven by Geth).
 
 \subsubsection{Amount Staked by Staking Pool}
 In examining the \textbf{Amount Staked by Staking Pool}, we observe that the level of concentration stays relatively static with a Gini index of \textbf{90\%} to \textbf{91\%} during the sample period.  This suggests a very high level of centralization amount staking pools, however upon scrutinizing the the underlying data, we observe that ~30\% of the total ETH staked on the network is controlled by a single entity, which is Lido.  While this seems concerning at first, it is to be noted that Lido itself is a DAO, and as such is a decentralized entity.  In fact, Lido commissions 29 separate independent node operators to manage their validators, with a relatively even distribution of stake between each node operator, as documented on the VaNoM portal\cite{lido2023}.
@@ -673,6 +691,12 @@ Native Assets by Address & 0.0000887 \\
 Exchange by Supply & 0.0017824 \\ \hline
 \end{tabular*}
 \end{center}
+
+\vspace{8pt}
+
+It is worth noting that over a longer time-frame, our model should be able to account for changes to the ecosystem from newer innovations and architectural changes.  These include enshrined PBS or the introduction of distributed block building.  There are a number of such proposals under development currently, including SUAVE from Flashbots, the architects of mev-boost.
+
+\newpage
 
 \printbibliography
 
