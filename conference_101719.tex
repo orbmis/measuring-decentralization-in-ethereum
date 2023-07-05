@@ -539,6 +539,27 @@ This results in a series of aggregate indices for each interval within the time-
 
 In this section we discuss the results of the application of our model to a sample that was recorded at 24 hour interval across a period of 30 days, between the 23\textsuperscript{rd} June 2023 to the 23\textsuperscript{rd} of July 2023.  We discuss how the results demonstrate our hypothesis that decentralization is a dynamic quality that changes over time, rather than a static quality that is maintained in continuous equilibrium.
 
+% \begin{tikzpicture}
+% \begin{axis}[
+%     ybar,
+%     ymin=0,
+%     ymax=0.5,
+%     xtick=data,
+%     xtick=data,
+%     xticklabel style={rotate=45, anchor=north east},
+%     xticklabels from table={data/master_index.dat}{Date},
+%     legend style={at={(0.5,-0.15)},
+%       anchor=north,legend columns=-1},
+%     ]
+%     
+% \addplot table [x expr=\coordindex, y=Gini, col sep=space] {data/master_index.dat};
+% \addplot table [x expr=\coordindex, y=HHI, col sep=space] {data/master_index.dat};
+% 
+% \legend{Gini, HHI, Shannon}
+% \end{axis}
+% \end{tikzpicture}
+
+
 \subsection{Discussion of Results}
 
 As can be seen from the table below, different indices give divergent results when applied to the same data.  This highlights the need to leverage more than one approach to measuring decentralization, and also highlights the fact that different indices are more suitable for applying to certain dimensions of measurements over others.
@@ -567,35 +588,11 @@ Blocks by Relays & \cellcolor[HTML]{FFD780}0.59 & \cellcolor[HTML]{DBFF80}0.23 &
 \label{fig:average indices}
 \end{figure}
 
-The values in the table in \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for many metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal.  We observe this phenomenon clearly in several metrics in the results table.
+The values in the table in \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for many metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal. 
 
-most notably  . . . . . .
+We observe this phenomenon clearly in several metrics in the results table, for example in the Amount Staked by Pool metric, where 2 entities control ~60\% of the market, where the distribution these two entities is almost equal, and the distribution between entities controlling the other ~40\% of the market is also relatively equal, which results in a re-scaled HHI of 0.2, indicating only moderate concentration, while the Gini index gives a value of 0.9, which more accurately relfects the level of concentration in this area.
 
 While the Gini index and the HHI are each better suited to specific dimensions of measurement, there can often be nuances that they fail to capture by themselves.  An illustrative given by Buterin \cite{buterin2022b} is where there are two hypothetical societies with profound levels of inequality, one in which half the population equally shares all the resources while the other half has none, and the other in which one person has half of all the resources, everyone else equally shares the remaining half.  In Buterin's example, both distributions would result in the same Gini index value, despite having radically different characteristics.
-
-
-% \begin{tikzpicture}
-% \begin{axis}[
-%     ybar,
-%     enlargelimits=0.15,
-%     legend style={at={(1,1)},
-%     anchor=north east},
-%     ylabel={Income},
-%     symbolic x coords={Individual 1, Individuals 2-25, Individuals 26-50, Individuals 51-75, Individuals 76-100},
-%     xtick=data,
-%     nodes near coords,
-%     nodes near coords align={vertical},
-%     x tick label style={rotate=45,anchor=east},
-%     title={Income Distribution in Society A and B},
-%     bar width=7pt,
-% ]
-% \addplot coordinates {(Individual 1,0) (Individuals 2-25,0) (Individuals 26-50,0) (Individuals 51-75,5) (Individuals 76-100,5)};
-% \addplot coordinates {(Individual 1,100) (Individuals 2-25,0) (Individuals 26-50,0) (Individuals 51-75,0) (Individuals 76-100,0)};
-% \legend{Society A, Society B}
-% \end{axis}
-% \end{tikzpicture}
-
-
 
 These limitations form the rationale behind in the inclusion of the Shannon index within our model.  The Shannon index is sensitive to both size of the distribution and the diversity of different values in the distribution, and is therefore able to highlight differences between distributions that the Gini index does not capture.
 
@@ -609,6 +606,10 @@ The observations of the recorded results have been organized into the following 
 
 \subsubsection{Network Nodes}
 When examining the data recorded across the dimensions of measurement that are based on original Nakamoto Coefficient subsystem selection, we first applied the Gini index to the metrics pertaining to network nodes.  The results of this analysis is displayed in figure \ref{fig:gini index network nodes}, which plots the Gini index of these metrics across our sample time period.
+
+We observe a relatively high Gini index value for both Execution Nodes by Country and Consensus Nodes by Country, which both maintain an average Gini index of 0.85 to 0.86.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having  ~39\% of Consensus nodes and ~46\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
+
+We observed that measuring Consensus Nodes by Client yields an average Gini index of 0.63, which is a reasonably safe level of client diversity, while Execution Nodes by Client shows a surprisingly dynamic Gini index, which changes from 0.73 to over 0.8 and back to 0.63.  Reaching above 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
 
 \begin{figure}[ht]
 \begin{center}
@@ -647,14 +648,40 @@ When examining the data recorded across the dimensions of measurement that are b
 \label{fig:gini index network nodes}
 \end{figure}
 
-We observe a relatively high Gini index value for both \textbf{Execution Nodes by Country} and \textbf{Consensus Nodes by Country}, which both maintain an average Gini index of \textbf{0.85} to \textbf{0.86}.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having approximately 39\% of Consensus nodes and approximately 46\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
-
-We observed that measuring \textbf{Consensus Nodes by Client} yields an average Gini index of \textbf{0.63}, which is a reasonably safe level of client diversity, while \textbf{Execution Nodes by Client} shows a surprisingly dynamic Gini index, which changes from \textbf{0.73} to over \textbf{0.8} and back to \textbf{0.63}.  Reaching above 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.  We also refer to the HHI as measurement of client diversity, which may be a more more accurate measurement than the Gini index, due to the fact that  the population size of the distribution.  In both cases the HHI suggest a highly concentrated distribution, and therefore a lack of healthy diversity, with a slight over-concentration in consensus nodes (mainly driven by prism and Lighthouse \cite{abu2023}), and a pronounce over-concentration in execution nodes (driven by Geth).
+We also refer to the HHI as measurement of client diversity, which may be a more more accurate measurement than the Gini index, due to the fact that  the population size of the distribution.  In both cases the HHI suggest a highly concentrated distribution, and therefore a lack of healthy diversity, with a slight over-concentration in consensus nodes (mainly driven by prism and Lighthouse \cite{abu2023}), and a pronounce over-concentration in execution nodes (driven by Geth).
 
 \subsubsection{Amount Staked by Staking Pool}
-In examining the \textbf{Amount Staked by Staking Pool}, we observe that the level of concentration stays relatively static with a Gini index of \textbf{90\%} to \textbf{91\%} during the sample period.  This suggests a very high level of centralization amount staking pools, however upon scrutinizing the the underlying data, we observe that ~30\% of the total ETH staked on the network is controlled by a single entity, which is Lido.  While this seems concerning at first, it is to be noted that Lido itself is a DAO, and as such is a decentralized entity.  In fact, Lido commissions 29 separate independent node operators to manage their validators, with a relatively even distribution of stake between each node operator, as documented on the VaNoM portal\cite{lido2023}.
+In examining the \textbf{Amount Staked by Staking Pool}, we observe that the level of concentration stays relatively static with a Gini index of \textbf{90\%} to \textbf{91\%} during the sample period.  This suggests a very high level of centralization amount staking pools, however upon scrutinizing the the underlying data, we observe that ~30\% of the total ETH staked on the network is controlled by a single entity, which is Lido.  While this seems concerning at first, it is to be noted that Lido itself is a DAO, and as such is a decentralized entity.  Lido commissions 29 separate independent node operators to manage their validators, with a relatively even distribution of stake between each node operator, as documented on the VaNoM portal\cite{lido2023}.
 
-Rather than breaking down the composition of Lido via it's node operators within the original dataset, we leverage the Atkinson index rather than the Gini index, by modifying the inequality aversion parameter to account for the composition of Lido by it's node operators.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, i.e.: $\alpha^\prime = \alpha \cdot \left( 1 - \omega \right) = 0.5 \cdot \left( 1 - 0.3 \right) = 0.35$.  By using an inequality aversion parameter of $\alpha^\prime=0.35$ we obtain an Atkinson index of $0.6$ to $0.61$ which remains relatively static through the sample period, and which represents a much lower level of centralization than suggested by applying the Gini index.  The value of Atkinson index indicates a moderate level of centralization, which is likely caused by a number of entities with larger of market shares, such as Coinbase, which has a share of ~10\%.
+Rather than accounting for Lido's decentralized quality by breaking down the composition of it's node operators within the original dataset, we leverage the Atkinson index, by modifying the inequality aversion parameter to account for it's level of decentralization.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, denoted by $\omega$, i.e.: $\alpha^\prime = \alpha \cdot \left( 1 - \omega \right) = 0.5 \cdot \left( 1 - 0.3 \right) = 0.35$.  By using an inequality aversion parameter of $\alpha^\prime=0.35$ we obtain an Atkinson index of $0.6$ to $0.61$ which remains relatively static through the sample period, and which represents a much lower level of centralization than suggested by applying the Gini index.  The value of Atkinson index indicates a moderate level of centralization, which is likely caused by a number of entities with larger of market shares, such as Coinbase, which has a share of ~10\%.
+
+\subsubsection{Exchanges by Supply}
+
+Through measuring the Exchanges by Supply we see a relatively high level of concentration among the top exchanges in the ecosystem.  It is worth noting though that Coinbase is missing from this list!!
+
+\begin{figure}[ht]
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            symbolic x coords={Binance, Bitfinex, Bitstamp, Bittrex, Gemini, Huobi, Kraken, Poloniex},
+            xtick=data,
+            xticklabel style={rotate=45, anchor=north east},
+            ytick={0,500000,1000000,1500000,2000000,2500000,3000000,3500000,4000000,4500000},
+            axis line style={gray!70},
+            ymajorgrids=true
+        ]
+        \addplot coordinates {(Binance, 4152789) (Bitfinex, 2292666) (Bitstamp, 59161) (Bittrex, 68555) (Gemini, 489367) (Huobi, 71959) (Kraken, 1799885) (Poloniex, 7603)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Supply by Exchange}
+    \label{fig:supply-exchange}
+\end{figure}
+
+\subsubsection{Distribution of Native asset by Amount}
+
+We observe that there is an indicative level of centralization with regards to the distribution of the native asset, ETH.  The most widely used index for measuring the distribution of wealth within an economic system is the Gini index, which gives a value of 0.76 for the distribution of ETH.
+
+While this represents a relatively high level of centralization with regards to control of ETH, we must make some consideration to the qualities of the entities at the top end of the distribution, that control large amounts of the asset, which could include the smart contracts of DeFi dapps, bridges etc..  One previous study by Glassnode \cite{checkmate2021} reported that 22.8\% of all ETH is stored in smart contracts.  This suggests that actual level of centralization in terms of ETH ownership is considerably less than is suggested through the  application of the Gini index.  While a portion of the smart contracts that hold ETH are wallets of private individuals, rather than dapps, the relative proportions is a question for further study.
 
 \subsection{Metrics pertaining to PBS}
 
@@ -695,7 +722,7 @@ As can be observed from the above visualization, the market concentration ranges
 
 To refer to the description of the HHI in section II, we recall that the US DoJ regards any sector with a HHI of less than 1,500 as being unconcentrated, whereas anything above 2,500 as being highly concentrated.  Using these broad categories as a reference, we observe that the relay market is by one definition, moderately to highly concentrated, whereas the block builder market ranges from almost unconcentrated to moderately concentrated.  We also observe that that level of concentration changes with significant relevance for the above categorization, even within a 30 day period.
 
-When examining the Jensen-Shannon Divergence between the first and last 24 hour intervals in the dataset for both relevant metrics, we see a relatively high value compared to all other metrics, which indicates that there are significant changes in the number of blocks proposed by individual builders and relays, as well as overall changes to level of concentration within the market.  This is a useful index to cross-reference as it is capable of capturing nuance that other indices sometimes fail to capture, in cases where two or more entities can frequently reverse their respective market shares, with each claiming an outsized portion of the market for a period of time.  In this scenario, the overall level of inequality
+When examining the Jensen-Shannon Divergence between the first and last 24 hour intervals in the dataset for both relevant metrics, we see a relatively high value compared to all other metrics, which indicates that there are significant changes in the number of blocks proposed by individual builders and relays, as well as overall changes to level of concentration within the market.  This is a useful index to cross-reference as it is capable of capturing nuance that other indices sometimes fail to capture, in cases where two or more entities can frequently reverse their respective market shares, with each claiming an outsized portion of the market for a period of time.  In this scenario, the overall level of inequality and centralization remains static but the relative share of individual participants can change radically.  This is a quality that the JSD index can help to capture.
 
 \vspace{8pt}
 
@@ -721,6 +748,20 @@ Exchange by Supply & 0.0017824 \\ \hline
 \vspace{8pt}
 
 It is worth noting that over a longer time-frame, our model should be able to account for changes to the ecosystem from newer innovations and architectural changes.  These include enshrined PBS or the introduction of distributed block building.  There are a number of such proposals under development currently, including SUAVE from Flashbots, the architects of mev-boost.
+
+\subsection{Miscellaneous Metrics}
+
+\subsubsection{Rollups by TVL}
+
+We observe a pronounce level of centralization in when we examine Rollups by TVL, with an 30 average Gini index value of 0.87, and a re-scaled HHI of 0.47.  Both of these values make sense when we observe the underlying data, in which a single rollup has 64.5\% of TVL across all rollups, which is Arbitrum One.  This is closely followed by Optimism that has a TVL of 18.5\%.  There are 17 rollups with a TVL share of < 1\%, and 6 with a TVL of >= 1\%, the latter group exhibiting significant variance, from which we would expect a high HHI value.
+
+We observe that the level of centralization in the rollups market at the time the data was collected, is at an unhealthy level for the Ethereum ecosystem.  The TVL across all rollups is ~8.1B USD, which is approximately 0.3 of the 26.562B USD TVL of Ethereum \cite{defillama}, and of which one single rollup accounts for 0.2\% of Ethereum's TVL.
+
+It is worth noting again that these figures will more than likely change over time as a number of zk-EVM based rollups will enter the market, which will dilute the marketplace will likely affect market concentration significantly, underpinning the need for measuring decentralization over time.
+
+\subsubsection{Stablecoins by TVL}
+
+We observe the highest value for the Gini index in teh Stablecoins by TVL metric.
 
 \newpage
 
