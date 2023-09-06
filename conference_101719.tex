@@ -65,7 +65,7 @@ Ethereum is not a static ecosystem, and other innovations will likely assume a p
 
 We use as a base for our model the measurement of decentralization in blockchain first described by Balaji Srinivasan as the Minimum Nakamoto coefficient \cite{srinivasan2018}.  This model considers a blockchain network as being composed of a number of subsystems, which are important in terms of maintaining decentralization within an ecosystem, allowing it to remain resistant to capture by any one party or group.  Srinivasan describes any blockchain as being only as decentralized as the least decentralized subsystem, and his original model loosely defines a number of discrete subsystems to measure.
 
-We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and introduced several other dimensions that represent exogenous vectors for potential centralization.  Our model thus extends Srinivasan's original model from 6 dimensions to 15.  These dimensions of measurement are listed below, and are followed by a detailed explanation of the rationale for each.
+We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and introduced several other dimensions that represent exogenous vectors for potential centralization.  Our model thus extends Srinivasan's original model from 6 dimensions to 12.  These dimensions of measurement are listed below, and are followed by a detailed explanation of the rationale for each.
 
 \vspace{8pt}
 
@@ -76,7 +76,6 @@ We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and
      \item Consensus nodes by country
      \item Execution nodes by client
      \item Execution nodes by country
-     \item Exchanges by supply
      \item Distribution of native asset by amount
      \item Amount staked by pool / staking service provider
    \end{itemize}
@@ -88,7 +87,7 @@ We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and
    \item \textbf{Metrics pertaining to Account Abstraction:}
    \begin{itemize}
        \item Number of user operations per bundler
-       \item Number of transactions per bundler
+       \item Number of wallets per deployer
    \end{itemize}
    \item \textbf{Miscellaneous Metrics:}
    \begin{itemize}
@@ -109,9 +108,11 @@ The Mining Decentralization metric is longer relevant in PoS Ethereum and as suc
 
 The ``Developer Decentralization'' metric is no longer an applicable metric for PoS Ethereum. The rationale for this change is the fact that nodes on the network run a number of different client implementations, each with its own distinct development team.  In this context, and considering a priori that developers are unique to each team, it is sufficient to measure the level of client diversity among nodes on the network rather than the relative contributions of individual developers. 
 
+The ``Exchanges by Supply'' metric is not employed in our model as there is not a strong enough argument as to relevance of this metric to decentralization in Ethereum.
+
 In terms of client diversity, it is also necessary to update the model to reflect the fact that Ethereum is now technically two merged blockchains that operate in unison, the Beacon Chain which handles consensus, and the execution layer, which is the P2P layer that gossips transactions and handles execution.  For this reason, the original ``Client Decentralization'', and ``Node Decentralization'' metrics have been replaced by ``Consensus / Execution nodes by client / country'' metrics. 
 
-The two metrics that have been retained in their original form are ``Distribution of native asset by amount'', which measures wealth inequality in terms of ownership of ETH, and ``Exchanges by supply'', which measures the potential influence of large centralized exchanges by the amount of ETH that they hold on deposit.
+The tone metric that has been retained in its original form is ``Distribution of native asset by amount'', which measures wealth inequality in terms of ownership of ETH.
 
 \subsection{Metrics pertaining to Proposer Builder Separation}
 
@@ -206,7 +207,7 @@ This can effectively create a two-tier network with transactions associated with
 
 \subsection{Metrics pertaining to Account Abstraction}
 
-Our model introduces two metrics that pertain specifically to account abstraction, including ``Number of user operations per bundler'' and ``Number of transactions per bundler''. Account Abstraction has been a goal of Ethereum since its inception, and there have been a number of previous proposals that were not implemented \cite{john2023, wilson2020, dietrichs2020}, which all involved some change to the core protocol.  The breakthrough came with ``ERC-4337: Account Abstraction Using Alt Mempool'' \cite{buterin2021B}, which does not require a protocol change, but which introduces new roles within the ecosystem topology: bundlers and paymasters.
+Our model introduces two metrics that pertain specifically to account abstraction, including ``Number of user operations per bundler'' and ``Number of wallets per deployer''. Account Abstraction has been a goal of Ethereum since its inception, and there have been a number of previous proposals that were not implemented \cite{john2023, wilson2020, dietrichs2020}, which all involved some change to the core protocol.  The breakthrough came with ``ERC-4337: Account Abstraction Using Alt Mempool'' \cite{buterin2021B}, which does not require a protocol change, but which introduces new roles within the ecosystem topology: bundlers and paymasters.
 
 ERC-4337 specifies a specific transaction type called a user operation, or ``userop''.  User operations are submitted to bundlers, who batch them into a single transaction to a global entrypoint contract, which iterates over the userops in the batch, passing them to their respective smart contract wallets along with the userop's calldata for the contract wallet to execute (e.g. send ETH or call a function on some specific smart contract).
 
@@ -283,6 +284,7 @@ As part of our model we measure the \textbf{effective inflation rate adjusted fo
 Our model thus incorporates a simple metric for measuring the inflation rate and adjusting it for the amount of ETH that is burned through the EIP-1559 mechanism, in which the base fee, which is adjusted for every block by the protocol itself, and that each transaction must pay at a minimum in order to be included in a block, is subsequently burned when a block is proposed.  This has the effect of  creating a negative issuance rate once transaction volume surpasses critical threshold, which will likely decrease the total supply over time \cite{liu2022empirical}.
 
 We have also incorporated a closely related metric which is the \textbf{percentage of total supply staked}.  This is directly related to the effective inflation rate metric with respect to maintaining an economic equilibrium between the issuance rate and circulating supply, allowing the asset to hold its value over time \cite{john2021equilibrium}.  It is worth pointing out that Ethereum's economics are designed to maintain this equilibrium by reducing issuance as more validators come online \cite{edgington2023}, which theoretically reduces the incentive to stake once the percentage of staked assets reaches a certain threshold. However, there is always the possibility that innovations such as EigenLayer may disrupt this equilibrium over time.
+
 
 Another meaningful metric that we have introduced into our model is the measurement of \textbf{Stablecoins by relative TVL on Ethereum}.  There exists both algorithmic stablecoins, (which are backed by a number of other assets and which rely on networks of decentralized oracles, and which are at least notionally decentralized by nature), and there also exists stablecoins which are backed largely by fiat deposits, and which are issued by a centralized authority.  The latter type of stablecoin is orthogonal to our model, insofar as while they are not part of the infrastructure of the network, they are a significant part of the ecosystem with which users interact with other dapps.  They also pose a centralization risk in terms of censorship as there have been a number of  cases where stablecoins have been frozen from specific addresses \cite{wall2021}.
 
@@ -537,28 +539,7 @@ This results in a series of aggregate indices for each interval within the time-
 
 \section{Results}
 
-In this section we discuss the results of the application of our model to a sample that was recorded at 24 hour interval across a period of 30 days, between the 23\textsuperscript{rd} June 2023 to the 23\textsuperscript{rd} of July 2023.  We discuss how the results demonstrate our hypothesis that decentralization is a dynamic quality that changes over time, rather than a static quality that is maintained in continuous equilibrium.
-
-% \begin{tikzpicture}
-% \begin{axis}[
-%     ybar,
-%     ymin=0,
-%     ymax=0.5,
-%     xtick=data,
-%     xtick=data,
-%     xticklabel style={rotate=45, anchor=north east},
-%     xticklabels from table={data/master_index.dat}{Date},
-%     legend style={at={(0.5,-0.15)},
-%       anchor=north,legend columns=-1},
-%     ]
-%     
-% \addplot table [x expr=\coordindex, y=Gini, col sep=space] {data/master_index.dat};
-% \addplot table [x expr=\coordindex, y=HHI, col sep=space] {data/master_index.dat};
-% 
-% \legend{Gini, HHI, Shannon}
-% \end{axis}
-% \end{tikzpicture}
-
+In this section we discuss the results of the application of our model to a sample that was recorded at 24 hour intervals across a period of 90 days, between the 23\textsuperscript{rd} May 2023 to the 23\textsuperscript{rd} of August 2023.  We discuss how the results demonstrate our hypothesis that decentralization is a dynamic quality that changes over time, rather than a static quality that is maintained in continuous equilibrium.
 
 \subsection{Discussion of Results}
 
@@ -569,36 +550,36 @@ As can be seen from the table below, different indices give divergent results wh
 \begin{tabular}{lcccc}
 \hline
 Metric & \rotatebox[origin=c]{90}{Gini} & \rotatebox[origin=c]{90}{HHI} & \rotatebox[origin=c]{90}{ Atkinson } & \rotatebox[origin=c]{90}{ Shannon } \\ \hline
-Execution Nodes by Country & \cellcolor[HTML]{FF9F80}0.85 & \cellcolor[HTML]{D9FF80}0.22 & \cellcolor[HTML]{FFEE80}0.52 & \cellcolor[HTML]{FFE880}0.49 \\
-Execution Nodes by Client & \cellcolor[HTML]{FFB080}0.77 & \cellcolor[HTML]{FFEA80}0.5 & \cellcolor[HTML]{FFDD80}0.44 & \cellcolor[HTML]{FFBB80}0.28 \\
-Consensus Nodes by Country & \cellcolor[HTML]{FF9D80}0.86 & \cellcolor[HTML]{D0FF80}0.18 & \cellcolor[HTML]{FFEC80}0.51 & \cellcolor[HTML]{FFEA80}0.5 \\
-Consensus Nodes by Client & \cellcolor[HTML]{FFCE80}0.63 & \cellcolor[HTML]{EEFF80}0.32 & \cellcolor[HTML]{FFBB80}0.28 & \cellcolor[HTML]{FFBF80}0.3 \\
-Amount Staked by Pool & \cellcolor[HTML]{FF9580}0.9 & \cellcolor[HTML]{D5FF80}0.2 & \cellcolor[HTML]{FDFF80}0.61 & \cellcolor[HTML]{FFF480}0.55 \\
-Native Assets by Address & \cellcolor[HTML]{FFB380}0.76 & \cellcolor[HTML]{FFFF80}0.4 & \cellcolor[HTML]{FFDD80}0.44 & \cellcolor[HTML]{FFC680}0.33 \\
-Exchange by Supply & \cellcolor[HTML]{FFCA80}0.65 & \cellcolor[HTML]{F0FF80}0.33 & \cellcolor[HTML]{FFBD80}0.29 & \cellcolor[HTML]{FFBF80}0.3 \\
-Activity by Bundler & \cellcolor[HTML]{C4FF80}0.12 & \cellcolor[HTML]{FFE380}0.53 & \cellcolor[HTML]{FF8280}0.01 & \cellcolor[HTML]{FF9580}0.1 \\
-Stablecoins by Tvl & \cellcolor[HTML]{FF8C80}0.94 & \cellcolor[HTML]{F7FF80}0.36 & \cellcolor[HTML]{E8FF80}0.71 & \cellcolor[HTML]{FFFD80}0.59 \\
-Rollups by Tvl & \cellcolor[HTML]{FF9B80}0.87 & \cellcolor[HTML]{FFF080}0.47 & \cellcolor[HTML]{FFF480}0.55 & \cellcolor[HTML]{FFDF80}0.45 \\
-Blocks by Builder & \cellcolor[HTML]{FFAE80}0.78 & \cellcolor[HTML]{D5FF80}0.2 & \cellcolor[HTML]{FFDB80}0.43 & \cellcolor[HTML]{FFDB80}0.43 \\
-Blocks by Relays & \cellcolor[HTML]{FFD780}0.59 & \cellcolor[HTML]{DBFF80}0.23 & \cellcolor[HTML]{FFB380}0.24 & \cellcolor[HTML]{FFC680}0.33 \\
+Execution Nodes by Country & \cellcolor[HTML]{FF9F80}0.85 & \cellcolor[HTML]{FF9E80}0.22 & \cellcolor[HTML]{F7FF80}0.64 & \cellcolor[HTML]{FFE880}0.49 \\
+Execution Nodes by Client & \cellcolor[HTML]{FFB780}0.74 & \cellcolor[HTML]{FF8080}0.46 & \cellcolor[HTML]{FFF980}0.57 & \cellcolor[HTML]{FFBD80}0.29 \\
+Consensus Nodes by Country & \cellcolor[HTML]{FFAC80}0.79 & \cellcolor[HTML]{FFDB80}0.16 & \cellcolor[HTML]{FDFF80}0.61 & \cellcolor[HTML]{FFDF80}0.45 \\
+Consensus Nodes by Client & \cellcolor[HTML]{FFDB80}0.57 & \cellcolor[HTML]{FF8080}0.29 & \cellcolor[HTML]{FFCC80}0.36 & \cellcolor[HTML]{FFBB80}0.28 \\
+Amount Staked by Pool & \cellcolor[HTML]{FF9380}0.91 & \cellcolor[HTML]{FFB380}0.2 & \cellcolor[HTML]{DBFF80}0.77 & \cellcolor[HTML]{FFF480}0.55 \\
+Native Assets by Address & \cellcolor[HTML]{FFB380}0.76 & \cellcolor[HTML]{FF8080}0.4 & \cellcolor[HTML]{F9FF80}0.63 & \cellcolor[HTML]{FFC680}0.33 \\
+Blocks by Builder & \cellcolor[HTML]{FFAE80}0.78 & \cellcolor[HTML]{FFBD80}0.19 & \cellcolor[HTML]{FFFB80}0.58 & \cellcolor[HTML]{FFDB80}0.43 \\
+Blocks by Relays & \cellcolor[HTML]{FFE180}0.54 & \cellcolor[HTML]{FFB380}0.2 & \cellcolor[HTML]{FFC380}0.32 & \cellcolor[HTML]{FFC680}0.33 \\
+User Operations by Bundler & \cellcolor[HTML]{C6FF80}0.13 & \cellcolor[HTML]{FF8080}0.62 & \cellcolor[HTML]{FF8A80}0.05 & \cellcolor[HTML]{FF8A80}0.05 \\
+Wallets by Deployer & \cellcolor[HTML]{B0FF80}0.03 & \cellcolor[HTML]{FF8080}0.4 & \cellcolor[HTML]{FF8480}0.02 & \cellcolor[HTML]{FF8280}0.01 \\
+Stablecoins by Tvl & \cellcolor[HTML]{FF8A80}0.95 & \cellcolor[HTML]{FF8080}0.37 & \cellcolor[HTML]{C8FF80}0.86 & \cellcolor[HTML]{FFFF80}0.6 \\
+Rollups by Tvl & \cellcolor[HTML]{FF9B80}0.87 & \cellcolor[HTML]{FF8080}0.45 & \cellcolor[HTML]{E3FF80}0.73 & \cellcolor[HTML]{FFDD80}0.44 \\
 \hline
 \end{tabular}
 \end{center}
-\caption{30 day averages across all metrics}
+\caption{90 day averages across all metrics}
 \label{fig:average indices}
 \end{figure}
 
-The values in the table in \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for many metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal. 
+The values in the table in \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for several metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal. 
 
-We observe this phenomenon clearly in several metrics in the results table, for example in the Amount Staked by Pool metric, where 2 entities control ~60\% of the market, where the distribution these two entities is almost equal, and the distribution between entities controlling the other ~40\% of the market is also relatively equal, which results in a re-scaled HHI of 0.2, indicating only moderate concentration, while the Gini index gives a value of 0.9, which more accurately relfects the level of concentration in this area.
+We observe this phenomenon clearly in several metrics in the results table, for example in the Amount Staked by Pool metric, where 2 entities control ~60\% of the market\cite{hildobby2023} (Lido controls ~31\% while solo stakers control ~29\%), where the distribution these two entities is almost equal, and the distribution between entities controlling the other ~40\% of the market is also relatively equal, which results in a re-scaled HHI of 0.2, indicating only moderate concentration, while the Gini index gives a value of 0.91, which more accurately reflects the level of concentration in this area.
 
 While the Gini index and the HHI are each better suited to specific dimensions of measurement, there can often be nuances that they fail to capture by themselves.  An illustrative given by Buterin \cite{buterin2022b} is where there are two hypothetical societies with profound levels of inequality, one in which half the population equally shares all the resources while the other half has none, and the other in which one person has half of all the resources, everyone else equally shares the remaining half.  In Buterin's example, both distributions would result in the same Gini index value, despite having radically different characteristics.
 
 These limitations form the rationale behind in the inclusion of the Shannon index within our model.  The Shannon index is sensitive to both size of the distribution and the diversity of different values in the distribution, and is therefore able to highlight differences between distributions that the Gini index does not capture.
 
-This is meaningful in considering the level of concentration in areas where the distribution is smaller, for example with "Stablecoins by Tvl".  In the result for this metrics, the Gini index is very high, indicating high concentration, but the Shannon shows a relatively low concentration, and this is a reflection of the fact there are fewer stablecoins, and hence less chance for a decentralized market to emerge.
+This is meaningful in considering the level of concentration in areas where the distribution is smaller, for example with "Stablecoins by Tvl".  In the result for this metrics, the Gini index is very high, indicating high concentration, but the Shannon Index shows a relatively low concentration, and this is a reflection of the fact there are fewer stablecoins, and hence less chance for a decentralized market to emerge.
 
-As we can see there is broad agreement between the Atkinson and Shannon indices, and this is not surprising considering they are both based on the entropy model.  However, the Atkinson index is not used by our model except for certain specific dimensions of measurements, because of it's non standard inequality aversion parameter, which makes it unsuitable for comparison with other studies. It can be useful however, in fine-tuning certain measurements when needed.
+As we can see there is broad agreement between the Atkinson and Shannon indices, and this is not surprising considering they are both based on the entropy model.  However, the Atkinson index is not used by our model except for certain specific dimensions of measurements, because of it's non-standard inequality aversion parameter, which makes it unsuitable for comparison with other studies. It can be useful however, in fine tuning certain measurements when needed.
 
 The observations of the recorded results have been organized into the following sections which broadly correspond to the categories of metrics as described in section I.
 
@@ -607,9 +588,9 @@ The observations of the recorded results have been organized into the following 
 \subsubsection{Network Nodes}
 When examining the data recorded across the dimensions of measurement that are based on original Nakamoto Coefficient subsystem selection, we first applied the Gini index to the metrics pertaining to network nodes.  The results of this analysis is displayed in figure \ref{fig:gini index network nodes}, which plots the Gini index of these metrics across our sample time period.
 
-We observe a relatively high Gini index value for both Execution Nodes by Country and Consensus Nodes by Country, which both maintain an average Gini index of 0.85 to 0.86.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having  ~39\% of Consensus nodes and ~46\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
+We observe a relatively high Gini index value for both Execution Nodes by Country and Consensus Nodes by Country, which both maintain an average Gini index of 0.85 to 0.79.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having  ~34\% of Consensus nodes and ~44\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
 
-We observed that measuring Consensus Nodes by Client yields an average Gini index of 0.63, which is a reasonably safe level of client diversity, while Execution Nodes by Client shows a surprisingly dynamic Gini index, which changes from 0.73 to over 0.8 and back to 0.63.  Reaching above 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
+We observed that measuring Consensus Nodes by Client yields an average Gini index of 0.57, which is a reasonably safe level of client diversity, while Execution Nodes by Client shows a surprisingly dynamic Gini index, which changes between 0.66 to 0.81.  Reaching 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
 
 \begin{figure}[ht]
 \begin{center}
@@ -617,7 +598,7 @@ We observed that measuring Consensus Nodes by Client yields an average Gini inde
 \begin{axis}[
   xtick={0,5,...,30},
   minor xtick={0,1,...,30},
-  xticklabels={May 23,May 28,Jun 2,Jun 7,Jun 12,Jun 17},
+  xticklabels={May 23,Jun 8,Jun 23,Jul 8,Jul 20,Aug 4,Aug 19},
   xticklabel style={font=\footnotesize,rotate=45,anchor=near xticklabel},
   ytick={0.6,0.7,...,0.9},
   minor ytick={0.65,0.75,...,0.85},
@@ -653,49 +634,34 @@ We also refer to the HHI as measurement of client diversity, which may be a more
 \subsubsection{Amount Staked by Staking Pool}
 In examining the \textbf{Amount Staked by Staking Pool}, we observe that the level of concentration stays relatively static with a Gini index of \textbf{90\%} to \textbf{91\%} during the sample period.  This suggests a very high level of centralization amount staking pools, however upon scrutinizing the the underlying data, we observe that ~30\% of the total ETH staked on the network is controlled by a single entity, which is Lido.  While this seems concerning at first, it is to be noted that Lido itself is a DAO, and as such is a decentralized entity.  Lido commissions 29 separate independent node operators to manage their validators, with a relatively even distribution of stake between each node operator, as documented on the VaNoM portal\cite{lido2023}.
 
-Rather than accounting for Lido's decentralized quality by breaking down the composition of it's node operators within the original dataset, we leverage the Atkinson index, by modifying the inequality aversion parameter to account for it's level of decentralization.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, denoted by $\omega$, i.e.: $\alpha^\prime = \alpha \cdot \left( 1 - \omega \right) = 0.5 \cdot \left( 1 - 0.3 \right) = 0.35$.  By using an inequality aversion parameter of $\alpha^\prime=0.35$ we obtain an Atkinson index of $0.6$ to $0.61$ which remains relatively static through the sample period, and which represents a much lower level of centralization than suggested by applying the Gini index.  The value of Atkinson index indicates a moderate level of centralization, which is likely caused by a number of entities with larger of market shares, such as Coinbase, which has a share of ~10\%.
+Rather than accounting for Lido's decentralized quality by breaking down the composition of it's node operators within the original dataset, we leverage the Atkinson index, by modifying the inequality aversion parameter to account for it's level of decentralization.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, denoted by $\omega$, i.e.:
 
-\subsubsection{Exchanges by Supply}
+\[\alpha^\prime = \alpha \cdot \left( 1 - \omega \right) = 0.5 \cdot \left( 1 - 0.3 \right) = 0.35\]
 
-Through measuring the Exchanges by Supply we see a relatively high level of concentration among the top exchanges in the ecosystem.
-
-\textbf{\textcolor{red}{Note to self: this data seems flawed - need to validate and cross-reference, e.g. Coinbase is missing !? - perhaps this metric should be removed completely - is it even still relevant?}}
-
-
-\begin{figure}[ht]
-    \begin{tikzpicture}
-        \begin{axis}[
-            ybar,
-            symbolic x coords={Binance, Bitfinex, Bitstamp, Bittrex, Gemini, Huobi, Kraken, Poloniex},
-            xtick=data,
-            xticklabel style={rotate=45, anchor=north east},
-            ytick={0,500000,1000000,1500000,2000000,2500000,3000000,3500000,4000000,4500000},
-            axis line style={gray!70},
-            ymajorgrids=true
-        ]
-        \addplot coordinates {(Binance, 4152789) (Bitfinex, 2292666) (Bitstamp, 59161) (Bittrex, 68555) (Gemini, 489367) (Huobi, 71959) (Kraken, 1799885) (Poloniex, 7603)};
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Supply by Exchange}
-    \label{fig:supply-exchange}
-\end{figure}
+By using an inequality aversion parameter of $\alpha^\prime=0.35$ we obtain an Atkinson index of $0.6$ to $0.61$ which remains relatively static through the sample period, and which represents a much lower level of centralization than suggested by applying the Gini index.  The value of the Atkinson index indicates a moderate level of centralization, which is likely caused by a number of entities with larger of market shares, such as Coinbase, which has a share of ~10\%.
 
 \subsubsection{Distribution of Native asset by Amount}
 
-We observe that there is an indicative level of centralization with regards to the distribution of the native asset, ETH.  The most widely used index for measuring the distribution of wealth within an economic system is the Gini index, which gives a value of 0.76 for the distribution of ETH.
+We observe that there is an indicative level of centralization with regards to the distribution of the native asset, ETH.  The most widely used index for measuring the distribution of wealth within an economic system is the Gini index, which gives an average value of 0.76 for the distribution of ETH.
 
-While this represents a relatively high level of centralization with regards to control of ETH, we must make some consideration to the qualities of the entities at the top end of the distribution, that control large amounts of the asset, which could include the smart contracts of DeFi dapps, bridges etc..  One previous study by Glassnode \cite{checkmate2021} reported that 22.8\% of all ETH is stored in smart contracts.  This suggests that actual level of centralization in terms of ETH ownership is considerably less than is suggested through the  application of the Gini index.  While a portion of the smart contracts that hold ETH are wallets of private individuals, rather than dapps, the relative proportions is a question for further study.
+While this represents a relatively high level of centralization with regards to control of ETH, we must make some consideration to the qualities of the entities at the top end of the distribution, that control large amounts of the asset, which could include the smart contracts of DeFi dapps, bridges etc..  One previous study by Glassnode \cite{checkmate2021} reported that 22.8\% of all ETH is stored in smart contracts.  This suggests that actual level of centralization in terms of ETH ownership is considerably less than is suggested through the  application of the Gini index.  While a portion of the smart contracts that hold ETH are wallets of private individuals, rather than dapps, the relative proportions of each is a question for further study.
 
 \subsection{Metrics pertaining to PBS}
 
-In analyzing the data with regards to the metrics pertaining to Proposer-Builder-Separation, we examined both the Blocks proposed by Builder and the Blocks proposed by Relay metrics.  For these metrics we applied the Herfindahl-Hirschman index as a more suitable index, due to the fact that the builder and relay space is naturally more concentrated, and comprised of a number of known entities, making it similar in some ways to more traditional economic sectors (as opposed to ~500,000 pseudonymous validators for instance).  The results of our analysis visualized in figure \ref{fig:HHI block builder relays}.
+In analyzing the data with regards to the metrics pertaining to Proposer-Builder-Separation, we examined both the metrics for Blocks proposed by Builder and the Blocks proposed by Relay.  For these metrics we applied the Herfindahl-Hirschman index as a more suitable index, due to the fact that the builder and relay space is naturally more concentrated, and comprised of a number of known entities, making it similar in some ways to more traditional economic sectors (as opposed to ~500,000 pseudonymous validators for instance).  The results of our analysis visualized in figure \ref{fig:HHI block builder relays}.
+
+As can be observed from the visualization, the market concentration ranges from a re-scaled HHI of ~0.16 (or 1,600), to ~0.24 (or 2,400) for relays, whereas the builders display a HHI that ranges from ~0.15 (1,500) to ~0.26 (2,600).
+
+To refer to the description of the HHI in section II, we recall that the US DoJ regards any sector with a HHI of less than 1,500 as being unconcentrated, whereas anything above 2,500 as being highly concentrated. 
+
+Using these broad categories as a reference, we observe that the block builder and relay markets range from almost unconcentrated to highly concentrated within the sample period.  We also observe that the level of concentration changes with significant relevance for the above categorization, even within a 90 day period.
 
 \begin{figure}[ht]
 \begin{tikzpicture}
 \begin{axis}[
   xtick={0,5,...,30},
   minor xtick={0,1,...,30},
-  xticklabels={May 23,May 28,Jun 2,Jun 7,Jun 12,Jun 17},
+  xticklabels={May 23,Jun 8,Jun 23,Jul 8,Aug 7,Aug 19},
   xticklabel style={font=\footnotesize,rotate=45,anchor=near xticklabel},
   ytick={0.05,0.1,...,0.35},
   minor ytick={0.025,0.075,...,0.325},
@@ -709,9 +675,6 @@ In analyzing the data with regards to the metrics pertaining to Proposer-Builder
   axis line style={gray!50},
 ]
 
-% \addplot table [x expr=\coordindex, y=BlocksByRelays] {data/HHI_block_builders_relays.dat};
-% \addplot table [x expr=\coordindex, y=BlocksByBuilder] {data/HHI_block_builders_relays.dat};
-
 \addplot[scatter, only marks, mark=*, mark size=2pt] table [x expr=\coordindex, y=BlocksByRelays] {data/HHI_block_builders_relays.dat};
 \addplot[scatter, only marks, mark=triangle*, mark size=2pt] table [x expr=\coordindex, y=BlocksByBuilder] {data/HHI_block_builders_relays.dat};
 
@@ -721,10 +684,6 @@ In analyzing the data with regards to the metrics pertaining to Proposer-Builder
 \label{fig:HHI block builder relays}
 \end{figure}
 
-As can be observed from the above visualization, the market concentration ranges from a re-scaled HHI of ~0.22 (or 2,200), to ~0.26 (or 2,600) for relays, whereas the builders display a HHI that ranges from ~0.16 (1,600) to ~0.21 (2,100).
-
-To refer to the description of the HHI in section II, we recall that the US DoJ regards any sector with a HHI of less than 1,500 as being unconcentrated, whereas anything above 2,500 as being highly concentrated.  Using these broad categories as a reference, we observe that the relay market is by one definition, moderately to highly concentrated, whereas the block builder market ranges from almost unconcentrated to moderately concentrated.  We also observe that that level of concentration changes with significant relevance for the above categorization, even within a 30 day period.
-
 When examining the Jensen-Shannon Divergence between the first and last 24 hour intervals in the dataset for both relevant metrics, we see a relatively high value compared to all other metrics, which indicates that there are significant changes in the number of blocks proposed by individual builders and relays, as well as overall changes to level of concentration within the market.  This is a useful index to cross-reference as it is capable of capturing nuance that other indices sometimes fail to capture, in cases where two or more entities can frequently reverse their respective market shares, with each claiming an outsized portion of the market for a period of time.  In this scenario, the overall level of inequality and centralization remains static but the relative share of individual participants can change radically.  This is a quality that the JSD index can help to capture.
 
 \vspace{8pt}
@@ -733,38 +692,51 @@ When examining the Jensen-Shannon Divergence between the first and last 24 hour 
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} llllll }
 \hline
 \textbf{Metric} & \textbf{JSD} \\ \hline
-Amount Staked by Pool & 0.0033466 \\
-Execution Nodes by Country & 0.0059288 \\
-Execution Nodes by Client Base & 0.0047427 \\
-Consensus Nodes by Country & 0.0027306 \\
-Consensus Nodes by Client & 0.0040048 \\
-Blocks by Relays & 0.0155308 \\
-\textbf{Blocks by Builder} & \textbf{0.1015199} \\ \hline
-Activity by Bundler & 0 \\
-Stablecoins by Tvl & 0.0090817 \\
-Rollups by Tvl & 0.0074514 \\
-Native Assets by Address & 0.0000887 \\
-Exchange by Supply & 0.0017824 \\ \hline
+Amount Staked by Pool & 0.0150451 \\
+Execution Nodes by Country & 0.0073133 \\
+Execution Nodes by ClientBase & 0.0118433 \\
+Consensus Nodes by Country & 0.0058399 \\
+Consensus Nodes by Client & 0.0077753 \\
+\textbf{Blocks by Relays} & \textbf{0.1324419} \\
+\textbf{Blocks by Builder} & \textbf{0.2201886} \\
+Stablecoins by Tvl & 0.0103413 \\
+Rollups by Tvl & 0.1058467 \\
+Native Assets by Address & 0.0005811 \\ \hline
 \end{tabular*}
 \end{center}
 
 \vspace{8pt}
 
-It is worth noting that over a longer time-frame, our model should be able to account for changes to the ecosystem from newer innovations and architectural changes.  These include enshrined PBS or the introduction of distributed block building.  There are a number of such proposals under development currently, including SUAVE from Flashbots, the architects of mev-boost.
+It is worth noting that over a longer time-frame, our model should be able to account for changes to the ecosystem from newer innovations and architectural changes.  These include enshrined PBS or the introduction of distributed block building, and there are a number of such proposals under development currently.
 
 \subsection{Miscellaneous Metrics}
 
 \subsubsection{Rollups by TVL}
 
-We observe a pronounce level of centralization in when we examine Rollups by TVL, with an 30 average Gini index value of 0.87, and a re-scaled HHI of 0.47.  Both of these values make sense when we observe the underlying data, in which a single rollup has 64.5\% of TVL across all rollups, which is Arbitrum One.  This is closely followed by Optimism that has a TVL of 18.5\%.  There are 17 rollups with a TVL share of < 1\%, and 6 with a TVL of >= 1\%, the latter group exhibiting significant variance, from which we would expect a high HHI value.
+We observe a pronounce level of centralization in when we examine Rollups by TVL, with an 90 average Gini index value of 0.87, and a re-scaled HHI of 0.45.  Both of these values make sense when we observe the underlying data, in which a single rollup has 54.3\% of TVL across all rollups, which is Arbitrum One (down from 64.5\% at the start of the sample period).  This is closely followed by Optimism that has a TVL of 25.9\%.  There are 12 rollups with a TVL share of less than 1\%, and 7 with a TVL of more than 1\%, the latter group exhibiting significant variance, from which we would expect a high HHI value.
+
+Interestingly, the one other metric that also show a high JSD value for the sample period is Rollups By TVL.  This could be explained by the launch of the Base network on August 9\textsuperscript{th} which significantly altered the relevant market share of prominent rollups.
 
 We observe that the level of centralization in the rollups market at the time the data was collected, is at an unhealthy level for the Ethereum ecosystem.  The TVL across all rollups is ~8.1B USD, which is approximately 0.3 of the 26.562B USD TVL of Ethereum \cite{defillama}, and of which one single rollup accounts for 0.2\% of Ethereum's TVL.
 
-It is worth noting again that these figures will more than likely change over time as a number of zk-EVM based rollups will enter the market, which will dilute the marketplace will likely affect market concentration significantly, underpinning the need for measuring decentralization over time.
+It is worth noting again that these figures will more than likely change over time as a number of zk-EVM based rollups will enter the market, which will dilute the marketplace will likely affect market concentration significantly, underpinning the need for ongoing measurement of decentralization over time.
 
 \subsubsection{Stablecoins by TVL}
 
-We observe the highest value for the Gini index in the "Stablecoins by TVL" metric, which also has a markedly high HHI value.  This suggests a very high level of concentration within the stablecoin market, which is obvious when we examine the underlying data, that shows that just two stablecoins comprise over 80\% of the market, i.e. USDC and USDT. As both stablecoins are issued by corporations, this represents a significant area of centralization with Ethereum.  Stablecoins are used by many people to interact with a wide array of dapps, and both USDC and USDT are vulnerable to censorship.  According to DefiLlama\cite{defillama}, the combined market cap for stablecoins on Ethereum is ~9.2B USD, which represents a third of the TVL on Ethereum.  This could arguably be the weakest point of Ethereum's overall decentralization.
+We observe the highest average value for the Gini index in the "Stablecoins by TVL" metric, which also has a markedly high HHI value.  This suggests a very high level of concentration within the stablecoin market, which is obvious when we examine the underlying data, that shows that just two stablecoins comprise over 80\% of the market, i.e. USDC and USDT. As both stablecoins are issued by corporations, this represents a significant area of centralization within Ethereum.  Stablecoins are used by many people to interact with a wide array of dapps, and both USDC and USDT are vulnerable to censorship, and have previously frozen token holders funds on request from authorities \cite{haqshanas2022} \cite{de2022}.
+
+According to DefiLlama\cite{defillama}, the combined market cap for stablecoins on Ethereum is ~9.2B USD, which represents a third of the TVL on Ethereum.  This could arguably be the weakest point of Ethereum's overall decentralization.
+
+\subsection{Metrics pertaining to Account Abstraction}
+
+The metrics that pertain to Account Abstraction, which are User Operations by Bundler and Wallets by Deployer are both striking insofar as they have especially low averages for the Gini index but very high values for the HHI values.  This indicates that there is an issue with the dataset that warrants further scrutiny.  Upon investigation we observe that the 90 day Gini Indices User Operations by Bundler data has a range of 0 to 1, with a median of 0.6 and a standard deviation of 0.36.  This highly unusual range and variance can be attributed to the nascent nature of the account abstraction space, and indicates that the infrastructure has yet to see significant adoption.
+
+Upon inspecting the underlying data, we observe that the maximum number of user operations processed in a single day during the sample period is only 301.  At this nascent stage, there is significant market concentration, with one specific bundler having 76\% market share out of 13 total active bundlers.
+
+It is worth noting however that this data looks at Ethereum mainnet itself, not the L2 rollups, on which thereby be more significantly higher level of adoption of account abstraction infrastructure, and is an area for future study.
+
+The Wallets by Deployer metric shows very similar characteristics to the User Operations by Bundler and follows much the same pattern of distribution throughout the sample period, with one specific deployer having an 87\% market share.
+
 
 \newpage
 
