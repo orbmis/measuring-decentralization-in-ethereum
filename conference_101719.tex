@@ -727,15 +727,37 @@ We observe the highest average value for the Gini index in the "Stablecoins by T
 
 According to DefiLlama\cite{defillama}, the combined market cap for stablecoins on Ethereum is ~9.2B USD, which represents a third of the TVL on Ethereum.  This could arguably be the weakest point of Ethereum's overall decentralization.
 
+\subsubsection{Effective inflation rate adjusted for burn}
+
+As discussed in section III, the Effective inflation rate adjusted for burn is an important metric to measure, as a high inflation rate can undermine the security of the network by diluting supply, and the devaluing the asset, potentially leading to misaligned incentives for the validators.
+
+Since the introduction of EIP-1559, which introduces the concept of the "base fee", which is set deterministically via protocol consensus and which is burned in every block, Ethereum's effective issuance rate becomes negative when the network usage / gas price crosses a certain threshold \cite{ethereum2023-2}.
+
+According to data from the Ultra Sound Money resource \cite{ultrasoundmoney2023}, the effective level of inflation of ETH since the merge has been -0.94\%, and ETH is projected to continue to be a deflationary asset in the long term, which is positive for the network's overall security and level of decentralization.
+
+\subsubsection{Percentage of total supply staked}
+
+The percentage of total supply staked is related to the effective inflation rate for the same reason as previously outlined, in that a high issuance has a dilutionary effect on the circulating supply, which incentives asset holders to stake in order to counteract the dilution, resulting in a feedback cycle that can undermine the network's security.  Ethereum’s economics are designed to reduce issuance as more validators come online [26], which theoretically reduces the incentive to stake once the percentage of staked assets reaches a certain threshold.  Currently the amount of ETH staked is 24,932,109 ETH according to beaconcha.in \cite{beaconchain2023}, out of 120,218,472 ETH total supply according to Etherscan \cite{etherscan2023}, resulting in a ratio of ~20\%, which is well within the bounds of what is  a safe level of total supply staked.
+
 \subsection{Metrics pertaining to Account Abstraction}
 
-The metrics that pertain to Account Abstraction, which are User Operations by Bundler and Wallets by Deployer are both striking insofar as they have especially low averages for the Gini index but very high values for the HHI values.  This indicates that there is an issue with the dataset that warrants further scrutiny.  Upon investigation we observe that the 90 day Gini Indices User Operations by Bundler data has a range of 0 to 1, with a median of 0.6 and a standard deviation of 0.36.  This highly unusual range and variance can be attributed to the nascent nature of the account abstraction space, and indicates that the infrastructure has yet to see significant adoption.
+The metrics that pertain to Account Abstraction, which are User Operations by Bundler and Wallets by Deployer are both striking insofar as they have especially low averages for the Gini index but very high values for the HHI values.  This indicates that there is an issue with the dataset that warrants further scrutiny.  Upon investigation we observe that the 90 day Gini indices for User Operations by Bundler has a range of 0 to 1, with a median of 0.6 and a standard deviation of 0.36.  This highly unusual range and variance can be attributed to the nascent nature of the account abstraction space, and indicates that the infrastructure has yet to see significant maturity or adoption.
 
 Upon inspecting the underlying data, we observe that the maximum number of user operations processed in a single day during the sample period is only 301.  At this nascent stage, there is significant market concentration, with one specific bundler having 76\% market share out of 13 total active bundlers.
 
-It is worth noting however that this data looks at Ethereum mainnet itself, not the L2 rollups, on which thereby be more significantly higher level of adoption of account abstraction infrastructure, and is an area for future study.
+It is worth noting however that this data looks at Ethereum mainnet itself, and does not consider any of the L2 rollups, on which thereby be a higher level of adoption of account abstraction infrastructure, and which is an area for future study.
 
 The Wallets by Deployer metric shows very similar characteristics to the User Operations by Bundler and follows much the same pattern of distribution throughout the sample period, with one specific deployer having an 87\% market share.
+
+The various metrics outlined in this paper will be useful in tracking the changes in decentralization over time as the account abstraction space matures and continues to see more adoption.  The influence of erc-4337 bundlers on the effective level of decentralization of the network has a whole is somewhat limited, so even a moderately high level of centralization is acceptable.
+
+\subsection{Master Index}
+
+Master index across 90 days . .. 
+
+\subsection{Acknowledgements}
+
+Special thanks to people that contributed valuable feedback and suggestions for future improvements to the model and areas for further study, including Tina from Flashbots, Vitalik Buterin, Stephane Gosselin and Gman from SMG.
 
 
 \newpage
