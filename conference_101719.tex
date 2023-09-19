@@ -505,7 +505,7 @@ Our model calculates an aggregate set of indices across a number of dimensions o
 
 \vspace{8pt}
 
-where \(\beta=\{\text{index}_1, \text{index}_1, ..., \text{index}_n\}\) i.e. the set of relevant indices, $\omega$ is the respective weighting for each index, and $n=\left| \beta \right|$, the cardinality of $\beta$, or the number of metrics being measured.
+where \(\beta=\{\text{metric}_1, \text{metric}_2, ..., \text{metric}_n\}\) i.e. the set of relevant metrics, $\omega$ is the respective weighting for each metric, and $n=\left| \beta \right|$, the number of metrics being measured.
 
 This master index can be used to see changes on a daily basis over a period of time and be used in conjunction with the normalized JSD, which measures changes at specific points of 30, 60, and 90 days.
 
@@ -751,9 +751,36 @@ The Wallets by Deployer metric shows very similar characteristics to the User Op
 
 The various metrics outlined in this paper will be useful in tracking the changes in decentralization over time as the account abstraction space matures and continues to see more adoption.  The influence of erc-4337 bundlers on the effective level of decentralization of the network has a whole is somewhat limited, so even a moderately high level of centralization is acceptable.
 
-\subsection{Master Index}
+\subsection{Master Indices}
 
 Master index across 90 days . .. 
+
+\begin{figure}[ht]
+    \centering
+    \pgfplotstableread[col sep=space]{data/master_index.dat}\datatable
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            height=8cm,
+            xtick=data,
+            xticklabels from table={\datatable}{Date},
+            x tick label style={rotate=45,anchor=east,font=\footnotesize},
+            legend style={at={(0.02,0.98)},
+                anchor=north west,legend columns=-1},
+            ymajorgrids=true,
+            xmajorgrids=false,
+            bar width=5pt,
+            minor y tick num=1,
+            ]
+            \addplot table[x expr=\coordindex,y=Gini] from \datatable;
+            \addlegendentry{Gini}
+            \addplot table[x expr=\coordindex,y=HHI] from \datatable;
+            \addlegendentry{HHI}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Master Indices of Gini Index and Herfindahl-Hirschman Index}
+    \label{fig:masterindices}
+\end{figure}
 
 \subsection{Acknowledgements}
 
