@@ -501,7 +501,7 @@ The normalized JSD is calculated across each measurement dimension for both the 
 As we are measuring Ethereum's level of decentralization over time, we need to account for it's modular topology, in which significant components of it's infrastructure will change.  For example, we might measure the concentration in the mev-boost relay market, but later decide to remove this metric as innovations like enshrined PBS make them redundant \cite{neuder2023}.
 
 Our model calculates an aggregate set of indices across a number of dimensions of measurement, that can be used as further indicator of the relative level of decentralization in Ethereum as it changes over time.  Each relevant index, (i.e. Gini, HHI, Atkinson), contributes to an aggregate index that is derived from calculating the normalized weighted geometric mean of the respective index's value across all relevant metrics, i.e.:
-\[ \gamma = \frac{{\left(\prod_{i=1}^{n} (\beta_i \times \omega_i)\right)^{\frac{1}{n}} - \text{min}\left(\beta\right)}}{{\text{max}\left(\beta\right) - \text{min}\left(\beta\right)}} \]
+\[ \gamma = \frac{{\left(\prod_{i=1}^{n} (\beta_i \times \omega_i)\cdot100\right)^{\frac{1}{n}} - \text{min}\left(\beta\right)}}{{(\text{max}\left(\beta\right) - \text{min}\left(\beta\right))\cdot10^{-2}}} \]
 
 \vspace{8pt}
 
@@ -509,9 +509,9 @@ where \(\beta=\{\text{metric}_1, \text{metric}_2, ..., \text{metric}_n\}\) i.e. 
 
 This master index can be used to see changes on a daily basis over a period of time and be used in conjunction with the normalized JSD, which measures changes at specific points of 30, 60, and 90 days.
 
-The relevant metrics that are included in each aggregate index, along with their respective weightings, are listed below. The weightings are assigned based on the qualitative properties of the infrastructural component being measured, as described in section III.
+The relevant metrics that are included in each aggregate index, along with their respective weightings, are listed below. The weightings are assigned based on the qualitative properties of the infrastructural component being measured. The actual weighting used in the formula are the percentage of each weighting relative the sum of all weightings.
 
-\vspace{12pt}
+\vspace{6pt}
 \begin{table}[h]
 \normalsize
 \begin{center}
@@ -534,6 +534,7 @@ Stablecoins by relative TVL & 0.3 \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
+
 This results in a series of aggregate indices for each interval within the time-range our sample data is taken from.  The aggregate indices relate to the Gini, Atkinson, Normalized HHI and Normalized Shannon indices.  This should allow us to track the changes in decentralization over time, while allowing us to examine an individual index at specific intervals in order to further understand any changes that occur.
 
 
@@ -753,7 +754,7 @@ The various metrics outlined in this paper will be useful in tracking the change
 
 \subsection{Master Indices}
 
-Master index across 90 days . .. 
+For every index that we track, we derive a master index that is a aggregate value derived from the value of each dimension of measurement for that index.  This means that we can derive a single value for every day in the sample period, rather than a 12 separate values for each day, (i.e. one for each dimension of measurement).
 
 \begin{figure}[ht]
     \centering
@@ -781,6 +782,14 @@ Master index across 90 days . ..
     \caption{Master Indices of Gini Index and Herfindahl-Hirschman Index}
     \label{fig:masterindices}
 \end{figure}
+
+We are specifically interested in the master index for both the Gini Index and Herfindahl-Hirschman Index for each day in the sample period.  We have sub-sampled 15 datapoints from the 90 day period and have charted them in \ref{fig:masterindices}.
+
+The master index establishes a measurement that can be referenced to itself as it changes over time, in order to derive a crude high-level indicator of the overall effective level of measurement of the network, and in theory we should be maintain a single relative measurement even as the dimensions of measure change over time.
+
+As can be seen from the sample above, we can see that the overall effective level of decentralization changes over time, and this is a reflection of the changes within the various dimensions of measurement.
+
+It is important to note that the values of the master are not like other indices, insofar as it is not the case that values closer to 0 indicate more decentralization and values closer to 1 indicate more centralization.  These values are relevant in comparison the same value at other points in time.
 
 \subsection{Acknowledgements}
 
