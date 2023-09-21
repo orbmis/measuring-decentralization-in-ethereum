@@ -38,12 +38,12 @@ Ethereum is undergoing significant changes to its architecture as it evolves.  T
 \end{abstract}
 
 \begin{IEEEkeywords}
-blockchain, Ethereum, decentralization, cryptocurrency, cryptoeconomics, WORK IN PROGRESS!!
+blockchain, Ethereum, decentralization, cryptocurrency, cryptoeconomics
 \end{IEEEkeywords}
 
 \section{Introduction}
 
-The contribution of this paper is to propose a model for measuring decentralization that accommodates any structural changes in wider network topology over time.  As web3 and cryptocurrencies are a relatively nascent socio-technological innovation, the broader cryptocurrency ecosystem is in a phase of initial rapid innovation, in which the architecture and topology of the networks are evolving significantly.  This is a well understood phenomenon in technological innovation, which was documented as early as the 1960s \cite{rogers2010diffusion}, in which the innovation and adoption of new technologies develop in an “S-Curve” shape, involving compressed stages of very rapid innovation followed by a period where innovation plateaus for a time.  Ethereum is an example of a technology that is in the rapid innovation phase, in which there are significant changes to the topology of the overall network, both intrinsic and extrinsic to the core protocol.  Whereas previous research \cite{gochhayat2020measuring, lin2021measuring, karakostas2022sok} focused on measuring decentralization at the various layers of a vertical stack within a monolithic system, our model views Ethereum as a socio-technological ecosystem in which significant components of the network develop outside the core protocol.
+The contribution of this paper is to propose a model for measuring decentralization that accommodates structural changes in wider network topology over time.  As web3 and cryptocurrencies are a relatively nascent socio-technological innovation, they are in a phase of initial rapid innovation, in which the architecture and topology of the networks are evolving significantly.  This is a well understood phenomenon in technological innovation, which was documented as early as the 1960s \cite{rogers2010diffusion}, in which the innovation and adoption of new technologies develop in an “S-Curve” shape, involving compressed stages of very rapid innovation followed by a period where innovation plateaus for a time.  Ethereum is an example of a technology that is in the rapid innovation phase, in which there are significant changes to the topology of the overall network, both intrinsic and extrinsic to the core protocol.  Whereas previous research \cite{gochhayat2020measuring, lin2021measuring, karakostas2022sok} focused on measuring decentralization at the various layers of a vertical stack within a monolithic system, our model views Ethereum as a socio-technological ecosystem in which significant components of the network develop outside the core protocol.
 
 The paper is organized as follows: in section II we deliver an overview of how Ethereum is evolving and the challenges faced when attempting to measure its level of decentralization.  In section III we outline the various dimensions that we propose to measure with our model, and our data sources.  In section IV we describe our methodology, including the various indices that are applied to our data.  In section V we deliver a breakdown of results, and we close with our conclusions in section VI.
 
@@ -53,7 +53,7 @@ It can be argued that protocols that are built on top of the base layer of Ether
 
 Any infrastructure that assumes a significant role in Ethereum can pose a centralization risk to the overall network based on two critical factors:
 \begin{enumerate}[label=\alph*.]
-\item the size of the infrastructure compared to the base layer, as measured in either percentage of base layer transactions that flow through the infrastructure and/or the Total Value Locked (TVL) compared to the base layer.
+\item the size of the infrastructure compared to the base layer, as measured in either the amount of base layer transactions that flow through the infrastructure and/or the Total Value Locked (TVL) compared to the base layer.
 \item the potential effect on the base layer should the infrastructure be compromised or develop misaligned incentives, whether this effect is a level of effective degraded performance of the network, or an increased level of censorship.
 \end{enumerate}
 
@@ -104,7 +104,7 @@ We have adapted Srinivasan's model to the contemporary PoS Ethereum topology and
 
 We have adapted the Nakamoto Coefficient model through a number of modifications to the original model.  These changes include removing Mining Decentralization and Developer Decentralization. 
 
-The Mining Decentralization metric is longer relevant in PoS Ethereum and as such has been replaced by the ``Amount staked by pool'' metric, which measures the relevant share of the staked ETH by staking service provider. 
+The ``Mining Decentralization'' metric is no longer relevant in PoS Ethereum and as such has been replaced by the ``Amount staked by pool'' metric, which measures the relevant share of the staked ETH by staking service provider. 
 
 The ``Developer Decentralization'' metric is no longer an applicable metric for PoS Ethereum. The rationale for this change is the fact that nodes on the network run a number of different client implementations, each with its own distinct development team.  In this context, and considering a priori that developers are unique to each team, it is sufficient to measure the level of client diversity among nodes on the network rather than the relative contributions of individual developers. 
 
@@ -112,7 +112,7 @@ The ``Exchanges by Supply'' metric is not employed in our model as there is not 
 
 In terms of client diversity, it is also necessary to update the model to reflect the fact that Ethereum is now technically two merged blockchains that operate in unison, the Beacon Chain which handles consensus, and the execution layer, which is the P2P layer that gossips transactions and handles execution.  For this reason, the original ``Client Decentralization'', and ``Node Decentralization'' metrics have been replaced by ``Consensus / Execution nodes by client / country'' metrics. 
 
-The tone metric that has been retained in its original form is ``Distribution of native asset by amount'', which measures wealth inequality in terms of ownership of ETH.
+The only metric that has been retained in its original form is ``Distribution of native asset by amount'', which measures wealth inequality in terms of ownership of ETH.
 
 \subsection{Metrics pertaining to Proposer Builder Separation}
 
@@ -275,28 +275,27 @@ Our model applies a weighting to this metric, taking into account the extent of 
 
 Consider as an example an L2 rollup with a centralized sequencer that experiences a significant liveness fault, in which users with funds on that network are no longer able to transact as they would under normal conditions.  In this scenario, it may be possible that the users can force a withdrawal through the L2's base layer smart contract bridge.  However, if this rollup contains a substantial number of user accounts, it may result in significant congestion on the base layer \cite{gorzny2022ideal}.  This would likely cause an increase in base fee and a prolonged delay in transaction inclusion.  Furthermore, in the case of tokens that are minted natively on an L2, it may not be possible to withdraw them to the base layer at all.
 
-There is also a theoretical risk to Ethereum's underlying social consensus from having a single dominant rollup is described by Buterin \cite{buterin2023}, from forming a broad assumption within the ecosystem that "\textit{if there is a bug that causes funds to be stolen, the losses will be so large that the community will have no choice but to fork to recover the users' funds}".
+There is also a theoretical risk to Ethereum's underlying social consensus from having a single dominant rollup, which is described by Buterin \cite{buterin2023}, as forming a broad assumption within the ecosystem that "\textit{if there is a bug that causes funds to be stolen, the losses will be so large that the community will have no choice but to fork to recover the users' funds}".
 
 \subsection{Miscellaneous Metrics}
 
-As part of our model we measure the \textbf{effective inflation rate adjusted for burn}.  This is an important metric for any PoS base layer protocol, including Ethereum.  A high rate of issuance of the network's native asset via validator rewards, has the effect of diluting the circulating supply, effectively decreasing the asset's value.  This incentivizes the network's users to stake the native asset in order to counteract the dilutionary effects of issuance, which forms a self-reinforcing cycle, leading to eventual hyperinflation even if that process takes a number of years.  Polynya describes a number of examples of this phenomenon that have been observed in practice \cite{polynya2022}. 
+As part of our model we measure the ``effective inflation rate adjusted for burn''.  This is an important metric for any PoS base layer protocol, including Ethereum.  A high rate of issuance of the network's native asset via validator rewards, has the effect of diluting the circulating supply, effectively decreasing the asset's value.  This incentivizes the network's users to stake the native asset in order to counteract the dilutionary effects of issuance, which forms a self-reinforcing cycle, leading to eventual hyperinflation even if that process takes a number of years.  Polynya describes a number of examples of this phenomenon that have been observed in practice \cite{polynya2022}. 
 
 Our model thus incorporates a simple metric for measuring the inflation rate and adjusting it for the amount of ETH that is burned through the EIP-1559 mechanism, in which the base fee, which is adjusted for every block by the protocol itself, and that each transaction must pay at a minimum in order to be included in a block, is subsequently burned when a block is proposed.  This has the effect of  creating a negative issuance rate once transaction volume surpasses critical threshold, which will likely decrease the total supply over time \cite{liu2022empirical}.
 
-We have also incorporated a closely related metric which is the \textbf{percentage of total supply staked}.  This is directly related to the effective inflation rate metric with respect to maintaining an economic equilibrium between the issuance rate and circulating supply, allowing the asset to hold its value over time \cite{john2021equilibrium}.  It is worth pointing out that Ethereum's economics are designed to maintain this equilibrium by reducing issuance as more validators come online \cite{edgington2023}, which theoretically reduces the incentive to stake once the percentage of staked assets reaches a certain threshold. However, there is always the possibility that innovations such as EigenLayer may disrupt this equilibrium over time.
+We have also incorporated a closely related metric which is the ``percentage of total supply staked''.  This is directly related to the effective inflation rate metric with respect to maintaining an economic equilibrium between the issuance rate and circulating supply, allowing the asset to hold its value over time \cite{john2021equilibrium}.  It is worth pointing out that Ethereum's economics are designed to maintain this equilibrium by reducing issuance as more validators come online \cite{edgington2023}, which theoretically reduces the incentive to stake once the percentage of staked assets reaches a certain threshold. However, there is always the possibility that innovations such as EigenLayer may disrupt this equilibrium over time.
 
-
-Another meaningful metric that we have introduced into our model is the measurement of \textbf{Stablecoins by relative TVL on Ethereum}.  There exists both algorithmic stablecoins, (which are backed by a number of other assets and which rely on networks of decentralized oracles, and which are at least notionally decentralized by nature), and there also exists stablecoins which are backed largely by fiat deposits, and which are issued by a centralized authority.  The latter type of stablecoin is orthogonal to our model, insofar as while they are not part of the infrastructure of the network, they are a significant part of the ecosystem with which users interact with other dapps.  They also pose a centralization risk in terms of censorship as there have been a number of  cases where stablecoins have been frozen from specific addresses \cite{wall2021}.
+Another meaningful metric that we have introduced into our model is the measurement of ``Stablecoins by relative TVL on Ethereum''.  There exists both algorithmic stablecoins, (which are backed by a number of other assets and which rely on networks of decentralized oracles, and which are at least notionally decentralized by nature), and there also exists stablecoins which are backed largely by fiat deposits, and which are issued by a centralized authority.  The latter type of stablecoin is relevant to our model, insofar as while these stablecoins are not part of the infrastructure of the network, they are a significant part of the ecosystem with which users interact with other dapps.  They also pose a centralization risk in terms of censorship as there have been a number of  cases where stablecoins have been frozen from specific addresses \cite{wall2021}.
 
 \section{Methodology}
 
-The measurement of inequality in distributions is a well understood area of statistics that has found many applications in the fields of economics and social sciences. As our model aims to measure the level of decentralization across a number of different dimensions with different qualities, it is necessary incorporate a number of different statistical measurements.
+The measurement of inequality in distributions is a well understood area of statistics that has found many applications in the fields of economics and social sciences. As our model aims to measure the level of decentralization across a number of different dimensions with different qualities, it is necessary to incorporate a number of different statistical measurements.
 
 We use as a base measurement, the Gini index and the Herfindahl-Hirschman index. The Gini index is arguably the most widely used index with regards to measuring wealth inequality, and is well suited for measuring the distribution of a network's native asset, (i.e. ETH), while the Herfindahl-Hirschman index (HHI) is more often used for measuring the level of competition in specific industrial sectors, making it more suitable for measuring the degree of decentralization within the block builder market.  The base measurement is applied to each measurement dimension, but our results will reference one or the other based on the respective qualities of each.
 
-The Shannon index is used to complement and cross reference any indicative result from our base measurement.  This is useful because the Shannon Index is based on a different approach to the Gini Index and the HHI.  The Atkinson Index is used to fine-tune the results from our base measurement by updating the index parameters to make it more sensitive to changes at different extremes of the distribution.  This can be useful is we want to qualify our results with more detail on any part of a distribution at certain times.
+The Shannon index is used to complement and cross reference any indicative result from our base measurement.  This is useful because the Shannon Index is based on a different approach to the Gini Index and the HHI.  The Atkinson Index is used to fine-tune the results from our base measurement by updating the index parameters to make it more sensitive to changes at different extremes of the distribution.  This can be useful if we want to qualify our results with more detail on any part of a distribution at certain times.
 
-The tail ratios are used to inform any decisions about the parameterization of the Atkinson Index.  These include the P90:P10, and P50:P10 ratios, as well as the Palma ratio.  These ratios describe inequality within a distribution by comparing percentiles, for example, the P90 represents the level of resources allocated to > 90\% of the population, while the P10 represents the level of resources allocated to > 10\% of the population.  Our model adjusts the parameterization of the Atkinson index with respect the to the values of these tail ratios.
+Tail ratios are used to inform any decisions about the parameterization of the Atkinson Index.  These include the P90:P10, and P50:P10 ratios, as well as the Palma ratio.  These ratios describe inequality within a distribution by comparing percentiles, for example, the P90 represents the level of resources allocated to $>$ 90\% of the population, while the P10 represents the level of resources allocated to $>$ 10\% of the population.  Our model adjusts the parameterization of the Atkinson index with respect the to the values of these tail ratios.
 
 The Jensen-Shannon Divergence is used to track changes to the distribution over time, by comparing distributions of respective measurement dimensions between specific intervals, such as 30, 60 and 90 day intervals.
 
@@ -334,6 +333,7 @@ The Gini Index is derived from the Lorenz curve \cite{lorenz1905methods}, which 
     \begin{axis}[
       xlabel = {cumulative proportion of population},
       ylabel = {cumulative proportion of resource},
+      xticklabels={0,0,0.2,0.4,0.6,0.8},
       axis y line*=left,
       axis x line*=bottom,
       minor tick num=1,
@@ -397,7 +397,7 @@ Highly Concentrated & $\text{HHI} > 2,500$ \\ \hline
 
 \vspace{8pt}
 
-Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the datapoints in our model that measure the infrastructure that is provide as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays, or ERC-4337 bundlers.
+Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the datapoints in our model that measure the infrastructure that is provided as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays, or ERC-4337 bundlers.
 
 \subsection{Shannon Index}
 
@@ -411,7 +411,7 @@ A basic example of this concept is a coin toss, where one party chooses heads, a
 
 Entropy as applied within the field of economics was systematized by Theil \cite{theil1967economics}, and has found applications in measuring inequality within a distribution of resources, and later within several studies of decentralization in cryptocurrencies \cite{zhang2022sok, gochhayat2020measuring, kusmierz2022centralized}.
 
-The Shannon index is commonly expressed using the following formula, where $Ni$ is the frequency of a each value in the dataset divided by $N$, the total number of distinct values in the dataset, i.e. $N_i$ is the number of entities within the population that have a $i$ amount of resources, in proportion to $N$ total number entities in the population.
+The Shannon index is commonly expressed using the following formula, where $N_i$ is the frequency of a each value in the dataset divided by $N$, the total number of distinct values in the dataset, i.e. $N_i$ is the number of entities within the population that have a $i$ amount of resources, in proportion to $N$ total number entities in the population.
 
 \[H' = - \sum_{i=1}^{N} \left(\frac{N_i}{N}\right) \log_{e} \left(\frac{N_i}{N}\right)\]
 
@@ -452,7 +452,7 @@ $\mu$ & average income of the total population \\ \hline
 
 \vspace{6pt}
 
-The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).  The Atkinson index results in a value between 0 and 1, and takes as a parameter $\epsilon$, which allows us to fine-tune the formula by increasing the value of $\epsilon$ in order to make the index more sensitive to changes at lower end of the distribution.  The value of $\epsilon$ is referred to as the inequality aversion, and yields a higher value when $\epsilon$ is given a value closer to 1.
+The Atkinson index is very closely linked to the generalized entropy index, and other related entropy based indices, such as the Theil index (i.e. GE(1)).  The Atkinson index results in a value between 0 and 1, and takes as a parameter $\epsilon$, which allows us to fine-tune the formula by increasing the value of $\epsilon$ in order to make the index more sensitive to changes at lower end of the distribution.  The value of $\epsilon$ is referred to as the inequality aversion, and the index yields a higher value when $\epsilon$ is given a value closer to 1.
 
 \subsection{Tail Ratios}
 
@@ -462,7 +462,7 @@ Our model incorporates the Palma Ratio\cite{palma2011homogeneous}, which is the 
 
 We complement the Palma ratio with other inter-decile ratios that can be used to qualify the character of the inequality in the distribution, including the P90:P10, P50:P10 ratios.  Without loss of generality, Px represents the level of resources allocated to greater than x\% of the population, and is used to compare the gap between allocation of resources to two discrete percentiles within the distribution.
 
-These inter-decile ratios are calculated using the linear interpolation method \cite{frost2023B} described below, where $P_x$ denotes the desired percentile, and $N$ is the population size, a $v$ represents the value at position $i$ in an ascending ordered dataset, where $i$ is calculated using the following formula:
+These inter-decile ratios are calculated using the linear interpolation method \cite{frost2023B} described below, where $P_x$ denotes the desired percentile, and $N$ is the population size, and $v$ represents the value at position $i$ in an ascending ordered dataset, where $i$ is calculated using the following formula:
 \[ i = \frac{P_x\left( N+1 \right)}{100} \]
 This gives us the rank position of the desired percentile, assuming the dataset is sorted in ascending order.  We then interpolate between the value at this rank position in the ordered dataset, and the value at the subsequent position, in order to attain each percentile in our desired inter-decile ratio:
 \begin{align*}
@@ -473,7 +473,7 @@ By themselves these ratios are not useful measurements as the range within the r
 
 \subsection{Jensen-Shannon Divergence}
 
-As we are interested in measuring the changes to levels of decentralization over time,  we employ a method described by Lin \cite{lin1991divergence} as the Jensen-Shannon Divergence, which is a method to measure of the level of similarity or divergence between two probability distributions.  The JSD is useful because it has a defined upper bound, which means it can be scaled for comparison with other index values.  In order to scale the JSD, we normalize it be dividing the result by the upper bound of the possible range of results, which in model, is $log_2$.
+As we are interested in measuring the changes to levels of decentralization over time,  we employ a method described by Lin \cite{lin1991divergence} as the Jensen-Shannon Divergence, which is a method to measure of the level of similarity or divergence between two probability distributions.  The JSD is useful because it has a defined upper bound, which means it can be scaled for comparison with other index values.  In order to scale the JSD, we normalize it by dividing the result by the upper bound of the possible range of results, which in our model, is $log_2$.
 
 We calculate the JSD between two intervals by comparing the distribution of each one across each measurement dimension respectively.  As such, we define $p$ and $q$  as two probability distributions, taken from two discrete intervals of a single metric, represented as vectors of sizes $n$ and $m$ respectively. The normalized JSD is then calculated as follows:
 
@@ -522,13 +522,12 @@ Consensus nodes by client & 1 \\ \hline
 Consensus nodes by country & 1 \\ \hline
 Execution nodes by client & 1 \\ \hline
 Execution nodes by country & 1 \\ \hline
-Exchanges by supply & 0.7 \\ \hline
 Distribution of ETH by amount & 1 \\ \hline
 Amount staked by Pool & 1 \\ \hline
 Blocks proposed by builder & 0.7 \\ \hline
 Blocks proposed by relay & 0.7 \\ \hline
 Number of userops per bundler & 0.2 \\ \hline
-Number of transactions per bundler & 0.2 \\ \hline
+Number of wallets per deployer & 0.2 \\ \hline
 Layer 2 rollups by relative TVL & 0.5 \\ \hline
 Stablecoins by relative TVL & 0.3 \\ \hline
 \end{tabular}
@@ -570,9 +569,9 @@ Rollups by Tvl & \cellcolor[HTML]{FF9B80}0.87 & \cellcolor[HTML]{FF8080}0.45 & \
 \label{fig:average indices}
 \end{figure}
 
-The values in the table in \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for several metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal. 
+The values in the table in figure \ref{fig:average indices} are color coded for legibility, with colors closer to red indicating higher levels of concentration, and colors closer to green indicating higher levels of decentralization. We observe that the index values for several metrics diverge significantly, particularly between the Gini index and HHI.  In most cases this is expected, since the HHI is more focused on measuring concentration at the upper end of a distribution. Consider, without loss of generality, a distribution with a large number entities that have a low share of resources. In this distribution the Gini index will increase significantly, while the HHI will remain largely unaffected.  If the same distribution contains a small number of entities that control nearly all the resources but that each have an equal share, the HHI will be relatively low, but will increase as the share between these controlling entities becomes less equal. 
 
-We observe this phenomenon clearly in several metrics in the results table, for example in the Amount Staked by Pool metric, where 2 entities control ~60\% of the market\cite{hildobby2023} (Lido controls ~31\% while solo stakers control ~29\%), where the distribution these two entities is almost equal, and the distribution between entities controlling the other ~40\% of the market is also relatively equal, which results in a re-scaled HHI of 0.2, indicating only moderate concentration, while the Gini index gives a value of 0.91, which more accurately reflects the level of concentration in this area.
+We observe this phenomenon clearly in several metrics in the results table, for example in the Amount Staked by Pool metric, where 2 entities control ~60\% of the market\cite{hildobby2023} (Lido controls ~31\% while solo stakers control ~29\%), where the distribution of these two entities is almost equal, and the distribution between entities controlling the other ~40\% of the market is also relatively equal, which results in a re-scaled HHI of 0.2, indicating only moderate concentration, while the Gini index gives a value of 0.91, which more accurately reflects the level of concentration in this area.
 
 While the Gini index and the HHI are each better suited to specific dimensions of measurement, there can often be nuances that they fail to capture by themselves.  An illustrative given by Buterin \cite{buterin2022b} is where there are two hypothetical societies with profound levels of inequality, one in which half the population equally shares all the resources while the other half has none, and the other in which one person has half of all the resources, everyone else equally shares the remaining half.  In Buterin's example, both distributions would result in the same Gini index value, despite having radically different characteristics.
 
@@ -589,9 +588,9 @@ The observations of the recorded results have been organized into the following 
 \subsubsection{Network Nodes}
 When examining the data recorded across the dimensions of measurement that are based on original Nakamoto Coefficient subsystem selection, we first applied the Gini index to the metrics pertaining to network nodes.  The results of this analysis is displayed in figure \ref{fig:gini index network nodes}, which plots the Gini index of these metrics across our sample time period.
 
-We observe a relatively high Gini index value for both Execution Nodes by Country and Consensus Nodes by Country, which both maintain an average Gini index of 0.85 to 0.79.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having  ~34\% of Consensus nodes and ~44\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to the liveness under adverse conditions.
+We observe a relatively high Gini index value for both Execution Nodes by Country and Consensus Nodes by Country, which both maintain an average Gini index of 0.85 to 0.79.  When examining the data more closely, this was found to be caused by an out-sized number of nodes that are situated in the USA, having  ~34\% of Consensus nodes and ~44\% of Execution nodes.  Both numbers are significant in terms of having crossed a key consensus threshold of 33\%, which is enough to cause disruption to liveness under adverse conditions.
 
-We observed that measuring Consensus Nodes by Client yields an average Gini index of 0.57, which is a reasonably safe level of client diversity, while Execution Nodes by Client shows a surprisingly dynamic Gini index, which changes between 0.66 to 0.81.  Reaching 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred on date when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
+We observe that measuring Consensus Nodes by Client yields an average Gini index of 0.57, which is a reasonably safe level of client diversity, while Execution Nodes by Client shows a surprisingly dynamic Gini index, which changes between 0.66 to 0.81.  Reaching 0.8 is unhealthy for the network, as a bug in a single client version can have consequences for the network, as occurred in May 2023 when a bug in a consensus client caused a lack of finality for a period of time \cite{offchainlabs2023}.
 
 \begin{figure}[ht]
 \begin{center}
@@ -649,7 +648,7 @@ While this represents a relatively high level of centralization with regards to 
 
 \subsection{Metrics pertaining to PBS}
 
-In analyzing the data with regards to the metrics pertaining to Proposer-Builder-Separation, we examined both the metrics for Blocks proposed by Builder and the Blocks proposed by Relay.  For these metrics we applied the Herfindahl-Hirschman index as a more suitable index, due to the fact that the builder and relay space is naturally more concentrated, and comprised of a number of known entities, making it similar in some ways to more traditional economic sectors (as opposed to ~500,000 pseudonymous validators for instance).  The results of our analysis visualized in figure \ref{fig:HHI block builder relays}.
+In analyzing the data with regards to the metrics pertaining to Proposer-Builder-Separation, we examined both the metrics for Blocks proposed by Builder and the Blocks proposed by Relay.  For these metrics we applied the Herfindahl-Hirschman index as a more suitable index, due to the fact that the builder and relay space is naturally more concentrated, and comprised of a number of known entities, making it similar in some ways to more traditional economic sectors (as opposed to ~500,000 pseudonymous validators for instance).  The results of our analysis is visualized in figure \ref{fig:HHI block builder relays}.
 
 As can be observed from the visualization, the market concentration ranges from a re-scaled HHI of ~0.16 (or 1,600), to ~0.24 (or 2,400) for relays, whereas the builders display a HHI that ranges from ~0.15 (1,500) to ~0.26 (2,600).
 
@@ -685,7 +684,7 @@ Using these broad categories as a reference, we observe that the block builder a
 \label{fig:HHI block builder relays}
 \end{figure}
 
-When examining the Jensen-Shannon Divergence between the first and last 24 hour intervals in the dataset for both relevant metrics, we see a relatively high value compared to all other metrics, which indicates that there are significant changes in the number of blocks proposed by individual builders and relays, as well as overall changes to level of concentration within the market.  This is a useful index to cross-reference as it is capable of capturing nuance that other indices sometimes fail to capture, in cases where two or more entities can frequently reverse their respective market shares, with each claiming an outsized portion of the market for a period of time.  In this scenario, the overall level of inequality and centralization remains static but the relative share of individual participants can change radically.  This is a quality that the JSD index can help to capture.
+When examining the Jensen-Shannon Divergence between the first and last 24 hour intervals in the dataset for both relevant metrics, we see a relatively high value compared to all other metrics, which indicates that there are significant changes in the number of blocks proposed by individual builders and relays, as well as overall changes to level of concentration within the market.  This is a useful index to cross-reference as it is capable of capturing nuance that other indices sometimes fail to capture, for example in cases where two or more entities can frequently reverse their respective market shares, with each claiming an outsized portion of the market for a period of time.  In this scenario, the overall level of inequality and centralization remains static but the relative share of individual participants can change radically.  This is a quality that the JSD index can help to capture.
 
 \vspace{8pt}
 
@@ -714,19 +713,19 @@ It is worth noting that over a longer time-frame, our model should be able to ac
 
 \subsubsection{Rollups by TVL}
 
-We observe a pronounce level of centralization in when we examine Rollups by TVL, with an 90 average Gini index value of 0.87, and a re-scaled HHI of 0.45.  Both of these values make sense when we observe the underlying data, in which a single rollup has 54.3\% of TVL across all rollups, which is Arbitrum One (down from 64.5\% at the start of the sample period).  This is closely followed by Optimism that has a TVL of 25.9\%.  There are 12 rollups with a TVL share of less than 1\%, and 7 with a TVL of more than 1\%, the latter group exhibiting significant variance, from which we would expect a high HHI value.
+We observe a pronounce level of centralization when we examine Rollups by TVL, with a 90 day average Gini index value of 0.87, and a re-scaled HHI of 0.45.  Both of these values make sense when we observe the underlying data, in which a single rollup has 54.3\% of TVL across all rollups, which is Arbitrum One (down from 64.5\% at the start of the sample period).  This is closely followed by Optimism that has a TVL of 25.9\%.  There are 12 rollups with a TVL share of less than 1\%, and 7 with a TVL of more than 1\%, the latter group exhibiting significant variance, from which we would expect a high HHI value.
 
 Interestingly, the one other metric that also show a high JSD value for the sample period is Rollups By TVL.  This could be explained by the launch of the Base network on August 9\textsuperscript{th} which significantly altered the relevant market share of prominent rollups.
 
-We observe that the level of centralization in the rollups market at the time the data was collected, is at an unhealthy level for the Ethereum ecosystem.  The TVL across all rollups is ~8.1B USD, which is approximately 0.3 of the 26.562B USD TVL of Ethereum \cite{defillama}, and of which one single rollup accounts for 0.2\% of Ethereum's TVL.
+We observe that the level of centralization in the rollup market at the time the data was collected, is at an unhealthy level for the Ethereum ecosystem.  The TVL across all rollups is ~8.1B USD, which is approximately 0.3\% of the 26.562B USD TVL of Ethereum \cite{defillama}, and of which one single rollup accounts for 0.2\% of Ethereum's TVL.
 
-It is worth noting again that these figures will more than likely change over time as a number of zk-EVM based rollups will enter the market, which will dilute the marketplace will likely affect market concentration significantly, underpinning the need for ongoing measurement of decentralization over time.
+It is worth noting again that these figures will more than likely change over time as a number of zk-EVM rollups will enter the market, which will dilute the marketplace and will likely affect market concentration significantly, underpinning the need for ongoing measurement of decentralization over time.
 
 \subsubsection{Stablecoins by TVL}
 
-We observe the highest average value for the Gini index in the "Stablecoins by TVL" metric, which also has a markedly high HHI value.  This suggests a very high level of concentration within the stablecoin market, which is obvious when we examine the underlying data, that shows that just two stablecoins comprise over 80\% of the market, i.e. USDC and USDT. As both stablecoins are issued by corporations, this represents a significant area of centralization within Ethereum.  Stablecoins are used by many people to interact with a wide array of dapps, and both USDC and USDT are vulnerable to censorship, and have previously frozen token holders funds on request from authorities \cite{haqshanas2022} \cite{de2022}.
+We observe the highest average value for the Gini index in the ``Stablecoins by TVL'' metric, which also has a markedly high HHI value.  This suggests a very high level of concentration within the stablecoin market, which is obvious when we examine the underlying data, that shows that just two stablecoins comprise over 80\% of the market, i.e. USDC and USDT. As both stablecoins are issued by corporations, this represents a significant area of centralization within Ethereum.  Stablecoins are used by many people to interact with a wide array of dapps, and both USDC and USDT are vulnerable to censorship, and have previously frozen token holders funds on request from authorities \cite{haqshanas2022} \cite{de2022}.
 
-According to DefiLlama\cite{defillama}, the combined market cap for stablecoins on Ethereum is ~9.2B USD, which represents a third of the TVL on Ethereum.  This could arguably be the weakest point of Ethereum's overall decentralization.
+According to DefiLlama \cite{defillama}, the combined market cap for stablecoins on Ethereum is ~9.2B USD, which represents a third of the TVL on Ethereum.  This could arguably be the weakest point of Ethereum's overall decentralization.
 
 \subsubsection{Effective inflation rate adjusted for burn}
 
@@ -746,11 +745,11 @@ The metrics that pertain to Account Abstraction, which are User Operations by Bu
 
 Upon inspecting the underlying data, we observe that the maximum number of user operations processed in a single day during the sample period is only 301.  At this nascent stage, there is significant market concentration, with one specific bundler having 76\% market share out of 13 total active bundlers.
 
-It is worth noting however that this data looks at Ethereum mainnet itself, and does not consider any of the L2 rollups, on which thereby be a higher level of adoption of account abstraction infrastructure, and which is an area for future study.
+It is worth noting however that this data looks at Ethereum mainnet itself, and does not consider any of the L2 rollups, on which there may be a higher level of adoption of account abstraction infrastructure, and which is an area for future study.
 
 The Wallets by Deployer metric shows very similar characteristics to the User Operations by Bundler and follows much the same pattern of distribution throughout the sample period, with one specific deployer having an 87\% market share.
 
-The various metrics outlined in this paper will be useful in tracking the changes in decentralization over time as the account abstraction space matures and continues to see more adoption.  The influence of erc-4337 bundlers on the effective level of decentralization of the network has a whole is somewhat limited, so even a moderately high level of centralization is acceptable.
+The various metrics outlined in this paper will be useful in tracking the changes in decentralization over time as the account abstraction space matures and continues to see more adoption.  The influence of erc-4337 bundlers on the effective level of decentralization of the network as a whole is somewhat limited, so even a moderately high level of centralization is acceptable.
 
 \subsection{Master Indices}
 
@@ -791,9 +790,29 @@ As can be seen from the sample above, we can see that the overall effective leve
 
 It is important to note that the values of the master are not like other indices, insofar as it is not the case that values closer to 0 indicate more decentralization and values closer to 1 indicate more centralization.  These values are relevant in comparison the same value at other points in time.
 
-\subsection{Acknowledgements}
+\section{Conclusion and Discussion}
 
-Special thanks to people that contributed valuable feedback and suggestions for future improvements to the model and areas for further study, including Tina from Flashbots, Vitalik Buterin, Stephane Gosselin and Gman from SMG.
+Our results clearly demonstrates that the overall Ethereum ecosystem displays elements of concentration of control that are arguably less decentralized than the community would aspire to.  The results suggest the need for diligence in efforts to develop and maintain a healthy level of decentralization.  This can seen in areas such as client diversity (in terms of network nodes), market share of staking pools, market share of rollups, and stablecoins.  While stablecoins have a much lower TVL compared to Ethereum as a whole, this belies the important function stablecoins serve in the ecosystem, and thus presents a red flag for centralization concerns.
+
+flatcoins?
+
+As the ecosystem evolves, the important components of the ecosystem's overall infrastructure will change, as will the extent of their impact on the overall effect level of decentralization. As Barnabé Monnot states: "There are things that the protocol does not see, but cares about" \cite{monnot2023}.  As such, we should expect our model to adapt to these changes over time.
+
+Not only will the components that we measure change over time, but also our model will evolve as we learn more about the ecosystem and how to measure it.  While we have demonstrated that attempting to measure decentralization using a single index yields inconclusive and incomplete results, using a number of different indices together can paint a more complete picture, giving us a more holistic view of the system.
+
+While we have attempted to use a series of metrics that can be used to cross reference each other to paint a larger picture, there is still some areas that can be explored.  For example, we could use [ reference Vitalik's suggestion ] in order to attempt to measure not only the concentration of control by single parties, but also the relative probability for collusion.  We can also adopt newer emergent techniques such as network science.
+
+Reference Tina's steer towards to the document that expands on the HHI
+Please cite this publication as:
+OECD (2021), Methodologies to measure market competition, OECD Competition Committee Issues Paper, https://oe.cd/mmmc
+
+One important factor in the measurement of decentralization, is that while our models become more complex, the ability for them to be widely understood remains an objective that should not be lost.  If the model itself becomes complex enough to preclude analysis from a diverse audience, then it loses it's ability to act as a reference point for communication and discussion, which remain it's primary objective.
+
+\section{Acknowledgements}
+
+Special thanks to people that contributed valuable feedback and suggestions for future improvements to the model and areas for further study, including Tina Zhen, Vitalik Buterin, Stephane Gosselin and Griffin Howlett.
+
+\textbf{TODO: ask for permission from above parties to mention them in acknowledgement}
 
 
 \newpage
@@ -820,15 +839,14 @@ Consensus nodes by client & \url{https://migalabs.es/api/v1/client-distribution}
 Consensus nodes by country & \url{https://migalabs.es/api/v1/geo-distribution} \\[6pt]
 Execution nodes by client & \url{https://www.ethernodes.org/} \\[6pt]
 Execution nodes by country & \url{https://www.ethernodes.org/countries} \\[6pt]
-Exchanges by supply & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
 Distribution of native asset by amount & \url{https://data.messari.io/api/v1/assets/ethereum/metrics} \\[6pt]
-Amount staked by Pool / Staking Service Provider & \url{https://api.dune.com/api/v1/query/2394100/results?api_key=} \\[24pt]
+Amount staked by Pool / Staking Service Provider & \url{https://api.dune.com/api/v1/query/2394100/results} \\[24pt]
 \multicolumn{2}{l}{\textbf{Metrics pertaining to Proposer Builder Separation:}} \\[10pt]
 Blocks proposed by builder & \url{https://mevboost.pics/data.html} \\[6pt]
 Blocks proposed by relayer & \url{https://mevboost.pics/data.html} \\[24pt]
 \multicolumn{2}{l}{\textbf{Metrics pertaining to Account Abstraction:}} \\[10pt]
-Number of user operations per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[6pt]
-Number of transactions per bundler & \url{https://api.dune.com/api/v1/query/2490033/results?api_key=} \\[24pt]
+Number of user operations per bundler & \url{https://dune.com/queries/2193933/3599135} \\[6pt]
+Number of wallets per deployer & \url{https://dune.com/queries/2434102/3999582} \\[24pt]
 \multicolumn{2}{l}{\textbf{Miscellaneous Metrics:}} \\[10pt]
 Rollups by relative TVL / size / volume & \url{https://l2beat.com/scaling/tvl} \\[6pt]
 Stablecoins & \url{https://stablecoins.llama.fi/stablecoins} \\[6pt]
