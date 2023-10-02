@@ -49,7 +49,7 @@ The paper is organized as follows: in section II we deliver an overview of how E
 
 \section{Background}
 
-It can be argued that protocols that are built on top of the base layer of Ethereum do not pose a direct threat to the base layer itself, even when they are highly centralized, and should therefore not be a factor in quantifying the network's level of decentralization.  Once the base layer is sufficiently decentralized, any number of protocol designs can be implemented on top of it, and ideally the base layer should not be aware of them, or be adversely affected by them.  However, as Ethereum evolves, users increasingly interact with the network through abstracted layers of infrastructure that overlay the core protocol, and as such it can be conversely argued that such protocols could potentially affect the security and/or performance of the overall network under certain conditions, and should therefore be considered within a holistic model of measurement of the networks' level of decentralization. Our criteria for inclusion within our model is that the component being measured does not just serve a single use case or application, but is a protocol through which users interact with an substantial number of other dapps and protocols.
+It can be argued that protocols that are built on top of the base layer of Ethereum do not pose a direct threat to the base layer itself, even when they are highly centralized, and should therefore not be a factor in quantifying the network's level of decentralization.  Once the base layer is sufficiently decentralized, any number of protocol designs can be implemented on top of it, and ideally the base layer should not be aware of them, or be adversely affected by them.  However, as Ethereum evolves, users increasingly interact with the network through abstracted layers of infrastructure that overlay the core protocol, and as such it can be conversely argued that such protocols could potentially affect the security and/or performance of the overall network under certain conditions, and should therefore be considered within a holistic model of measurement of the networks' level of decentralization. Our criteria for inclusion within our model is that the component being measured does not just serve a single use case or application, but is a protocol through which users interact with a substantial number of other dapps and protocols.
 
 Any infrastructure that assumes a significant role in Ethereum can pose a centralization risk to the overall network based on two critical factors:
 \begin{enumerate}[label=\alph*.]
@@ -310,7 +310,7 @@ The indices that we have employed in our model are as listed below and are descr
 \hline
 \textbf{Underlying Approach} & \textbf{Index} \\ \hline
 Deviations model & Gini index \\ \hline
-Combinatoratics model & Herfindahl-Hirschman index \\ \hline
+Combinatorics model & Herfindahl-Hirschman index \\ \hline
 Entropy model & Shannon index \\ \hline
 Social welfare model & Atkinson index \\ \hline
 Tail ratios & Palma ratio, Pareto ratio \\ \hline
@@ -361,7 +361,7 @@ While the area under a curve is commonly calculated using the Newton-Leibnitz fo
 \[G=1-2\int_{0}^{1}L\left( x \right)dx\]
 \vspace{1pt}
 
-While the calculation of the Gini Index using the Lorenz Curve is useful for visualising the distribution and level of inequality on a chart, it is also possible to calculate directly using an approach that is based on the empirical mean difference of the values in the dataset \cite{gastwirth1972estimation}, which is the approach that we have implemented:
+While the calculation of the Gini Index using the Lorenz Curve is useful for visualizing the distribution and level of inequality on a chart, it is also possible to calculate directly using an approach that is based on the empirical mean difference of the values in the dataset \cite{gastwirth1972estimation}, which is the approach that we have implemented:
 
 \[G=\frac{\sum_{i=1}^{n}\sum_{j=1}^{n}\left| x_i - x_j \right|}{2n^2\mu}\]
 
@@ -397,7 +397,7 @@ Highly Concentrated & $\text{HHI} > 2,500$ \\ \hline
 
 \vspace{8pt}
 
-Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the datapoints in our model that measure the infrastructure that is provided as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays, or ERC-4337 bundlers.
+Because the Herfindahl-Hirschman Index is commonly used for identifying and measuring the presence of monopolies in industry, it is more suited to the data points in our model that measure the infrastructure that is provided as a service or public good by a relatively small number of actors, as opposed to measuring the distribution of ownership or control of some asset.  This makes it particularly useful for measuring middleware such as block builders or relays, or ERC-4337 bundlers.
 
 \subsection{Shannon Index}
 
@@ -460,7 +460,7 @@ According to Atkinson \cite{atkinson1970measurement}, the Gini index is affected
 
 Our model incorporates the Palma Ratio\cite{palma2011homogeneous}, which is the ratio of the share of resources allocated to the top 10\% of the distribution to the lower 40\% of the distribution.  Palma concludes that changes in the level of inequality tend to happen more at either end of the distribution, with the middle being affected less.
 
-We complement the Palma ratio with other inter-decile ratios that can be used to qualify the character of the inequality in the distribution, including the P90:P10, P50:P10 ratios.  Without loss of generality, Px represents the level of resources allocated to greater than x\% of the population, and is used to compare the gap between allocation of resources to two discrete percentiles within the distribution.
+We complement the Palma ratio with other interdecile ratios that can be used to qualify the character of the inequality in the distribution, including the P90:P10, P50:P10 ratios.  Without loss of generality, Px represents the level of resources allocated to greater than x\% of the population, and is used to compare the gap between allocation of resources to two discrete percentiles within the distribution.
 
 These inter-decile ratios are calculated using the linear interpolation method \cite{frost2023B} described below, where $P_x$ denotes the desired percentile, and $N$ is the population size, and $v$ represents the value at position $i$ in an ascending ordered dataset, where $i$ is calculated using the following formula:
 \[ i = \frac{P_x\left( N+1 \right)}{100} \]
@@ -498,7 +498,7 @@ The normalized JSD is calculated across each measurement dimension for both the 
 
 \subsection{Deriving a Master Index}
 
-As we are measuring Ethereum's level of decentralization over time, we need to account for it's modular topology, in which significant components of it's infrastructure will change.  For example, we might measure the concentration in the mev-boost relay market, but later decide to remove this metric as innovations like enshrined PBS make them redundant \cite{neuder2023}.
+As we are measuring Ethereum's level of decentralization over time, we need to account for its modular topology, in which significant components of its infrastructure will change.  For example, we might measure the concentration in the mev-boost relay market, but later decide to remove this metric as innovations like enshrined PBS make them redundant \cite{neuder2023}.
 
 Our model calculates an aggregate set of indices across a number of dimensions of measurement, that can be used as further indicator of the relative level of decentralization in Ethereum as it changes over time.  Each relevant index, (i.e. Gini, HHI, Atkinson), contributes to an aggregate index that is derived from calculating the normalized weighted geometric mean of the respective index's value across all relevant metrics, i.e.:
 \[ \gamma = \frac{{\left(\prod_{i=1}^{n} (\beta_i \times \omega_i)\cdot100\right)^{\frac{1}{n}} - \text{min}\left(\beta\right)}}{{(\text{max}\left(\beta\right) - \text{min}\left(\beta\right))\cdot10^{-2}}} \]
@@ -509,7 +509,7 @@ where \(\beta=\{\text{metric}_1, \text{metric}_2, ..., \text{metric}_n\}\) i.e. 
 
 This master index can be used to see changes on a daily basis over a period of time and be used in conjunction with the normalized JSD, which measures changes at specific points of 30, 60, and 90 days.
 
-The relevant metrics that are included in each aggregate index, along with their respective weightings, are listed below. The weightings are assigned based on the qualitative properties of the infrastructural component being measured. The actual weighting used in the formula are the percentage of each weighting relative the sum of all weightings.
+The relevant metrics that are included in each aggregate index, along with their respective weightings, are listed below. The weightings are assigned based on the qualitative properties of the infrastructural component being measured. The actual weightings used in the formula are the percentage of each weighting relative to the sum of all weightings.
 
 \vspace{6pt}
 \begin{table}[h]
@@ -579,7 +579,7 @@ These limitations form the rationale behind in the inclusion of the Shannon inde
 
 This is meaningful in considering the level of concentration in areas where the distribution is smaller, for example with "Stablecoins by Tvl".  In the result for this metrics, the Gini index is very high, indicating high concentration, but the Shannon Index shows a relatively low concentration, and this is a reflection of the fact there are fewer stablecoins, and hence less chance for a decentralized market to emerge.
 
-As we can see there is broad agreement between the Atkinson and Shannon indices, and this is not surprising considering they are both based on the entropy model.  However, the Atkinson index is not used by our model except for certain specific dimensions of measurements, because of it's non-standard inequality aversion parameter, which makes it unsuitable for comparison with other studies. It can be useful however, in fine tuning certain measurements when needed.
+As we can see there is broad agreement between the Atkinson and Shannon indices, and this is not surprising considering they are both based on the entropy model.  However, the Atkinson index is not used by our model except for certain specific dimensions of measurements, because of its non-standard inequality aversion parameter, which makes it unsuitable for comparison with other studies. It can be useful however, in fine tuning certain measurements when needed.
 
 The observations of the recorded results have been organized into the following sections which broadly correspond to the categories of metrics as described in section I.
 
@@ -634,7 +634,7 @@ We also refer to the HHI as measurement of client diversity, which may be a more
 \subsubsection{Amount Staked by Staking Pool}
 In examining the \textbf{Amount Staked by Staking Pool}, we observe that the level of concentration stays relatively static with a Gini index of \textbf{90\%} to \textbf{91\%} during the sample period.  This suggests a very high level of centralization amount staking pools, however upon scrutinizing the the underlying data, we observe that ~30\% of the total ETH staked on the network is controlled by a single entity, which is Lido.  While this seems concerning at first, it is to be noted that Lido itself is a DAO, and as such is a decentralized entity.  Lido commissions 29 separate independent node operators to manage their validators, with a relatively even distribution of stake between each node operator, as documented on the VaNoM portal\cite{lido2023}.
 
-Rather than accounting for Lido's decentralized quality by breaking down the composition of it's node operators within the original dataset, we leverage the Atkinson index, by modifying the inequality aversion parameter to account for it's level of decentralization.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, denoted by $\omega$, i.e.:
+Rather than accounting for Lido's decentralized quality by breaking down the composition of its node operators within the original dataset, we leverage the Atkinson index, by modifying the inequality aversion parameter to account for its level of decentralization.  To do this we multiply the standard inequality parameter of $0.5$ by a weighting derived from Lido's market share, denoted by $\omega$, i.e.:
 
 \[\alpha^\prime = \alpha \cdot \left( 1 - \omega \right) = 0.5 \cdot \left( 1 - 0.3 \right) = 0.35\]
 
@@ -765,8 +765,8 @@ For every index that we track, we derive a master index that is a aggregate valu
             xtick=data,
             xticklabels from table={\datatable}{Date},
             x tick label style={rotate=45,anchor=east,font=\footnotesize},
-            legend style={at={(0.02,0.98)},
-                anchor=north west,legend columns=-1},
+            legend style={at={(0.98,0.98)},
+                anchor=north east,legend columns=-1},
             ymajorgrids=true,
             xmajorgrids=false,
             bar width=5pt,
@@ -782,38 +782,35 @@ For every index that we track, we derive a master index that is a aggregate valu
     \label{fig:masterindices}
 \end{figure}
 
-We are specifically interested in the master index for both the Gini Index and Herfindahl-Hirschman Index for each day in the sample period.  We have sub-sampled 15 datapoints from the 90 day period and have charted them in \ref{fig:masterindices}.
+We are specifically interested in the master index for both the Gini Index and Herfindahl-Hirschman Index for each day in the sample period.  We have sub-sampled 18 data points from the 90 day period and have charted them in figure \ref{fig:masterindices}.
 
 The master index establishes a measurement that can be referenced to itself as it changes over time, in order to derive a crude high-level indicator of the overall effective level of measurement of the network, and in theory we should be maintain a single relative measurement even as the dimensions of measure change over time.
 
-As can be seen from the sample above, we can see that the overall effective level of decentralization changes over time, and this is a reflection of the changes within the various dimensions of measurement.
+As can be seen from the sample above, we can see that the overall effective level of decentralization changes over time, and this is a reflection of the changes within the various dimensions of measurement, specifically the Gini index and HHI index in this case.  Overall we can see a trend in a reduction in the value of the Gini across all dimensions of measurement from ~21\% to ~14\%, conversely the trend in the HHI for across dimensions of measurement increases slightly from 7.5\% to 10\%. Note that the anomalous reduction in the level of centralization around the July 8\textsuperscript{th} to July 13\textsuperscript{th} period are due to gaps in the source data.  Also, we have excluded the values for metrics related to account abstraction in order to get a clearer representation of the overall trends in the data.
 
 It is important to note that the values of the master are not like other indices, insofar as it is not the case that values closer to 0 indicate more decentralization and values closer to 1 indicate more centralization.  These values are relevant in comparison the same value at other points in time.
 
 \section{Conclusion and Discussion}
 
-Our results clearly demonstrates that the overall Ethereum ecosystem displays elements of concentration of control that are arguably less decentralized than the community would aspire to.  The results suggest the need for diligence in efforts to develop and maintain a healthy level of decentralization.  This can seen in areas such as client diversity (in terms of network nodes), market share of staking pools, market share of rollups, and stablecoins.  While stablecoins have a much lower TVL compared to Ethereum as a whole, this belies the important function stablecoins serve in the ecosystem, and thus presents a red flag for centralization concerns.
+Our results clearly demonstrate that the overall Ethereum ecosystem displays elements of concentration of control that are arguably less decentralized than the community would aspire to.  The results suggest the need for diligence in efforts to develop and maintain a healthy level of decentralization.  This can seen in areas such as client diversity (in terms of network nodes), market share of staking pools, market share of rollups, and stablecoins.  While stablecoins have a much lower TVL compared to Ethereum as a whole, this belies the important function stablecoins serve in the ecosystem, and thus presents a red flag for centralization concerns.
 
-flatcoins?
-
-As the ecosystem evolves, the important components of the ecosystem's overall infrastructure will change, as will the extent of their impact on the overall effect level of decentralization. As Barnabé Monnot states: "There are things that the protocol does not see, but cares about" \cite{monnot2023}.  As such, we should expect our model to adapt to these changes over time.
+As the ecosystem evolves, there will be changes in the important components of the ecosystem's overall infrastructure beyond the core Ethereum protocol, and there will also be changes to the extent of their impact on the overall effect level of decentralization. As Barnabé Monnot states: "There are things that the protocol does not see, but cares about" \cite{monnot2023}.  As such, we should expect our model to adapt to these changes over time.
 
 Not only will the components that we measure change over time, but also our model will evolve as we learn more about the ecosystem and how to measure it.  While we have demonstrated that attempting to measure decentralization using a single index yields inconclusive and incomplete results, using a number of different indices together can paint a more complete picture, giving us a more holistic view of the system.
 
-While we have attempted to use a series of metrics that can be used to cross reference each other to paint a larger picture, there is still some areas that can be explored.  For example, we could use [ reference Vitalik's suggestion ] in order to attempt to measure not only the concentration of control by single parties, but also the relative probability for collusion.  We can also adopt newer emergent techniques such as network science.
+While we have attempted to use a series of metrics that can be used to cross reference each other to paint a larger picture, there are still some areas that can be explored further.  One potential area of exploration is to study the methodologies used in other areas that face a similar challenge.  One example of research that can be explored is the OECD's methodologies to measure market competition \cite{oecd2021}, in which they explore the use of numerous models and indices under two broad categories of structural measures and performance measures.
 
-Reference Tina's steer towards to the document that expands on the HHI
-Please cite this publication as:
-OECD (2021), Methodologies to measure market competition, OECD Competition Committee Issues Paper, https://oe.cd/mmmc
+Another potential direction for research is to develop a way to measure potential collusion between entities within a population, rather than assuming that each entity in a population is totally independent, as our current model assumes.  Vitalik Buterin discussed this approach \cite{brown2023} and described it as being done by assigning pairwise coordination coefficients to all distinct pairs of entities within a population.  This would mean that any two pairwise entities within a population would have coefficient between 0 and 1, where 1 implies they are so tightly coordinated and aligned, they should be measured as a single actor, and a  0 implies they are completely independent.  The properties that attribute the level of coordination and alignment, and resultant coordination coefficient, could be as simple as being the same country, or being on the same network etc.
 
-One important factor in the measurement of decentralization, is that while our models become more complex, the ability for them to be widely understood remains an objective that should not be lost.  If the model itself becomes complex enough to preclude analysis from a diverse audience, then it loses it's ability to act as a reference point for communication and discussion, which remain it's primary objective.
+Obviously an approach such as this would require much more data about the individual entities in the population, and would present a challenge to gathering the data and ensuring data quality, which is an important consideration when deciding to develop a model based on that data. Nevertheless, this represents an interesting direction for future research.
+
+One important factor in the measurement of decentralization, is that while our models become more complex, the ability for them to be widely understood remains an objective that should not be lost.  If the model itself becomes complex enough to preclude analysis from a diverse audience, then it loses its ability to act as a reference point for communication and discussion, which remains its primary objective.
+
+\vspace{16pt}
 
 \section{Acknowledgements}
 
-Special thanks to people that contributed valuable feedback and suggestions for future improvements to the model and areas for further study, including Tina Zhen, Vitalik Buterin, Stephane Gosselin and Griffin Howlett.
-
-\textbf{TODO: ask for permission from above parties to mention them in acknowledgement}
-
+Special thanks to the people that contributed valuable feedback and suggestions for future improvements to the model and areas for further study, including Tina Zhen, Vitalik Buterin, Stephane Gosselin and Griffin Howlett.
 
 \newpage
 
